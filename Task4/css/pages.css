@@ -1,0 +1,700 @@
+/* ==========================================================================
+   VibePlayer - Page-Specific Styles
+   (Playlists, Recently Played, Search, Album Details, Settings)
+   ========================================================================== */
+
+/* ==========================================================================
+   Shared Data Table Styles (Used in Playlists, Recent, Album)
+   ========================================================================== */
+.tracks-table-container {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 44px 3fr 2fr 100px 50px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-dim);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.track-row {
+  display: grid;
+  grid-template-columns: 44px 3fr 2fr 100px 50px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  position: relative;
+}
+
+.track-row:hover {
+  background-color: var(--bg-surface-elevated);
+}
+
+.track-row.playing {
+  background-color: rgba(139, 92, 246, 0.12);
+  border: 1px solid var(--border-active);
+}
+
+.track-row.playing .track-title-text {
+  color: var(--accent-purple-light);
+  font-weight: 700;
+}
+
+.track-index {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.track-info-cell {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.track-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #1f2438;
+  flex-shrink: 0;
+}
+
+.track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.track-title-text {
+  font-weight: 600;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-main);
+}
+
+.track-artist-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-album-text {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-duration-text {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.track-action-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.track-action-btn:hover {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* ==========================================================================
+   PAGE 1: My Playlists Styles
+   ========================================================================== */
+.playlist-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 20px;
+}
+
+.playlist-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.playlist-card:hover {
+  background-color: var(--bg-card-hover);
+  transform: translateY(-4px);
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+}
+
+.playlist-card.active-selected {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 20px var(--accent-purple-glow);
+}
+
+.playlist-cover-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+  background: #191e2b;
+}
+
+.playlist-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.playlist-card:hover .playlist-cover-img {
+  transform: scale(1.05);
+}
+
+.playlist-play-overlay {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-purple);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.25s ease;
+}
+.playlist-card:hover .playlist-play-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.playlist-card-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlist-card-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  height: 38px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.playlist-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-weight: 600;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 10px;
+}
+
+/* Selected Playlist Banner */
+.selected-playlist-hero {
+  display: flex;
+  gap: 28px;
+  align-items: flex-end;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(20, 24, 38, 0.8) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.selected-cover {
+  width: 180px;
+  height: 180px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+}
+
+.selected-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.selected-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   PAGE 2: Recently Played Styles
+   ========================================================================== */
+.recent-stat-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 22px;
+}
+
+.recent-time-badge {
+  font-size: 0.76rem;
+  color: var(--accent-emerald);
+  background: rgba(16, 185, 129, 0.1);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ==========================================================================
+   PAGE 3: Search Page Styles
+   ========================================================================== */
+.search-input-container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  padding: 14px 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
+  max-width: 760px;
+  width: 100%;
+}
+
+.search-input-container:focus-within {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 20px var(--accent-purple-glow);
+  background: var(--bg-card-hover);
+}
+
+.search-input-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+.search-input-field::placeholder {
+  color: var(--text-dim);
+}
+
+.search-clear-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 4px;
+  display: none;
+}
+.search-clear-btn:hover {
+  color: var(--text-main);
+}
+
+.search-shortcut-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-dim);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search-filter-pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-filter-btn {
+  padding: 8px 20px;
+  border-radius: 9999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+}
+.search-filter-btn:hover {
+  background: var(--bg-surface-elevated);
+  color: var(--text-main);
+}
+.search-filter-btn.active {
+  background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 14px var(--accent-purple-glow);
+}
+
+.artists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.artist-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.artist-card:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-4px);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+
+.artist-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   PAGE 4: Album Details Styles
+   ========================================================================== */
+.album-hero-banner {
+  display: flex;
+  gap: 36px;
+  align-items: flex-end;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.25) 0%, rgba(16, 20, 32, 0.85) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+}
+
+.album-hero-cover {
+  width: 220px;
+  height: 220px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
+}
+
+.album-hero-details {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.album-title-main {
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+  line-height: 1.1;
+}
+
+.album-artist-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: var(--text-main);
+  font-weight: 600;
+}
+.album-artist-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.album-telemetry-strip {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+/* ==========================================================================
+   PAGE 5: Settings Page Styles
+   ========================================================================== */
+.settings-section-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.settings-section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 14px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 8px 0;
+}
+
+.settings-row-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.settings-row-label {
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+.settings-row-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* Accessible Toggle Switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  flex-shrink: 0;
+}
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #2b3042;
+  border-radius: 34px;
+  transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--border-subtle);
+}
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+input:checked + .toggle-slider {
+  background-color: var(--accent-purple);
+  box-shadow: 0 0 12px var(--accent-purple-glow);
+}
+input:checked + .toggle-slider:before {
+  transform: translateX(22px);
+}
+
+/* Range Slider */
+.settings-range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 200px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--bg-surface-elevated);
+  outline: none;
+  cursor: pointer;
+}
+.settings-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-purple);
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--accent-purple-glow);
+  transition: transform 0.15s;
+}
+.settings-range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Theme Selector Cards */
+.theme-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.theme-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.theme-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: var(--bg-surface-elevated);
+}
+.theme-card.active {
+  border-color: var(--accent-purple);
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.theme-color-disc {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   Empty States Component
+   ========================================================================== */
+.empty-state-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px;
+  gap: 16px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: rgba(18, 20, 26, 0.5);
+}
+
+.empty-icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(139, 92, 246, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-purple-light);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.empty-state-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.empty-state-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  max-width: 420px;
+  line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .selected-playlist-hero, .album-hero-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+    gap: 20px;
+  }
+  .selected-cover, .album-hero-cover {
+    width: 140px;
+    height: 140px;
+  }
+  .album-title-main {
+    font-size: 1.9rem;
+  }
+  .table-header, .track-row {
+    grid-template-columns: 36px 1fr 70px 40px;
+  }
+  .track-album-col {
+    display: none;
+  }
+}

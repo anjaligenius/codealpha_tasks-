@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="description" content="PixelGallery — Discover the Beauty in Every Frame. A curated fine art photography showcase inspired by Google Stitch UI/UX design." />
+  <title>PixelGallery — Responsive Image Gallery</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Material Symbols Outlined (Stitch Standard) -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN with Stitch Theme Configuration -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#5b45c8",
+            "primary-container": "#7460e3",
+            "primary-fixed": "#e5deff",
+            "primary-fixed-dim": "#c8bfff",
+            "on-primary": "#ffffff",
+            "surface": "#fbf8ff",
+            "surface-dim": "#d5d8f6",
+            "surface-bright": "#fbf8ff",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f3f2ff",
+            "surface-container": "#ececff",
+            "surface-container-high": "#e5e6ff",
+            "surface-container-highest": "#dee1fe",
+            "on-surface": "#161a30",
+            "on-surface-variant": "#484554",
+            "secondary": "#575d7c",
+            "on-secondary": "#ffffff",
+            "secondary-container": "#d6dbff",
+            "on-secondary-container": "#595f7e",
+            "secondary-fixed-dim": "#bfc5e8",
+            "inverse-surface": "#2b2f46",
+            "inverse-on-surface": "#f0efff",
+            "tertiary": "#845000",
+            "tertiary-fixed": "#ffddbb",
+            "tertiary-fixed-dim": "#ffb867",
+            "outline": "#797585",
+            "outline-variant": "#c9c4d6"
+          },
+          fontFamily: {
+            "headline": ["'Plus Jakarta Sans'", "sans-serif"],
+            "body": ["'Inter'", "sans-serif"],
+            "title": ["'Plus Jakarta Sans'", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="bg-surface font-body text-on-surface flex flex-col min-h-screen selection:bg-primary-container selection:text-white">
+
+  <!-- ==========================================
+       1. Top Navigation Bar (Sticky Glassmorphic)
+       ========================================== -->
+  <header id="mainHeader" class="fixed top-0 w-full z-40 bg-surface/85 backdrop-blur-xl transition-all duration-300 shadow-[0_1px_8px_rgba(22,26,48,0.04)]">
+    <div class="max-w-7xl mx-auto h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#hero" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl p-1">
+        <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white shadow-[0_2px_10px_rgba(91,69,200,0.35)] group-hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-headline font-bold text-lg text-on-surface tracking-tight leading-none group-hover:text-primary transition-colors">PixelGallery</span>
+          <span class="text-[11px] font-semibold text-secondary tracking-wide uppercase">Fine Art Vault</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#hero" class="nav-link text-sm text-secondary hover:text-primary active">Home</a>
+        <a href="#gallery-grid" class="nav-link text-sm text-secondary hover:text-primary">Explore</a>
+        <a href="#editor-collections" class="nav-link text-sm text-secondary hover:text-primary">Collections</a>
+        <a href="#about" class="nav-link text-sm text-secondary hover:text-primary">About</a>
+      </nav>
+
+      <!-- Right Navigation Actions -->
+      <div class="flex items-center gap-2">
+        <!-- Quick Jump to Search -->
+        <a href="#gallery-search" aria-label="Search photos" class="w-10 h-10 flex items-center justify-center rounded-full text-secondary hover:text-primary hover:bg-surface-container active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-[22px]">search</span>
+        </a>
+
+        <!-- Favorites Shortcut Filter -->
+        <button id="navFavoritesBtn" type="button" aria-label="View Favorites" title="View Favorite Photos" class="relative w-10 h-10 flex items-center justify-center rounded-full text-secondary hover:text-primary hover:bg-surface-container active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-[22px]">favorite</span>
+          <span id="favCountNav" class="hidden absolute top-1 right-1 w-4 h-4 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center">0</span>
+        </button>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button id="hamburgerBtn" aria-label="Open navigation menu" aria-expanded="false" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full text-secondary hover:text-primary hover:bg-surface-container active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+
+        <!-- User Profile Avatar Pill -->
+        <div class="hidden sm:flex w-8 h-8 rounded-full bg-primary items-center justify-center ml-1 text-white shadow-[0_2px_8px_rgba(91,69,200,0.25)] select-none">
+          <span class="material-symbols-outlined text-[18px]">person</span>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer Overlay -->
+  <div id="mobileDrawerBackdrop" class="fixed inset-0 z-50 bg-inverse-surface/60 backdrop-blur-sm md:hidden"></div>
+  <aside id="mobileDrawer" class="fixed top-0 right-0 bottom-0 w-[290px] z-50 bg-surface shadow-2xl p-6 flex flex-col justify-between md:hidden" aria-label="Mobile Navigation">
+    <div class="flex flex-col gap-6">
+      <div class="flex items-center justify-between pb-4 border-b border-surface-container">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center">
+            <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+          </div>
+          <span class="font-headline font-bold text-base text-on-surface">PixelGallery</span>
+        </div>
+        <button id="mobileDrawerClose" aria-label="Close menu" class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-secondary hover:text-on-surface">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <nav class="flex flex-col gap-3">
+        <a href="#hero" class="mobile-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-headline font-semibold text-sm text-secondary hover:text-primary hover:bg-surface-container-low transition-colors">
+          <span class="material-symbols-outlined text-[20px]">home</span>
+          Home
+        </a>
+        <a href="#gallery-grid" class="mobile-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-headline font-semibold text-sm text-secondary hover:text-primary hover:bg-surface-container-low transition-colors">
+          <span class="material-symbols-outlined text-[20px]">grid_view</span>
+          Explore Gallery
+        </a>
+        <a href="#editor-collections" class="mobile-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-headline font-semibold text-sm text-secondary hover:text-primary hover:bg-surface-container-low transition-colors">
+          <span class="material-symbols-outlined text-[20px]">collections_bookmark</span>
+          Editor's Picks
+        </a>
+        <a href="#about" class="mobile-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-headline font-semibold text-sm text-secondary hover:text-primary hover:bg-surface-container-low transition-colors">
+          <span class="material-symbols-outlined text-[20px]">info</span>
+          Curatorial Statement
+        </a>
+      </nav>
+    </div>
+
+    <div class="pt-6 border-t border-surface-container flex flex-col gap-3">
+      <div class="flex items-center justify-between text-xs text-secondary">
+        <span>Google Stitch Edition</span>
+        <span class="font-bold text-primary">v2.4</span>
+      </div>
+      <p class="text-[12px] text-secondary leading-snug">Designed with editorial precision and responsive craftsmanship.</p>
+    </div>
+  </aside>
+
+  <!-- ==========================================
+       Main Content Area
+       ========================================== -->
+  <main class="flex-1 flex flex-col w-full pt-16">
+
+    <!-- ==========================================
+         2. Hero Section (Stitch UI Design)
+         ========================================== -->
+    <section id="hero" class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-10 flex flex-col gap-8">
+      
+      <!-- Headline & Editorial Intro -->
+      <div class="max-w-3xl flex flex-col gap-3">
+        <div class="inline-flex items-center gap-2 w-fit px-3.5 py-1.5 rounded-full bg-surface-container-high text-primary">
+          <span class="material-symbols-outlined text-[15px]">auto_awesome</span>
+          <span class="font-headline text-xs font-bold uppercase tracking-wider">Curated Fine Art Showcase</span>
+        </div>
+        
+        <h1 class="font-headline text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-on-surface tracking-tight leading-[1.12]">
+          Discover the Beauty in Every Frame.
+        </h1>
+        
+        <p class="text-secondary text-base sm:text-lg leading-relaxed max-w-2xl">
+          Explore a curated collection of moments, places, and stories captured through contemporary fine art photography.
+        </p>
+
+        <!-- Action CTA Buttons -->
+        <div class="flex flex-wrap items-center gap-3.5 pt-2">
+          <a href="#gallery-grid" class="inline-flex items-center justify-center gap-2 bg-primary text-white rounded-full px-6 py-3 font-headline font-bold text-sm shadow-[0_4px_18px_rgba(91,69,200,0.3)] hover:bg-[#4d36be] active:scale-[0.98] transition-all">
+            <span>Explore Gallery</span>
+            <span class="material-symbols-outlined text-[18px]">south</span>
+          </a>
+          <a href="#editor-collections" class="inline-flex items-center justify-center gap-2 bg-surface-container-lowest text-on-surface border border-surface-container rounded-full px-6 py-3 font-headline font-bold text-sm shadow-[0_2px_10px_rgba(22,26,48,0.04)] hover:bg-surface-container-low active:scale-[0.98] transition-all">
+            <span>Editor's Collections</span>
+            <span class="material-symbols-outlined text-[18px]">collections_bookmark</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Featured Photograph Showcase (Stitch Layout) -->
+      <div class="hero-featured-card relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] rounded-2xl sm:rounded-3xl overflow-hidden group">
+        <img
+          alt="Alpine Dawn Awakening - Himalayan Expedition"
+          class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_mWN0mVIC2D4-uVpwjUzwtH8NHVZt3fucuBFc9yEHxDqAblLA0iaYHIUbKbXJm44U1OB0sy4CUWl5XALFz9tQ1OO5YLCtaw-k7f5URQvNlaTSybtGm5mU360I7yBYC4HqnkyJdWJvLhPKLG19Hz20Gmha3p6Hq9sX2XQefxLfzmoYRj55p8wh8PxTb3M2cidWUb6RY1vNi-DiE1DFH3_Lo05XM3JCHMI6BedyFe3W4GJ9FT2VVP2Dtg"
+        />
+
+        <!-- Top Badges Glassmorphism -->
+        <div class="absolute top-3 sm:top-5 left-3 sm:left-5 right-3 sm:right-5 flex items-center justify-between pointer-events-none">
+          <div class="hero-glass-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            <span class="font-headline text-xs font-bold text-on-surface">Featured of the Day</span>
+          </div>
+
+          <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-inverse-surface/85 backdrop-blur-md text-inverse-on-surface text-xs font-medium">
+            <span class="material-symbols-outlined text-[15px]">photo_camera</span>
+            <span>Elena Rostova</span>
+          </div>
+        </div>
+
+        <!-- Bottom Curatorial Scrim -->
+        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-on-surface/95 via-on-surface/50 to-transparent p-5 sm:p-8 flex flex-col justify-end pt-16">
+          <span class="font-headline text-xs text-primary-fixed uppercase tracking-wider font-bold">Himalayan Expedition</span>
+          <h2 class="font-headline text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mt-1">Alpine Dawn Awakening</h2>
+          
+          <div class="flex items-center justify-between flex-wrap gap-2 mt-3 pt-3 border-t border-white/15 text-xs sm:text-sm text-inverse-on-surface/85">
+            <span class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px] text-primary-fixed">location_on</span>
+              Ama Dablam Valley, Himalayas
+            </span>
+            <span class="flex items-center gap-2 font-mono text-tertiary-fixed">
+              <span class="material-symbols-outlined text-[15px]">shutter_speed</span>
+              1/250s · f/8.0 · ISO 100
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==========================================
+         3. Sticky Search & Filter Toolbar
+         ========================================== -->
+    <section class="sticky top-16 z-30 bg-surface/90 backdrop-blur-xl border-y border-surface-container py-3.5 px-4 sm:px-6 lg:px-8 shadow-[0_4px_16px_rgba(22,26,48,0.03)]">
+      <div class="max-w-7xl mx-auto flex flex-col gap-3">
+        
+        <!-- Live Search Input -->
+        <div class="relative w-full flex items-center">
+          <span class="material-symbols-outlined absolute left-4 text-secondary text-[20px] pointer-events-none">search</span>
+          <input
+            id="gallery-search"
+            type="text"
+            placeholder="Search moods, places, or categories (e.g. Nature, Himalayas, Fox)..."
+            class="w-full bg-surface-container-lowest text-on-surface placeholder:text-secondary/60 text-sm font-body pl-11 pr-11 py-2.5 rounded-full border border-surface-container shadow-[0_2px_8px_rgba(22,26,48,0.04)] focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+          />
+          <button
+            id="clear-search"
+            type="button"
+            aria-label="Clear search"
+            class="hidden absolute right-3 w-7 h-7 flex items-center justify-center rounded-full text-secondary hover:text-on-surface hover:bg-surface-container"
+          >
+            <span class="material-symbols-outlined text-[16px]">close</span>
+          </button>
+        </div>
+
+        <!-- Category Pills (Horizontal Scrollable) -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar" id="category-pills">
+          <button
+            type="button"
+            data-category="all"
+            class="category-btn active px-4 py-1.5 rounded-full font-headline text-xs font-semibold whitespace-nowrap bg-primary text-white inline-flex items-center gap-1.5 shadow-md"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse shadow-[0_0_6px_#ffffff]"></span>
+            <span>All Photos</span>
+          </button>
+
+          <button
+            type="button"
+            data-category="Nature"
+            class="category-btn px-4 py-1.5 rounded-full font-headline text-xs font-semibold whitespace-nowrap bg-surface-container-lowest text-secondary border border-surface-container shadow-[0_2px_6px_rgba(22,26,48,0.03)] inline-flex items-center gap-1.5"
+          >
+            <span>Nature</span>
+          </button>
+
+          <button
+            type="button"
+            data-category="Travel"
+            class="category-btn px-4 py-1.5 rounded-full font-headline text-xs font-semibold whitespace-nowrap bg-surface-container-lowest text-secondary border border-surface-container shadow-[0_2px_6px_rgba(22,26,48,0.03)] inline-flex items-center gap-1.5"
+          >
+            <span>Travel</span>
+          </button>
+
+          <button
+            type="button"
+            data-category="Architecture"
+            class="category-btn px-4 py-1.5 rounded-full font-headline text-xs font-semibold whitespace-nowrap bg-surface-container-lowest text-secondary border border-surface-container shadow-[0_2px_6px_rgba(22,26,48,0.03)] inline-flex items-center gap-1.5"
+          >
+            <span>Architecture</span>
+          </button>
+
+          <button
+            type="button"
+            data-category="Animals"
+            class="category-btn px-4 py-1.5 rounded-full font-headline text-xs font-semibold whitespace-nowrap bg-surface-container-lowest text-secondary border border-surface-container shadow-[0_2px_6px_rgba(22,26,48,0.03)] inline-flex items-center gap-1.5"
+          >
+            <span>Animals</span>
+          </button>
+
+          <button
+            type="button"
+            data-category="Portraits"
+            class="category-btn px-4 py-1.5 rounded-full font-headline text-xs font-semibold whitespace-nowrap bg-surface-container-lowest text-secondary border border-surface-container shadow-[0_2px_6px_rgba(22,26,48,0.03)] inline-flex items-center gap-1.5"
+          >
+            <span>Portraits</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4. Gallery Section (Stitch Responsive Grid)
+         ========================================== -->
+    <section id="gallery-grid" class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-10 pb-12 flex flex-col gap-6">
+      
+      <!-- Section Header & Counter -->
+      <div class="flex items-center justify-between flex-wrap gap-3">
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span>
+            <h2 class="font-headline font-bold text-2xl sm:text-3xl text-on-surface tracking-tight">Explore Our Gallery</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-secondary mt-1">A collection of extraordinary moments from around the world.</p>
+        </div>
+
+        <span id="items-counter" class="font-headline text-xs font-bold px-3 py-1.5 rounded-full bg-surface-container-high text-primary">
+          16 items
+        </span>
+      </div>
+
+      <!-- Responsive Multi-Column Photographic Grid -->
+      <div id="photo-cards-container" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
+        <!-- Rendered dynamically by JavaScript with Skeleton Loaders -->
+      </div>
+
+      <!-- Empty State Feedback -->
+      <div id="no-results" class="hidden flex flex-col items-center justify-center py-16 px-4 text-center bg-surface-container-low/60 rounded-3xl border border-dashed border-surface-container">
+        <div class="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center text-secondary mb-3 shadow-sm">
+          <span class="material-symbols-outlined text-[28px]">image_not_supported</span>
+        </div>
+        <h4 class="font-headline font-bold text-lg text-on-surface">No frames found</h4>
+        <p class="text-sm text-secondary max-w-sm mt-1">Try adjusting your search keywords or resetting active category filters.</p>
+        <button id="reset-filter-btn" type="button" class="mt-5 px-5 py-2.5 rounded-full bg-primary text-white font-headline font-semibold text-xs shadow-md hover:bg-[#4d36be] active:scale-95 transition-all">
+          Reset All Filters
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ==========================================
+         5. Featured Collections ("Editor's Picks")
+         ========================================== -->
+    <section id="editor-collections" class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 border-t border-surface-container flex flex-col gap-6">
+      
+      <div class="flex items-center justify-between">
+        <div class="flex flex-col">
+          <span class="font-headline text-xs font-bold text-primary uppercase tracking-wider">Curated Collections</span>
+          <h2 class="font-headline font-bold text-2xl sm:text-3xl text-on-surface tracking-tight">Editor's Picks</h2>
+        </div>
+        <span class="material-symbols-outlined text-secondary text-[24px]">verified</span>
+      </div>
+
+      <!-- 3 Curated Collection Cards (Stitch Design) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+        
+        <!-- Collection 1: Into the Wild -->
+        <div class="collection-card relative rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(22,26,48,0.06)] bg-surface-container-lowest cursor-pointer group" data-collection-tag="into the wild" data-collection-title="Into the Wild">
+          <div class="h-44 sm:h-52 w-full relative">
+            <img
+              alt="Into the Wild - Wildlife and untamed terrain"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSjMbouA_5pKgYbi0HJlv08mYvccVGZT0NmapddoXLt5pkrjhdkaNgyr5VECh38aqqfmn-GdI9-gfd4d18cFx_jI6n78YOnbTSUoFcVfEfN_bKyROzOs4cOdiZ7ClLdvaPwPurwBI8F_L8NjY-HakhU5ySstODCSXcMyJ0oDBqdzGRA48-3gDQoRnat1d42ck5wLNWYWyaHH2SulfMZgY2uBAGa_2JLzba5zlaAoCVpIIGPntRDtVx7w"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-on-surface via-on-surface/40 to-transparent"></div>
+            
+            <div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/80 backdrop-blur-md">
+              <span class="font-headline text-xs font-semibold text-on-surface">18 Artworks</span>
+            </div>
+
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <h3 class="font-headline text-lg font-bold">Into the Wild</h3>
+              <p class="text-xs text-inverse-on-surface/90 line-clamp-1 mt-0.5">Untouched habitats and the creatures thriving in them.</p>
+              <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-primary-fixed mt-2 group-hover:translate-x-1 transition-transform">
+                <span>View Collection</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Collection 2: Urban Perspectives -->
+        <div class="collection-card relative rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(22,26,48,0.06)] bg-surface-container-lowest cursor-pointer group" data-collection-tag="urban perspectives" data-collection-title="Urban Perspectives">
+          <div class="h-44 sm:h-52 w-full relative">
+            <img
+              alt="Urban Perspectives - Architectural geometry"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-Pnts0HVEN28JGg3-JJdg9OwwFZDbGZZNtiQh-3pV_Z9JGJMu0J268rAt3i7LJUsQGOKagCd8F9Chb4eLrzPAW1qP_EFRXHsGfwbyaArkV5qP0s0djUdHxhKqBc2tW_snfFCyc8N5veo3Ml588avkX0xgoQQpLfebA0753v38Bn1a3R8xSTsAcbwS2LEAID-RnDZb3B_iHiztwTd1o5NlO3emzs4KDdPockkPIemSXh0-5-Ynr63vHA"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-on-surface via-on-surface/40 to-transparent"></div>
+            
+            <div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/80 backdrop-blur-md">
+              <span class="font-headline text-xs font-semibold text-on-surface">24 Artworks</span>
+            </div>
+
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <h3 class="font-headline text-lg font-bold">Urban Perspectives</h3>
+              <p class="text-xs text-inverse-on-surface/90 line-clamp-1 mt-0.5">Lines, shadows, and human ingenuity etched in glass.</p>
+              <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-primary-fixed mt-2 group-hover:translate-x-1 transition-transform">
+                <span>View Collection</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Collection 3: Golden Hour -->
+        <div class="collection-card relative rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(22,26,48,0.06)] bg-surface-container-lowest cursor-pointer group" data-collection-tag="golden hour" data-collection-title="Golden Hour">
+          <div class="h-44 sm:h-52 w-full relative">
+            <img
+              alt="Golden Hour - Twilight glow"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_mWN0mVIC2D4-uVpwjUzwtH8NHVZt3fucuBFc9yEHxDqAblLA0iaYHIUbKbXJm44U1OB0sy4CUWl5XALFz9tQ1OO5YLCtaw-k7f5URQvNlaTSybtGm5mU360I7yBYC4HqnkyJdWJvLhPKLG19Hz20Gmha3p6Hq9sX2XQefxLfzmoYRj55p8wh8PxTb3M2cidWUb6RY1vNi-DiE1DFH3_Lo05XM3JCHMI6BedyFe3W4GJ9FT2VVP2Dtg"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-on-surface via-on-surface/40 to-transparent"></div>
+            
+            <div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-surface-container-lowest/80 backdrop-blur-md">
+              <span class="font-headline text-xs font-semibold text-on-surface">32 Artworks</span>
+            </div>
+
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <h3 class="font-headline text-lg font-bold">Golden Hour</h3>
+              <p class="text-xs text-inverse-on-surface/90 line-clamp-1 mt-0.5">When sunlight turns every landscape into pure poetry.</p>
+              <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-primary-fixed mt-2 group-hover:translate-x-1 transition-transform">
+                <span>View Collection</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==========================================
+         6. About / Curatorial Statement Section
+         ========================================== -->
+    <section id="about" class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12">
+      <div class="p-6 sm:p-10 rounded-3xl bg-surface-container-low flex flex-col md:flex-row gap-8 items-center shadow-[0_4px_24px_rgba(91,69,200,0.04)] border border-surface-container">
+        
+        <!-- Left: Statement Narrative -->
+        <div class="flex-1 flex flex-col gap-4">
+          <div class="flex items-center gap-2 text-primary">
+            <span class="material-symbols-outlined text-[20px]">menu_book</span>
+            <span class="font-headline text-xs uppercase tracking-wider font-bold">Curatorial Statement</span>
+          </div>
+
+          <h2 class="font-headline font-extrabold text-2xl sm:text-3xl lg:text-4xl text-on-surface tracking-tight">
+            Photography That Tells a Story.
+          </h2>
+
+          <p class="text-secondary text-sm sm:text-base leading-relaxed">
+            PixelGallery showcases extraordinary perspectives from visionary photographers across the globe. We believe that behind every lens lies an unrepeatable narrative—a confluence of patience, natural geometry, and luminous emotional resonance.
+          </p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
+            <div>
+              <span class="font-headline font-bold text-2xl text-primary">100%</span>
+              <p class="text-xs text-secondary mt-0.5">Curated High-Res</p>
+            </div>
+            <div>
+              <span class="font-headline font-bold text-2xl text-primary">50+</span>
+              <p class="text-xs text-secondary mt-0.5">Global Creators</p>
+            </div>
+            <div>
+              <span class="font-headline font-bold text-2xl text-primary">0</span>
+              <p class="text-xs text-secondary mt-0.5">Watermarks</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Curator's Gear Specification Card (Stitch Exact Component) -->
+        <div class="w-full md:w-80 bg-surface-container-lowest p-5 rounded-2xl flex flex-col gap-3.5 shadow-[0_2px_12px_rgba(22,26,48,0.04)] border border-surface-container shrink-0">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+                <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="font-headline text-sm font-semibold text-on-surface">Curator's Gear Spec</span>
+                <span class="text-xs text-secondary">Reference Standard</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-surface-container-high text-primary font-headline text-[11px] font-bold">
+              Fine Art
+            </span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-3 border-t border-surface-container text-center">
+            <div class="flex flex-col">
+              <span class="text-[11px] text-secondary">Body</span>
+              <span class="font-headline text-xs font-semibold text-on-surface">Leica M11</span>
+            </div>
+            <div class="flex flex-col border-x border-surface-container">
+              <span class="text-[11px] text-secondary">Optic</span>
+              <span class="font-headline text-xs font-semibold text-on-surface">35mm f/1.4</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-[11px] text-secondary">ISO</span>
+              <span class="font-headline text-xs font-semibold text-on-surface">100</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       7. Fullscreen Lightbox Modal (Stitch Screen 1 Exact UI)
+       ========================================== -->
+  <div id="imageLightbox" class="fixed inset-0 z-50 bg-inverse-surface/92 backdrop-blur-xl flex flex-col justify-between p-3 sm:p-6 transition-all duration-300" role="dialog" aria-modal="true" aria-hidden="true">
+    
+    <div class="lightbox-dialog-window max-w-5xl mx-auto w-full h-full flex flex-col justify-between rounded-3xl overflow-hidden bg-inverse-surface text-inverse-on-surface shadow-2xl relative">
+      
+      <!-- Top Control Bar (Screen 1) -->
+      <div class="w-full px-4 sm:px-6 pt-4 pb-2 flex items-center justify-between gap-3 z-30">
+        
+        <!-- Left: Image Counter Badge -->
+        <div class="flex items-center gap-2 bg-surface-container-lowest/10 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-sm">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+          <span id="lightboxCounter" class="font-headline text-xs font-semibold text-inverse-on-surface tracking-wider">03 / 16</span>
+        </div>
+
+        <!-- Right: Action Suite -->
+        <div class="flex items-center gap-2">
+          <!-- Favorite Button (Interactive Toggled State) -->
+          <button
+            id="lightboxFavBtn"
+            type="button"
+            aria-label="Favorite photograph"
+            title="Favorite photograph"
+            class="w-10 h-10 rounded-full bg-surface-container-lowest/15 hover:bg-surface-container-lowest/25 active:scale-90 flex items-center justify-center transition-all duration-200"
+          >
+            <span class="material-symbols-outlined text-[20px] text-inverse-on-surface">favorite</span>
+          </button>
+
+          <!-- Download Action -->
+          <button
+            id="lightboxDownloadBtn"
+            type="button"
+            aria-label="Download high resolution image"
+            title="Download high-resolution image"
+            class="w-10 h-10 rounded-full bg-surface-container-lowest/15 hover:bg-surface-container-lowest/25 active:scale-90 flex items-center justify-center text-inverse-on-surface transition-all duration-200"
+          >
+            <span class="material-symbols-outlined text-[20px]">download</span>
+          </button>
+
+          <!-- Share Action -->
+          <button
+            id="lightboxShareBtn"
+            type="button"
+            aria-label="Share photo"
+            title="Share image link"
+            class="w-10 h-10 rounded-full bg-surface-container-lowest/15 hover:bg-surface-container-lowest/25 active:scale-90 flex items-center justify-center text-inverse-on-surface transition-all duration-200"
+          >
+            <span class="material-symbols-outlined text-[20px]">share</span>
+          </button>
+
+          <!-- Close / Dismiss Button -->
+          <button
+            id="lightboxCloseBtn"
+            type="button"
+            aria-label="Exit fullscreen viewer"
+            title="Close viewer (Esc)"
+            class="w-10 h-10 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/35 active:scale-90 flex items-center justify-center text-inverse-on-surface ml-1 transition-all duration-200"
+          >
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Central Image Stage with Floating Arrows -->
+      <div class="relative w-full flex-1 px-4 sm:px-6 py-2 flex items-center justify-center select-none overflow-hidden">
+        
+        <!-- Previous Arrow (Floating Left) -->
+        <button
+          id="lightboxPrevBtn"
+          type="button"
+          aria-label="Previous image"
+          title="Previous (Left Arrow)"
+          class="absolute left-4 sm:left-8 z-20 w-11 h-11 rounded-full bg-surface-container-lowest/25 hover:bg-surface-container-lowest/40 active:scale-95 backdrop-blur-lg flex items-center justify-center text-white shadow-lg transition-all"
+        >
+          <span class="material-symbols-outlined text-[24px]">chevron_left</span>
+        </button>
+
+        <!-- Main Focal Photo Frame -->
+        <div class="relative max-w-full max-h-[58vh] sm:max-h-[64vh] rounded-2xl overflow-hidden bg-inverse-surface/80 shadow-2xl flex items-center justify-center">
+          <img
+            id="lightboxMainImg"
+            alt="Enlarged gallery preview"
+            class="lightbox-main-img max-w-full max-h-[58vh] sm:max-h-[64vh] object-contain rounded-2xl"
+            src=""
+          />
+          
+          <!-- Subtle Ambient Vignette Scrim -->
+          <div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/60 via-transparent to-transparent pointer-events-none"></div>
+
+          <!-- Quick Zoom Indicator -->
+          <div class="absolute bottom-3 right-3 bg-surface-container-lowest/25 backdrop-blur-md rounded-full px-2.5 py-1 flex items-center gap-1 pointer-events-none text-white text-xs">
+            <span class="material-symbols-outlined text-[14px]">zoom_in</span>
+            <span class="font-headline font-medium">Click to Zoom</span>
+          </div>
+        </div>
+
+        <!-- Next Arrow (Floating Right) -->
+        <button
+          id="lightboxNextBtn"
+          type="button"
+          aria-label="Next image"
+          title="Next (Right Arrow)"
+          class="absolute right-4 sm:right-8 z-20 w-11 h-11 rounded-full bg-surface-container-lowest/25 hover:bg-surface-container-lowest/40 active:scale-95 backdrop-blur-lg flex items-center justify-center text-white shadow-lg transition-all"
+        >
+          <span class="material-symbols-outlined text-[24px]">chevron_right</span>
+        </button>
+
+      </div>
+
+      <!-- Curatorial Metadata Bar (Screen 1) -->
+      <div class="px-4 sm:px-6 pt-1 pb-2 flex flex-col gap-1.5">
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3 min-w-0">
+            <h2 id="lightboxTitle" class="font-headline text-base sm:text-lg font-bold text-inverse-on-surface tracking-tight truncate">Photo Title</h2>
+            <span id="lightboxCategory" class="inline-flex items-center font-headline text-xs font-semibold bg-primary/30 text-primary-fixed px-2.5 py-0.5 rounded-full">
+              Category
+            </span>
+          </div>
+
+          <!-- Live Likes Counter Indicator -->
+          <div class="flex items-center gap-1.5 text-primary-fixed shrink-0 text-xs sm:text-sm font-semibold">
+            <span class="material-symbols-outlined text-[16px] text-primary fill-1" style="font-variation-settings: 'FILL' 1;">favorite</span>
+            <span id="lightboxLikesCount">1,428</span>
+          </div>
+        </div>
+
+        <!-- Photographic EXIF Metadata -->
+        <div class="flex items-center flex-wrap gap-x-2 gap-y-0.5 text-xs text-secondary-fixed-dim/90">
+          <span id="lightboxPhotographer" class="font-medium text-white">Elena Rostova</span>
+          <span class="opacity-40">•</span>
+          <span id="lightboxCamera">Sony A7R V</span>
+          <span class="opacity-40">•</span>
+          <span id="lightboxLens">24-70mm f/2.8</span>
+          <span class="opacity-40">•</span>
+          <span id="lightboxShutter">1/250s</span>
+          <span class="opacity-40">•</span>
+          <span id="lightboxIso">ISO 100</span>
+        </div>
+      </div>
+
+      <!-- Bottom Thumbnail Carousel Strip (Screen 1 Sequence) -->
+      <div class="w-full pt-1 pb-3 px-4 sm:px-6 bg-inverse-surface/95 border-t border-white/10">
+        <div class="mb-1.5 flex items-center justify-between text-xs">
+          <span class="font-headline font-semibold text-secondary-fixed-dim/80 uppercase tracking-widest text-[10px]">Exhibition Sequence</span>
+          <span class="text-primary-fixed text-[11px]">Click or swipe to navigate</span>
+        </div>
+        
+        <div id="lightboxThumbStrip" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ==========================================
+       8. Footer Section
+       ========================================== -->
+  <footer class="bg-surface-container-low border-t border-surface-container pt-12 pb-8 text-on-surface">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-10">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        <!-- Col 1: Brand & Narrative -->
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-primary flex items-center justify-center text-white">
+              <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+            </div>
+            <span class="font-headline font-bold text-lg tracking-tight">PixelGallery</span>
+          </div>
+          <p class="text-xs text-secondary leading-relaxed">
+            A museum-grade digital gallery curating fine art photography from celebrated visual creators worldwide.
+          </p>
+        </div>
+
+        <!-- Col 2: Navigation Links -->
+        <div class="flex flex-col gap-2.5">
+          <span class="font-headline font-bold text-xs uppercase tracking-wider text-primary">Navigation</span>
+          <a href="#hero" class="text-xs text-secondary hover:text-primary transition-colors">Home Showcase</a>
+          <a href="#gallery-grid" class="text-xs text-secondary hover:text-primary transition-colors">Explore Gallery</a>
+          <a href="#editor-collections" class="text-xs text-secondary hover:text-primary transition-colors">Editor's Picks</a>
+          <a href="#about" class="text-xs text-secondary hover:text-primary transition-colors">Curatorial Statement</a>
+        </div>
+
+        <!-- Col 3: Categories -->
+        <div class="flex flex-col gap-2.5">
+          <span class="font-headline font-bold text-xs uppercase tracking-wider text-primary">Categories</span>
+          <span class="text-xs text-secondary">Nature & Landscapes</span>
+          <span class="text-xs text-secondary">Urban & Architecture</span>
+          <span class="text-xs text-secondary">Wildlife & Animals</span>
+          <span class="text-xs text-secondary">Expressive Portraits</span>
+        </div>
+
+        <!-- Col 4: Newsletter Subscription -->
+        <div class="flex flex-col gap-3">
+          <span class="font-headline font-bold text-xs uppercase tracking-wider text-primary">Weekly Highlights</span>
+          <p class="text-xs text-secondary">Receive handpicked curated prints directly in your inbox.</p>
+          <form id="newsletterForm" class="flex items-center gap-2">
+            <input
+              type="email"
+              required
+              placeholder="Your email address"
+              class="w-full bg-surface-container-lowest text-xs text-on-surface px-3 py-2 rounded-full border border-surface-container focus:outline-none focus:border-primary"
+            />
+            <button
+              type="submit"
+              class="w-8 h-8 shrink-0 rounded-full bg-primary text-white flex items-center justify-center hover:bg-[#4d36be] active:scale-95 transition-all"
+            >
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-6 border-t border-surface-container flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-secondary">
+        <p>© 2026 PixelGallery. All rights reserved. Designed for CodeAlpha Task 1.</p>
+        
+        <div class="flex items-center gap-4">
+          <span class="hover:text-primary transition-colors cursor-pointer">Privacy Policy</span>
+          <span>•</span>
+          <span class="hover:text-primary transition-colors cursor-pointer">Terms of Service</span>
+          <span>•</span>
+          <span class="hover:text-primary transition-colors cursor-pointer">Curator License</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Floating Toast Notification Container -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Floating Back to Top Button -->
+  <button
+    id="backToTopBtn"
+    type="button"
+    aria-label="Back to top"
+    title="Back to top"
+    class="fixed bottom-6 left-6 z-40 w-11 h-11 rounded-full bg-surface-container-lowest text-on-surface shadow-lg border border-surface-container flex items-center justify-center hover:text-primary hover:scale-105 active:scale-95 transition-all"
+  >
+    <span class="material-symbols-outlined text-[20px]">arrow_upward</span>
+  </button>
+
+  <!-- Application Logic -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibePlayer - Album Details</title>
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Shared & Page Styles -->
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Audio Element (Managed by VibeAudioPlayer) -->
+  <audio id="main-audio" preload="metadata"></audio>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast-alert">
+    <i data-lucide="info" style="color: #c084fc;"></i>
+    <span id="toast-message">Album loaded</span>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <a class="brand-logo" href="index.html">
+        <div class="brand-icon-box">
+          <i data-lucide="radio" style="width: 22px; height: 22px;"></i>
+        </div>
+        <div class="brand-title">VibePlayer</div>
+        <span class="brand-badge">PRO</span>
+      </a>
+
+      <nav class="nav-group">
+        <div class="nav-label">Menu</div>
+        <a class="nav-item" href="index.html">
+          <i data-lucide="home" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Home</span>
+        </a>
+        <a class="nav-item" href="playlist.html">
+          <i data-lucide="library" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">My Playlist</span>
+        </a>
+        <a class="nav-item" href="recent.html">
+          <i data-lucide="clock" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Recently Played</span>
+        </a>
+        <a class="nav-item" href="search.html">
+          <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Search</span>
+        </a>
+        <a class="nav-item active" href="album.html">
+          <i data-lucide="disc" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Album Details</span>
+        </a>
+        <a class="nav-item" href="settings.html">
+          <i data-lucide="settings" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Settings</span>
+        </a>
+      </nav>
+
+      <div class="nav-group" style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
+        <div class="nav-label">All Albums</div>
+        <div class="playlist-scroll" id="sidebar-albums-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="sidebar-footer" style="background: rgba(255,255,255,0.03); border: 1px dashed var(--border-subtle); padding: 12px; border-radius: var(--radius-sm); font-size: 0.76rem; color: var(--text-dim); line-height: 1.4;">
+        <span style="color: var(--accent-emerald); font-weight: 600;">Studio Master 24-bit:</span><br>
+        Full dynamic range and pristine sound staging.
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-view">
+      
+      <!-- Album Hero Banner -->
+      <section class="album-hero-banner" id="album-banner">
+        <img id="album-cover-img" class="album-hero-cover" src="" alt="Album Cover">
+        
+        <div class="album-hero-details">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <span class="pill-badge purple">OFFICIAL STUDIO RELEASE</span>
+            <span id="album-fidelity-badge" class="pill-badge emerald">Stereo Master 96kHz / 24-bit</span>
+          </div>
+
+          <h1 id="album-title-text" class="album-title-main">Ethereal Horizons</h1>
+
+          <div class="album-artist-row">
+            <img id="album-artist-avatar" class="album-artist-avatar" src="" alt="Artist">
+            <span id="album-artist-name" style="font-weight: 700;">Aura Minimal</span>
+            <i data-lucide="badge-check" style="width: 17px; height: 17px; color: var(--accent-purple-light); fill: var(--accent-purple-light);"></i>
+            <span style="color: var(--text-dim);">•</span>
+            <span id="album-year" style="color: var(--text-muted);">2024</span>
+            <span style="color: var(--text-dim);">•</span>
+            <span id="album-stats" style="color: var(--text-muted);">3 Tracks • 24 mins</span>
+          </div>
+
+          <p id="album-description" style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; max-width: 650px;">
+            A lush sonic landscape of warm analog synthesizers, organic field recordings, and ethereal textures crafted for deep focus, mindful unwinding, and late-night contemplation.
+          </p>
+
+          <!-- Action Buttons -->
+          <div style="display: flex; align-items: center; gap: 12px; margin-top: 6px; flex-wrap: wrap;">
+            <button class="btn-primary" id="btn-play-album">
+              <i data-lucide="play" style="width: 18px; height: 18px; fill: currentColor;"></i>
+              <span>Play Album</span>
+            </button>
+            <button class="btn-secondary" id="btn-shuffle-album">
+              <i data-lucide="shuffle" style="width: 18px; height: 18px;"></i>
+              <span>Shuffle</span>
+            </button>
+            <button class="btn-secondary" id="btn-like-album" title="Favorite Album">
+              <i data-lucide="heart" style="width: 18px; height: 18px;"></i>
+              <span>Save</span>
+            </button>
+            <button class="btn-secondary" onclick="window.vibePlayer.showToast('Album downloaded for offline lossless playback.')" title="Download">
+              <i data-lucide="download" style="width: 18px; height: 18px;"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Telemetry Strip -->
+      <div class="album-telemetry-strip">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <i data-lucide="activity" style="color: var(--accent-emerald); width: 16px; height: 16px;"></i>
+          <span>Peak Dynamic Range: <strong style="color: var(--text-main);">+12.4 LUFS</strong></span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <i data-lucide="sliders" style="color: var(--accent-purple-light); width: 16px; height: 16px;"></i>
+          <span id="album-label-text">Mastered at Nocturne Sound Labs</span>
+        </div>
+      </div>
+
+      <!-- Track List Table -->
+      <section>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h2 style="font-size: 1.25rem; font-weight: 700;">Tracklist</h2>
+            <p style="color: var(--text-muted); font-size: 0.84rem;">Click any track to listen or switch songs</p>
+          </div>
+          <span id="album-tracks-counter" class="pill-badge">3 Compositions</span>
+        </div>
+
+        <div class="tracks-table-container">
+          <div class="table-header">
+            <div>#</div>
+            <div>Title</div>
+            <div>Plays</div>
+            <div>Duration</div>
+            <div style="text-align: right;">Play</div>
+          </div>
+          
+          <div id="album-tracks-list" style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- More Albums / Related Discography -->
+      <section>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="font-size: 1.25rem; font-weight: 700;">Browse Other Albums</h2>
+          <span style="font-size: 0.82rem; color: var(--text-dim);">Select an album to explore its tracklist</span>
+        </div>
+
+        <div class="playlist-cards-grid" id="other-albums-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Persistent Bottom Music Player Bar -->
+  <footer class="player-bar">
+    <div class="player-now-playing">
+      <img id="player-art" class="player-album-art" src="" alt="Album Artwork" onclick="window.location.href='album.html'">
+      <div class="now-playing-meta">
+        <a id="player-title" class="now-playing-title" href="album.html">No Track Selected</a>
+        <div id="player-artist" class="now-playing-artist">Choose a vibe to play</div>
+      </div>
+      <button class="player-like-btn" id="like-track-btn" title="Add to Favorites">
+        <i data-lucide="heart" style="width: 18px; height: 18px;"></i>
+      </button>
+    </div>
+
+    <div class="player-center">
+      <div class="playback-buttons">
+        <button class="control-btn" id="shuffle-btn" title="Toggle Shuffle">
+          <i data-lucide="shuffle" style="width: 17px; height: 17px;"></i>
+        </button>
+        <button class="control-btn" id="prev-btn" title="Previous Track">
+          <i data-lucide="skip-back" style="width: 20px; height: 20px; fill: currentColor;"></i>
+        </button>
+        <button class="play-pause-btn" id="play-pause-btn" title="Play">
+          <i id="play-icon" data-lucide="play" style="width: 22px; height: 22px; fill: currentColor; margin-left: 2px;"></i>
+        </button>
+        <button class="control-btn" id="next-btn" title="Next Track">
+          <i data-lucide="skip-forward" style="width: 20px; height: 20px; fill: currentColor;"></i>
+        </button>
+        <button class="control-btn" id="repeat-btn" title="Toggle Repeat">
+          <i data-lucide="repeat" style="width: 17px; height: 17px;"></i>
+        </button>
+      </div>
+
+      <div class="progress-container">
+        <span class="time-stamp" id="current-time">0:00</span>
+        <div class="seek-slider-wrap" id="seek-slider">
+          <div class="seek-track-bg">
+            <div class="seek-fill-bar" id="seek-progress"></div>
+            <div class="seek-thumb" id="seek-thumb"></div>
+          </div>
+        </div>
+        <span class="time-stamp" id="total-duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-right">
+      <button class="control-btn" id="mute-btn" title="Mute/Unmute">
+        <i id="volume-icon" data-lucide="volume-2" style="width: 19px; height: 19px;"></i>
+      </button>
+      <div class="volume-box">
+        <div class="volume-slider-wrap" id="volume-slider">
+          <div class="volume-track-bg">
+            <div class="volume-fill-bar" id="volume-fill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-nav-bar">
+    <a href="index.html" class="mobile-nav-item">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="playlist.html" class="mobile-nav-item">
+      <i data-lucide="library"></i>
+      <span>Playlists</span>
+    </a>
+    <a href="recent.html" class="mobile-nav-item">
+      <i data-lucide="clock"></i>
+      <span>Recent</span>
+    </a>
+    <a href="search.html" class="mobile-nav-item">
+      <i data-lucide="search"></i>
+      <span>Search</span>
+    </a>
+    <a href="settings.html" class="mobile-nav-item">
+      <i data-lucide="settings"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    // Album Details Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const albums = window.VIBE_CATALOG.albums;
+      const urlParams = new URLSearchParams(window.location.search);
+      let currentAlbumId = urlParams.get('id') || 'ethereal-horizons';
+
+      let album = albums.find(a => a.id === currentAlbumId) || albums[0];
+
+      const albumCoverImg = document.getElementById('album-cover-img');
+      const albumTitleText = document.getElementById('album-title-text');
+      const albumArtistAvatar = document.getElementById('album-artist-avatar');
+      const albumArtistName = document.getElementById('album-artist-name');
+      const albumYear = document.getElementById('album-year');
+      const albumStats = document.getElementById('album-stats');
+      const albumDescription = document.getElementById('album-description');
+      const albumFidelityBadge = document.getElementById('album-fidelity-badge');
+      const albumLabelText = document.getElementById('album-label-text');
+      const albumTracksCounter = document.getElementById('album-tracks-counter');
+
+      const albumTracksList = document.getElementById('album-tracks-list');
+      const otherAlbumsGrid = document.getElementById('other-albums-grid');
+      const sidebarAlbumsList = document.getElementById('sidebar-albums-list');
+
+      const btnPlayAlbum = document.getElementById('btn-play-album');
+      const btnShuffleAlbum = document.getElementById('btn-shuffle-album');
+      const btnLikeAlbum = document.getElementById('btn-like-album');
+
+      function getAlbumSongs() {
+        return album.tracks.map(id => window.VIBE_CATALOG.songs.find(s => s.id === id)).filter(Boolean);
+      }
+
+      function renderAlbum() {
+        album = albums.find(a => a.id === currentAlbumId) || albums[0];
+
+        // Find artist avatar
+        const artistObj = window.VIBE_CATALOG.artists.find(art => art.name === album.artist);
+        const avatarUrl = artistObj ? artistObj.avatar : "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80";
+
+        albumCoverImg.src = album.coverArt;
+        albumTitleText.textContent = album.title;
+        albumArtistAvatar.src = avatarUrl;
+        albumArtistName.textContent = album.artist;
+        albumYear.textContent = album.year;
+        albumStats.textContent = `${album.tracks.length} Tracks • ${album.totalDuration}`;
+        albumDescription.textContent = album.description;
+        albumFidelityBadge.textContent = album.lossless || "Studio Master 24-bit";
+        albumLabelText.textContent = `Mastered at ${album.label || 'Nocturne Sound Labs'}`;
+        albumTracksCounter.textContent = `${album.tracks.length} Compositions`;
+
+        renderSidebarAlbums();
+        renderTracks();
+        renderOtherAlbums();
+
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      function renderSidebarAlbums() {
+        sidebarAlbumsList.innerHTML = '';
+        albums.forEach(a => {
+          const chip = document.createElement('a');
+          chip.className = `playlist-chip ${a.id === currentAlbumId ? 'active' : ''}`;
+          chip.href = `album.html?id=${a.id}`;
+          chip.innerHTML = `
+            <span>${a.title}</span>
+            ${a.id === currentAlbumId ? '<i data-lucide="check" style="width: 13px; height: 13px;"></i>' : ''}
+          `;
+          chip.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentAlbumId = a.id;
+            history.pushState(null, '', `album.html?id=${a.id}`);
+            renderAlbum();
+          });
+          sidebarAlbumsList.appendChild(chip);
+        });
+      }
+
+      function renderTracks() {
+        albumTracksList.innerHTML = '';
+        const songs = getAlbumSongs();
+        const currentSong = window.vibePlayer ? window.vibePlayer.getCurrentSong() : null;
+        const isPlaying = window.vibePlayer ? window.vibePlayer.isPlaying : false;
+
+        songs.forEach((song, idx) => {
+          const isCurrent = currentSong && song.id === currentSong.id;
+          const row = document.createElement('div');
+          row.className = `track-row ${isCurrent ? 'playing' : ''}`;
+          row.dataset.id = song.id;
+
+          row.innerHTML = `
+            <div class="track-index">
+              ${isCurrent && isPlaying ? `
+                <div class="sound-bars">
+                  <div class="sound-bar"></div>
+                  <div class="sound-bar"></div>
+                  <div class="sound-bar"></div>
+                  <div class="sound-bar"></div>
+                </div>
+              ` : (idx + 1)}
+            </div>
+            <div class="track-info-cell">
+              <img class="track-thumb" src="${song.albumArt}" alt="${song.title}">
+              <div class="track-meta">
+                <span class="track-title-text">${song.title}</span>
+                <span class="track-artist-text">${song.artist}</span>
+              </div>
+            </div>
+            <div class="track-album-col track-album-text" style="color: var(--text-dim); font-size: 0.84rem;">
+              ${song.plays || '1.2M'} plays
+            </div>
+            <div class="track-duration-text">${song.duration}</div>
+            <div style="display: flex; justify-content: flex-end;">
+              <button class="track-action-btn" title="Play Track">
+                <i data-lucide="${isCurrent && isPlaying ? 'pause' : 'play'}" style="width: 16px; height: 16px; fill: currentColor;"></i>
+              </button>
+            </div>
+          `;
+
+          row.addEventListener('click', () => {
+            if (window.vibePlayer.currentTrackId === song.id) {
+              window.vibePlayer.togglePlayPause();
+            } else {
+              window.vibePlayer.setQueue(songs, song.id);
+              window.vibePlayer.showToast(`Playing from album: ${song.title}`);
+            }
+          });
+
+          albumTracksList.appendChild(row);
+        });
+      }
+
+      function renderOtherAlbums() {
+        otherAlbumsGrid.innerHTML = '';
+        const others = albums.filter(a => a.id !== currentAlbumId);
+
+        others.forEach(a => {
+          const card = document.createElement('div');
+          card.className = 'playlist-card';
+          card.innerHTML = `
+            <div class="playlist-cover-wrap">
+              <img class="playlist-cover-img" src="${a.coverArt}" alt="${a.title}">
+              <div class="playlist-play-overlay">
+                <i data-lucide="disc" style="width: 20px; height: 20px; color: white;"></i>
+              </div>
+            </div>
+            <div>
+              <div class="playlist-card-title">${a.title}</div>
+              <div class="playlist-card-desc">${a.artist} • ${a.year}</div>
+            </div>
+            <div class="playlist-card-meta">
+              <span>${a.tracks.length} Tracks</span>
+              <span style="color: var(--accent-purple-light);">View Album →</span>
+            </div>
+          `;
+
+          card.addEventListener('click', () => {
+            currentAlbumId = a.id;
+            history.pushState(null, '', `album.html?id=${a.id}`);
+            renderAlbum();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+
+          otherAlbumsGrid.appendChild(card);
+        });
+      }
+
+      // Actions
+      btnPlayAlbum.addEventListener('click', () => {
+        const songs = getAlbumSongs();
+        if (songs.length > 0) {
+          window.vibePlayer.setQueue(songs, songs[0].id);
+          window.vibePlayer.showToast(`Playing Album: ${album.title}`);
+        }
+      });
+
+      btnShuffleAlbum.addEventListener('click', () => {
+        const songs = getAlbumSongs();
+        if (songs.length > 0) {
+          window.vibePlayer.isShuffle = true;
+          localStorage.setItem('vibe_is_shuffle', 'true');
+          const shuffleBtn = document.getElementById('shuffle-btn');
+          if (shuffleBtn) shuffleBtn.classList.add('active');
+          const randomIdx = Math.floor(Math.random() * songs.length);
+          window.vibePlayer.setQueue(songs, songs[randomIdx].id);
+          window.vibePlayer.showToast(`Shuffling Album: ${album.title}`);
+        }
+      });
+
+      let isAlbumSaved = false;
+      btnLikeAlbum.addEventListener('click', () => {
+        isAlbumSaved = !isAlbumSaved;
+        btnLikeAlbum.style.color = isAlbumSaved ? '#f43f5e' : 'var(--text-main)';
+        btnLikeAlbum.querySelector('span').textContent = isAlbumSaved ? 'Saved' : 'Save';
+        window.vibePlayer.showToast(isAlbumSaved ? `Saved "${album.title}" to library ❤️` : `Removed "${album.title}" from library`);
+      });
+
+      // Track updates
+      window.addEventListener('vibeTrackChange', () => {
+        renderTracks();
+        if (window.lucide) window.lucide.createIcons();
+      });
+
+      renderAlbum();
+    });
+  </script>
+</body>
+</html>

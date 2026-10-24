@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibePlayer - My Playlists</title>
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Shared & Page Styles -->
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Audio Element (Managed by VibeAudioPlayer) -->
+  <audio id="main-audio" preload="metadata"></audio>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast-alert">
+    <i data-lucide="info" style="color: #c084fc;"></i>
+    <span id="toast-message">Playlist updated</span>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <a class="brand-logo" href="index.html">
+        <div class="brand-icon-box">
+          <i data-lucide="radio" style="width: 22px; height: 22px;"></i>
+        </div>
+        <div class="brand-title">VibePlayer</div>
+        <span class="brand-badge">PRO</span>
+      </a>
+
+      <nav class="nav-group">
+        <div class="nav-label">Menu</div>
+        <a class="nav-item" href="index.html">
+          <i data-lucide="home" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Home</span>
+        </a>
+        <a class="nav-item active" href="playlist.html">
+          <i data-lucide="library" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">My Playlist</span>
+        </a>
+        <a class="nav-item" href="recent.html">
+          <i data-lucide="clock" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Recently Played</span>
+        </a>
+        <a class="nav-item" href="search.html">
+          <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Search</span>
+        </a>
+        <a class="nav-item" href="album.html">
+          <i data-lucide="disc" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Album Details</span>
+        </a>
+        <a class="nav-item" href="settings.html">
+          <i data-lucide="settings" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Settings</span>
+        </a>
+      </nav>
+
+      <div class="nav-group" style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
+        <div class="nav-label">Quick Jump</div>
+        <div class="playlist-scroll" id="sidebar-playlists-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="sidebar-footer" style="background: rgba(255,255,255,0.03); border: 1px dashed var(--border-subtle); padding: 12px; border-radius: var(--radius-sm); font-size: 0.76rem; color: var(--text-dim); line-height: 1.4;">
+        <span style="color: var(--accent-emerald); font-weight: 600;">Cloud Storage Sync:</span><br>
+        Your playlists are safely stored and synced across sessions.
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-view">
+      
+      <!-- Page Header -->
+      <header class="top-header-bar">
+        <div class="header-left-title">
+          <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+            <span class="pill-badge purple">
+              <i data-lucide="sparkles" style="width: 13px; height: 13px;"></i> Personal Library
+            </span>
+            <span id="playlist-count-pill" class="pill-badge emerald">4 Playlists</span>
+          </div>
+          <h1>My Playlists</h1>
+          <p>Create and curate personalized music mixes with custom tracks and dynamic reordering.</p>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-primary" id="open-create-modal-btn">
+            <i data-lucide="plus-circle" style="width: 18px; height: 18px;"></i>
+            <span>Create Playlist</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Empty State Container (Displayed if zero playlists exist) -->
+      <section id="empty-playlists-view" class="empty-state-box" style="display: none;">
+        <div class="empty-icon-wrap">
+          <i data-lucide="music" style="width: 36px; height: 36px;"></i>
+        </div>
+        <h3 class="empty-state-title">No Playlists Created Yet</h3>
+        <p class="empty-state-text">Start your audio collection by creating your first personalized mix, or restore our sample curated playlists.</p>
+        <div style="display: flex; gap: 12px; margin-top: 8px;">
+          <button class="btn-primary" onclick="document.getElementById('create-modal').classList.add('open')">
+            <i data-lucide="plus" style="width: 17px; height: 17px;"></i>
+            <span>Create New Playlist</span>
+          </button>
+          <button class="btn-secondary" id="restore-playlists-btn">
+            <i data-lucide="rotate-ccw" style="width: 17px; height: 17px;"></i>
+            <span>Restore Defaults</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- All Playlists Cards Grid -->
+      <section id="playlists-grid-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="font-size: 1.25rem; font-weight: 700;">All Playlists</h2>
+          <span style="font-size: 0.82rem; color: var(--text-dim);">Select a playlist below to view its tracks</span>
+        </div>
+        <div class="playlist-cards-grid" id="playlists-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Selected Playlist Detail Banner & Song Table -->
+      <section id="selected-playlist-section" style="display: flex; flex-direction: column; gap: 24px;">
+        
+        <div class="selected-playlist-hero">
+          <img id="sel-playlist-cover" class="selected-cover" src="" alt="Playlist Cover">
+          <div class="selected-meta">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="pill-badge emerald">ACTIVE PLAYLIST</span>
+              <span id="sel-playlist-trackcount" class="pill-badge">4 Tracks</span>
+            </div>
+            <h2 id="sel-playlist-title" style="font-size: 2rem; font-weight: 800; letter-spacing: -0.02em;">Chill Lofi Beats</h2>
+            <p id="sel-playlist-desc" style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; line-height: 1.5;">Mellow vibes and warm instrumental beats to unwind and flow.</p>
+            
+            <div class="selected-actions">
+              <button class="btn-primary" id="btn-play-all">
+                <i data-lucide="play" style="width: 18px; height: 18px; fill: currentColor;"></i>
+                <span>Play All</span>
+              </button>
+              <button class="btn-secondary" id="btn-shuffle-playlist">
+                <i data-lucide="shuffle" style="width: 18px; height: 18px;"></i>
+                <span>Shuffle</span>
+              </button>
+              <button class="btn-secondary" id="btn-add-songs">
+                <i data-lucide="plus" style="width: 18px; height: 18px;"></i>
+                <span>Add Songs</span>
+              </button>
+              <button class="btn-danger" id="btn-delete-playlist" title="Delete this playlist">
+                <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                <span>Delete Playlist</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Songs in Playlist Table -->
+        <div class="tracks-table-container">
+          <div class="table-header">
+            <div>#</div>
+            <div>Title</div>
+            <div class="track-album-col">Album</div>
+            <div>Duration</div>
+            <div style="text-align: right;">Remove</div>
+          </div>
+          
+          <div id="playlist-songs-list" style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Empty songs in playlist state -->
+          <div id="empty-songs-in-playlist" class="empty-state-box" style="display: none; padding: 40px 16px; margin-top: 10px;">
+            <div class="empty-icon-wrap" style="width: 50px; height: 50px;">
+              <i data-lucide="list-music" style="width: 24px; height: 24px;"></i>
+            </div>
+            <h4 style="font-size: 1.05rem; font-weight: 700;">No Songs in this Playlist</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); max-width: 320px;">Use the 'Add Songs' button to add your favorite tracks to this playlist.</p>
+            <button class="btn-secondary" onclick="document.getElementById('btn-add-songs').click()" style="margin-top: 4px;">
+              <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+              <span>Add Songs Now</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Create Playlist Modal -->
+  <div id="create-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New Playlist</h3>
+        <button class="modal-close-btn" id="close-create-modal">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+      
+      <form id="create-playlist-form" style="display: flex; flex-direction: column; gap: 16px;">
+        <div class="form-group">
+          <label class="form-label" for="playlist-name-input">Playlist Name *</label>
+          <input type="text" id="playlist-name-input" class="form-input" placeholder="e.g. Midnight Coding Vibes" required maxlength="40">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="playlist-desc-input">Description (Optional)</label>
+          <input type="text" id="playlist-desc-input" class="form-input" placeholder="What is the mood of this playlist?" maxlength="120">
+        </div>
+        
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px;">
+          <button type="button" class="btn-secondary" id="cancel-create-modal">Cancel</button>
+          <button type="submit" class="btn-primary">
+            <i data-lucide="check" style="width: 16px; height: 16px;"></i>
+            <span>Create Playlist</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Songs to Playlist Modal -->
+  <div id="add-songs-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 580px;">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Add Songs to Playlist</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Select tracks from the catalog to add</p>
+        </div>
+        <button class="modal-close-btn" id="close-add-songs-modal">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+
+      <div id="available-songs-to-add" style="display: flex; flex-direction: column; gap: 6px; max-height: 340px; overflow-y: auto; padding-right: 4px;">
+        <!-- Dynamically rendered -->
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+        <button type="button" class="btn-secondary" id="done-add-songs-btn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persistent Bottom Music Player Bar -->
+  <footer class="player-bar">
+    <div class="player-now-playing">
+      <img id="player-art" class="player-album-art" src="" alt="Album Artwork" onclick="window.location.href='album.html'">
+      <div class="now-playing-meta">
+        <a id="player-title" class="now-playing-title" href="album.html">No Track Selected</a>
+        <div id="player-artist" class="now-playing-artist">Choose a vibe to play</div>
+      </div>
+      <button class="player-like-btn" id="like-track-btn" title="Add to Favorites">
+        <i data-lucide="heart" style="width: 18px; height: 18px;"></i>
+      </button>
+    </div>
+
+    <div class="player-center">
+      <div class="playback-buttons">
+        <button class="control-btn" id="shuffle-btn" title="Toggle Shuffle">
+          <i data-lucide="shuffle" style="width: 17px; height: 17px;"></i>
+        </button>
+        <button class="control-btn" id="prev-btn" title="Previous Track">
+          <i data-lucide="skip-back" style="width: 20px; height: 20px; fill: currentColor;"></i>
+        </button>
+        <button class="play-pause-btn" id="play-pause-btn" title="Play">
+          <i id="play-icon" data-lucide="play" style="width: 22px; height: 22px; fill: currentColor; margin-left: 2px;"></i>
+        </button>
+        <button class="control-btn" id="next-btn" title="Next Track">
+          <i data-lucide="skip-forward" style="width: 20px; height: 20px; fill: currentColor;"></i>
+        </button>
+        <button class="control-btn" id="repeat-btn" title="Toggle Repeat">
+          <i data-lucide="repeat" style="width: 17px; height: 17px;"></i>
+        </button>
+      </div>
+
+      <div class="progress-container">
+        <span class="time-stamp" id="current-time">0:00</span>
+        <div class="seek-slider-wrap" id="seek-slider">
+          <div class="seek-track-bg">
+            <div class="seek-fill-bar" id="seek-progress"></div>
+            <div class="seek-thumb" id="seek-thumb"></div>
+          </div>
+        </div>
+        <span class="time-stamp" id="total-duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-right">
+      <button class="control-btn" id="mute-btn" title="Mute/Unmute">
+        <i id="volume-icon" data-lucide="volume-2" style="width: 19px; height: 19px;"></i>
+      </button>
+      <div class="volume-box">
+        <div class="volume-slider-wrap" id="volume-slider">
+          <div class="volume-track-bg">
+            <div class="volume-fill-bar" id="volume-fill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-nav-bar">
+    <a href="index.html" class="mobile-nav-item">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="playlist.html" class="mobile-nav-item active">
+      <i data-lucide="library"></i>
+      <span>Playlists</span>
+    </a>
+    <a href="recent.html" class="mobile-nav-item">
+      <i data-lucide="clock"></i>
+      <span>Recent</span>
+    </a>
+    <a href="search.html" class="mobile-nav-item">
+      <i data-lucide="search"></i>
+      <span>Search</span>
+    </a>
+    <a href="settings.html" class="mobile-nav-item">
+      <i data-lucide="settings"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    // Playlist Page Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      let playlists = VibeApp.getPlaylists();
+      
+      // Determine active selected playlist from URL param or first playlist
+      const urlParams = new URLSearchParams(window.location.search);
+      let selectedPlaylistId = urlParams.get('id');
+      if (!selectedPlaylistId && playlists.length > 0) {
+        selectedPlaylistId = playlists[0].id;
+      }
+
+      const playlistsGrid = document.getElementById('playlists-grid');
+      const sidebarPlaylistsList = document.getElementById('sidebar-playlists-list');
+      const emptyPlaylistsView = document.getElementById('empty-playlists-view');
+      const playlistsGridSection = document.getElementById('playlists-grid-section');
+      const selectedPlaylistSection = document.getElementById('selected-playlist-section');
+      const playlistSongsList = document.getElementById('playlist-songs-list');
+      const emptySongsInPlaylist = document.getElementById('empty-songs-in-playlist');
+      const playlistCountPill = document.getElementById('playlist-count-pill');
+
+      // Modals
+      const createModal = document.getElementById('create-modal');
+      const openCreateModalBtn = document.getElementById('open-create-modal-btn');
+      const closeCreateModalBtn = document.getElementById('close-create-modal');
+      const cancelCreateModalBtn = document.getElementById('cancel-create-modal');
+      const createPlaylistForm = document.getElementById('create-playlist-form');
+      const playlistNameInput = document.getElementById('playlist-name-input');
+      const playlistDescInput = document.getElementById('playlist-desc-input');
+
+      const addSongsModal = document.getElementById('add-songs-modal');
+      const btnAddSongs = document.getElementById('btn-add-songs');
+      const closeAddSongsModal = document.getElementById('close-add-songs-modal');
+      const doneAddSongsBtn = document.getElementById('done-add-songs-btn');
+      const availableSongsContainer = document.getElementById('available-songs-to-add');
+
+      const btnPlayAll = document.getElementById('btn-play-all');
+      const btnShufflePlaylist = document.getElementById('btn-shuffle-playlist');
+      const btnDeletePlaylist = document.getElementById('btn-delete-playlist');
+      const restorePlaylistsBtn = document.getElementById('restore-playlists-btn');
+
+      function getSelectedPlaylist() {
+        return playlists.find(p => p.id === selectedPlaylistId) || playlists[0] || null;
+      }
+
+      function renderAll() {
+        playlists = VibeApp.getPlaylists();
+        playlistCountPill.textContent = `${playlists.length} Playlists`;
+
+        if (playlists.length === 0) {
+          emptyPlaylistsView.style.display = 'flex';
+          playlistsGridSection.style.display = 'none';
+          selectedPlaylistSection.style.display = 'none';
+          sidebarPlaylistsList.innerHTML = '<span style="font-size:0.75rem; color:var(--text-dim); padding:6px 10px;">No playlists</span>';
+          return;
+        }
+
+        emptyPlaylistsView.style.display = 'none';
+        playlistsGridSection.style.display = 'block';
+        selectedPlaylistSection.style.display = 'flex';
+
+        // Check if selected ID is valid
+        if (!playlists.some(p => p.id === selectedPlaylistId)) {
+          selectedPlaylistId = playlists[0].id;
+        }
+
+        renderPlaylistsGrid();
+        renderSidebarPlaylists();
+        renderSelectedPlaylist();
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      function renderSidebarPlaylists() {
+        sidebarPlaylistsList.innerHTML = '';
+        playlists.forEach(pl => {
+          const chip = document.createElement('a');
+          chip.className = `playlist-chip ${pl.id === selectedPlaylistId ? 'active' : ''}`;
+          chip.href = `playlist.html?id=${pl.id}`;
+          chip.innerHTML = `
+            <span>${pl.name}</span>
+            ${pl.id === selectedPlaylistId ? '<i data-lucide="check" style="width: 13px; height: 13px;"></i>' : ''}
+          `;
+          chip.addEventListener('click', (e) => {
+            e.preventDefault();
+            selectedPlaylistId = pl.id;
+            history.pushState(null, '', `playlist.html?id=${pl.id}`);
+            renderAll();
+          });
+          sidebarPlaylistsList.appendChild(chip);
+        });
+      }
+
+      function renderPlaylistsGrid() {
+        playlistsGrid.innerHTML = '';
+        playlists.forEach(pl => {
+          const isSelected = pl.id === selectedPlaylistId;
+          const card = document.createElement('div');
+          card.className = `playlist-card ${isSelected ? 'active-selected' : ''}`;
+          card.innerHTML = `
+            <div class="playlist-cover-wrap">
+              <img class="playlist-cover-img" src="${pl.coverArt}" alt="${pl.name}">
+              <div class="playlist-play-overlay">
+                <i data-lucide="play" style="width: 20px; height: 20px; fill: white; margin-left: 2px;"></i>
+              </div>
+            </div>
+            <div>
+              <div class="playlist-card-title">${pl.name}</div>
+              <div class="playlist-card-desc">${pl.description || 'Personal playlist'}</div>
+            </div>
+            <div class="playlist-card-meta">
+              <span>${pl.songIds.length} Songs</span>
+              <span>${pl.createdAt || '2026'}</span>
+            </div>
+          `;
+
+          card.addEventListener('click', () => {
+            selectedPlaylistId = pl.id;
+            history.pushState(null, '', `playlist.html?id=${pl.id}`);
+            renderAll();
+            // Scroll smoothly to detail section
+            selectedPlaylistSection.scrollIntoView({ behavior: 'smooth' });
+          });
+
+          // Overlay Play click
+          const playOverlay = card.querySelector('.playlist-play-overlay');
+          playOverlay.addEventListener('click', (e) => {
+            e.stopPropagation();
+            playPlaylist(pl, false);
+          });
+
+          playlistsGrid.appendChild(card);
+        });
+      }
+
+      function renderSelectedPlaylist() {
+        const pl = getSelectedPlaylist();
+        if (!pl) return;
+
+        document.getElementById('sel-playlist-cover').src = pl.coverArt;
+        document.getElementById('sel-playlist-title').textContent = pl.name;
+        document.getElementById('sel-playlist-desc').textContent = pl.description || 'Custom mix on VibePlayer';
+        document.getElementById('sel-playlist-trackcount').textContent = `${pl.songIds.length} Tracks`;
+
+        // Render tracks inside this playlist
+        playlistSongsList.innerHTML = '';
+        const songsInPlaylist = pl.songIds.map(id => window.VIBE_CATALOG.songs.find(s => s.id === id)).filter(Boolean);
+
+        if (songsInPlaylist.length === 0) {
+          emptySongsInPlaylist.style.display = 'flex';
+          playlistSongsList.style.display = 'none';
+        } else {
+          emptySongsInPlaylist.style.display = 'none';
+          playlistSongsList.style.display = 'flex';
+
+          const currentSong = window.vibePlayer ? window.vibePlayer.getCurrentSong() : null;
+          const isPlaying = window.vibePlayer ? window.vibePlayer.isPlaying : false;
+
+          songsInPlaylist.forEach((song, idx) => {
+            const isCurrent = currentSong && song.id === currentSong.id;
+            const row = document.createElement('div');
+            row.className = `track-row ${isCurrent ? 'playing' : ''}`;
+            row.dataset.id = song.id;
+
+            row.innerHTML = `
+              <div class="track-index">
+                ${isCurrent && isPlaying ? `
+                  <div class="sound-bars">
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                  </div>
+                ` : (idx + 1)}
+              </div>
+              <div class="track-info-cell">
+                <img class="track-thumb" src="${song.albumArt}" alt="${song.title}">
+                <div class="track-meta">
+                  <span class="track-title-text">${song.title}</span>
+                  <span class="track-artist-text">${song.artist}</span>
+                </div>
+              </div>
+              <div class="track-album-col track-album-text">${song.album}</div>
+              <div class="track-duration-text">${song.duration}</div>
+              <div style="display:flex; justify-content:flex-end;">
+                <button class="track-action-btn remove-track-btn" title="Remove from playlist" data-id="${song.id}">
+                  <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                </button>
+              </div>
+            `;
+
+            row.addEventListener('click', (e) => {
+              if (e.target.closest('.remove-track-btn')) return;
+              window.vibePlayer.setQueue(songsInPlaylist, song.id);
+            });
+
+            const removeBtn = row.querySelector('.remove-track-btn');
+            removeBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              VibeApp.removeSongFromPlaylist(pl.id, song.id);
+              window.vibePlayer.showToast(`Removed "${song.title}" from playlist`);
+              renderAll();
+            });
+
+            playlistSongsList.appendChild(row);
+          });
+        }
+      }
+
+      function playPlaylist(pl, shuffle = false) {
+        const songs = pl.songIds.map(id => window.VIBE_CATALOG.songs.find(s => s.id === id)).filter(Boolean);
+        if (songs.length === 0) {
+          window.vibePlayer.showToast("Playlist is empty. Add songs first!");
+          return;
+        }
+        if (shuffle) {
+          window.vibePlayer.isShuffle = true;
+          localStorage.setItem('vibe_is_shuffle', 'true');
+          const shuffleBtn = document.getElementById('shuffle-btn');
+          if (shuffleBtn) shuffleBtn.classList.add('active');
+          const randomIdx = Math.floor(Math.random() * songs.length);
+          window.vibePlayer.setQueue(songs, songs[randomIdx].id);
+          window.vibePlayer.showToast(`Shuffling: ${pl.name}`);
+        } else {
+          window.vibePlayer.setQueue(songs, songs[0].id);
+          window.vibePlayer.showToast(`Playing playlist: ${pl.name}`);
+        }
+      }
+
+      // Actions
+      btnPlayAll.addEventListener('click', () => {
+        const pl = getSelectedPlaylist();
+        if (pl) playPlaylist(pl, false);
+      });
+
+      btnShufflePlaylist.addEventListener('click', () => {
+        const pl = getSelectedPlaylist();
+        if (pl) playPlaylist(pl, true);
+      });
+
+      btnDeletePlaylist.addEventListener('click', () => {
+        const pl = getSelectedPlaylist();
+        if (!pl) return;
+        if (confirm(`Are you sure you want to delete the playlist "${pl.name}"?`)) {
+          VibeApp.deletePlaylist(pl.id);
+          window.vibePlayer.showToast(`Deleted playlist "${pl.name}"`);
+          playlists = VibeApp.getPlaylists();
+          selectedPlaylistId = playlists.length > 0 ? playlists[0].id : null;
+          renderAll();
+        }
+      });
+
+      if (restorePlaylistsBtn) {
+        restorePlaylistsBtn.addEventListener('click', () => {
+          localStorage.setItem('vibe_playlists', JSON.stringify(window.VIBE_CATALOG.defaultPlaylists));
+          playlists = VibeApp.getPlaylists();
+          selectedPlaylistId = playlists[0].id;
+          renderAll();
+          window.vibePlayer.showToast("Default playlists restored");
+        });
+      }
+
+      // Create Playlist Modal handlers
+      openCreateModalBtn.addEventListener('click', () => {
+        createModal.classList.add('open');
+        playlistNameInput.focus();
+      });
+
+      const closeModal = () => {
+        createModal.classList.remove('open');
+        createPlaylistForm.reset();
+      };
+      closeCreateModalBtn.addEventListener('click', closeModal);
+      cancelCreateModalBtn.addEventListener('click', closeModal);
+
+      createPlaylistForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = playlistNameInput.value.trim();
+        const desc = playlistDescInput.value.trim();
+        if (!name) return;
+
+        const newPl = VibeApp.createPlaylist(name, desc);
+        closeModal();
+        if (newPl) {
+          selectedPlaylistId = newPl.id;
+          window.vibePlayer.showToast(`Created playlist "${name}" 🎉`);
+          renderAll();
+        }
+      });
+
+      // Add Songs Modal handlers
+      btnAddSongs.addEventListener('click', () => {
+        const pl = getSelectedPlaylist();
+        if (!pl) return;
+
+        availableSongsContainer.innerHTML = '';
+        window.VIBE_CATALOG.songs.forEach(song => {
+          const alreadyAdded = pl.songIds.includes(song.id);
+          const item = document.createElement('div');
+          item.className = 'track-row';
+          item.style.gridTemplateColumns = '36px 1fr 100px';
+          item.style.background = 'var(--bg-surface-elevated)';
+
+          item.innerHTML = `
+            <img class="track-thumb" src="${song.albumArt}" alt="${song.title}" style="width: 32px; height: 32px;">
+            <div class="track-meta">
+              <span class="track-title-text" style="font-size: 0.88rem;">${song.title}</span>
+              <span class="track-artist-text">${song.artist}</span>
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+              <button class="btn-secondary" style="font-size: 0.78rem; padding: 5px 12px; ${alreadyAdded ? 'opacity: 0.5; pointer-events: none;' : ''}">
+                <i data-lucide="${alreadyAdded ? 'check' : 'plus'}" style="width: 14px; height: 14px;"></i>
+                <span>${alreadyAdded ? 'Added' : 'Add'}</span>
+              </button>
+            </div>
+          `;
+
+          if (!alreadyAdded) {
+            item.querySelector('button').addEventListener('click', () => {
+              VibeApp.addSongToPlaylist(pl.id, song.id);
+              window.vibePlayer.showToast(`Added "${song.title}" to ${pl.name}`);
+              renderAll();
+              btnAddSongs.click(); // Re-render modal list
+            });
+          }
+
+          availableSongsContainer.appendChild(item);
+        });
+
+        if (window.lucide) window.lucide.createIcons();
+        addSongsModal.classList.add('open');
+      });
+
+      const closeAddModal = () => addSongsModal.classList.remove('open');
+      closeAddSongsModal.addEventListener('click', closeAddModal);
+      doneAddSongsBtn.addEventListener('click', closeAddModal);
+
+      // Listen for track changes to update active sound waves
+      window.addEventListener('vibeTrackChange', () => {
+        renderSelectedPlaylist();
+        if (window.lucide) window.lucide.createIcons();
+      });
+
+      renderAll();
+    });
+  </script>
+</body>
+</html>

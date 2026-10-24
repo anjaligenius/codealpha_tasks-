@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibePlayer - Modern Music Player</title>
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Shared & Page Styles -->
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Audio Element (Managed by VibeAudioPlayer) -->
+  <audio id="main-audio" preload="metadata"></audio>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast-alert">
+    <i data-lucide="info" style="color: #c084fc;"></i>
+    <span id="toast-message">Ready to stream</span>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <a class="brand-logo" href="index.html">
+        <div class="brand-icon-box">
+          <i data-lucide="radio" style="width: 22px; height: 22px;"></i>
+        </div>
+        <div class="brand-title">VibePlayer</div>
+        <span class="brand-badge">PRO</span>
+      </a>
+
+      <nav class="nav-group">
+        <div class="nav-label">Menu</div>
+        <a class="nav-item active" href="index.html">
+          <i data-lucide="home" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Home</span>
+        </a>
+        <a class="nav-item" href="playlist.html">
+          <i data-lucide="library" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">My Playlist</span>
+        </a>
+        <a class="nav-item" href="recent.html">
+          <i data-lucide="clock" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Recently Played</span>
+        </a>
+        <a class="nav-item" href="search.html">
+          <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Search</span>
+        </a>
+        <a class="nav-item" href="album.html">
+          <i data-lucide="disc" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Album Details</span>
+        </a>
+        <a class="nav-item" href="settings.html">
+          <i data-lucide="settings" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Settings</span>
+        </a>
+      </nav>
+
+      <div class="nav-group" style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
+        <div class="nav-label">Curated Playlists</div>
+        <div class="playlist-scroll" id="sidebar-playlist-links">
+          <a class="playlist-chip active" href="playlist.html?id=pl-chill-lofi">
+            <span>☕ Chill Lofi Beats</span>
+            <i data-lucide="sparkles" style="width: 14px; height: 14px; color: var(--accent-emerald);"></i>
+          </a>
+          <a class="playlist-chip" href="playlist.html?id=pl-cyber-synth">
+            <span>⚡ Cyber Synthwave</span>
+          </a>
+          <a class="playlist-chip" href="playlist.html?id=pl-deep-focus">
+            <span>🧠 Deep Focus Study</span>
+          </a>
+          <a class="playlist-chip" href="playlist.html?id=pl-midnight-echoes">
+            <span>🌙 Midnight Echoes</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="sidebar-footer" style="background: rgba(255,255,255,0.03); border: 1px dashed var(--border-subtle); padding: 12px; border-radius: var(--radius-sm); font-size: 0.76rem; color: var(--text-dim); line-height: 1.4;">
+        <span style="color: var(--accent-emerald); font-weight: 600;">High-Fidelity Audio:</span><br>
+        24-Bit / 96kHz Lossless Master Engine with Instant Playback.
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-view">
+      
+      <!-- Hero Banner -->
+      <section style="display: flex; justify-content: space-between; align-items: flex-end; background: linear-gradient(135deg, rgba(139, 92, 246, 0.28) 0%, rgba(20, 24, 38, 0.8) 100%); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 36px 40px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);">
+        <div style="position: relative; z-index: 2;">
+          <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(139, 92, 246, 0.2); padding: 4px 12px; border-radius: 9999px; color: #d8b4fe; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px;">
+            <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> Trending Playlist
+          </div>
+          <h1 style="font-size: 2.3rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px;">Your Music, Your Vibe</h1>
+          <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 520px; line-height: 1.5;">Stream high-fidelity, handpicked instrumental beats. Real audio playback with interactive waveform scrubbing.</p>
+          <button class="btn-primary" id="hero-play-btn" style="margin-top: 20px; padding: 12px 26px;">
+            <i data-lucide="play" style="width: 18px; height: 18px; fill: currentColor;"></i>
+            <span>Play Trending Mix</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Featured Collections -->
+      <section>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h2 style="font-size: 1.35rem; font-weight: 700;">Featured Collections</h2>
+          <div style="display: flex; gap: 8px; background: var(--bg-surface); padding: 4px; border-radius: 9999px; border: 1px solid var(--border-subtle);">
+            <button class="filter-tab active" data-filter="all" style="padding: 6px 16px; border-radius: 9999px; font-size: 0.82rem; font-weight: 600; color: var(--text-main); background: var(--bg-surface-elevated); border: none; cursor: pointer;">All</button>
+            <button class="filter-tab" data-filter="synth" style="padding: 6px 16px; border-radius: 9999px; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); background: transparent; border: none; cursor: pointer;">Electronic</button>
+            <button class="filter-tab" data-filter="chill" style="padding: 6px 16px; border-radius: 9999px; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); background: transparent; border: none; cursor: pointer;">Ambient</button>
+          </div>
+        </div>
+        <div class="playlist-cards-grid" id="featured-cards-grid">
+          <!-- Dynamically populated from VIBE_CATALOG -->
+        </div>
+      </section>
+
+      <!-- All Tracks Table / Library -->
+      <section>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h2 style="font-size: 1.35rem; font-weight: 700;">Song Library</h2>
+            <p style="color: var(--text-muted); font-size: 0.86rem; margin-top: 4px;">Click any song to start instant playback</p>
+          </div>
+          <a href="search.html" class="btn-secondary" style="font-size: 0.82rem; padding: 7px 16px;">
+            <i data-lucide="search" style="width: 15px; height: 15px;"></i>
+            <span>Browse All in Search</span>
+          </a>
+        </div>
+
+        <div class="tracks-table-container">
+          <div class="table-header">
+            <div>#</div>
+            <div>Title</div>
+            <div class="track-album-col">Album</div>
+            <div>Duration</div>
+            <div style="text-align: right;">Action</div>
+          </div>
+          <div id="tracks-list" style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+            <!-- Track items dynamically rendered -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Persistent Bottom Music Player Bar -->
+  <footer class="player-bar">
+    <!-- Left: Current Track Details -->
+    <div class="player-now-playing">
+      <img id="player-art" class="player-album-art" src="" alt="Album Artwork" onclick="window.location.href='album.html'">
+      <div class="now-playing-meta">
+        <a id="player-title" class="now-playing-title" href="album.html">No Track Selected</a>
+        <div id="player-artist" class="now-playing-artist">Choose a vibe to play</div>
+      </div>
+      <button class="player-like-btn" id="like-track-btn" title="Add to Favorites">
+        <i data-lucide="heart" style="width: 18px; height: 18px;"></i>
+      </button>
+    </div>
+
+    <!-- Center: Playback Controls & Progress Bar -->
+    <div class="player-center">
+      <div class="playback-buttons">
+        <button class="control-btn" id="shuffle-btn" title="Toggle Shuffle">
+          <i data-lucide="shuffle" style="width: 17px; height: 17px;"></i>
+        </button>
+        <button class="control-btn" id="prev-btn" title="Previous Track">
+          <i data-lucide="skip-back" style="width: 20px; height: 20px; fill: currentColor;"></i>
+        </button>
+        <button class="play-pause-btn" id="play-pause-btn" title="Play">
+          <i id="play-icon" data-lucide="play" style="width: 22px; height: 22px; fill: currentColor; margin-left: 2px;"></i>
+        </button>
+        <button class="control-btn" id="next-btn" title="Next Track">
+          <i data-lucide="skip-forward" style="width: 20px; height: 20px; fill: currentColor;"></i>
+        </button>
+        <button class="control-btn" id="repeat-btn" title="Toggle Repeat">
+          <i data-lucide="repeat" style="width: 17px; height: 17px;"></i>
+        </button>
+      </div>
+
+      <div class="progress-container">
+        <span class="time-stamp" id="current-time">0:00</span>
+        <div class="seek-slider-wrap" id="seek-slider">
+          <div class="seek-track-bg">
+            <div class="seek-fill-bar" id="seek-progress"></div>
+            <div class="seek-thumb" id="seek-thumb"></div>
+          </div>
+        </div>
+        <span class="time-stamp" id="total-duration">0:00</span>
+      </div>
+    </div>
+
+    <!-- Right: Volume & Extra Utilities -->
+    <div class="player-right">
+      <button class="control-btn" id="mute-btn" title="Mute/Unmute">
+        <i id="volume-icon" data-lucide="volume-2" style="width: 19px; height: 19px;"></i>
+      </button>
+      <div class="volume-box">
+        <div class="volume-slider-wrap" id="volume-slider">
+          <div class="volume-track-bg">
+            <div class="volume-fill-bar" id="volume-fill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-nav-bar">
+    <a href="index.html" class="mobile-nav-item active">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="playlist.html" class="mobile-nav-item">
+      <i data-lucide="library"></i>
+      <span>Playlists</span>
+    </a>
+    <a href="recent.html" class="mobile-nav-item">
+      <i data-lucide="clock"></i>
+      <span>Recent</span>
+    </a>
+    <a href="search.html" class="mobile-nav-item">
+      <i data-lucide="search"></i>
+      <span>Search</span>
+    </a>
+    <a href="settings.html" class="mobile-nav-item">
+      <i data-lucide="settings"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    // Home Page specific UI rendering
+    document.addEventListener('DOMContentLoaded', () => {
+      const featuredGrid = document.getElementById('featured-cards-grid');
+      const tracksList = document.getElementById('tracks-list');
+      const heroPlayBtn = document.getElementById('hero-play-btn');
+      let currentFilter = 'all';
+
+      function renderFeaturedCards() {
+        featuredGrid.innerHTML = '';
+        const songs = window.VIBE_CATALOG.songs.filter(s => currentFilter === 'all' || s.genre === currentFilter);
+        
+        songs.slice(0, 4).forEach((song) => {
+          const card = document.createElement('div');
+          card.className = 'playlist-card';
+          card.innerHTML = `
+            <div class="playlist-cover-wrap">
+              <img class="playlist-cover-img" src="${song.albumArt}" alt="${song.title}">
+              <div class="playlist-play-overlay">
+                <i data-lucide="play" style="width: 20px; height: 20px; fill: white; margin-left: 2px;"></i>
+              </div>
+            </div>
+            <div>
+              <div class="playlist-card-title">${song.title}</div>
+              <div class="playlist-card-desc">${song.artist} • ${song.album}</div>
+            </div>
+            <div class="playlist-card-meta">
+              <span>${song.genre.toUpperCase()}</span>
+              <span>${song.plays} plays</span>
+            </div>
+          `;
+          card.addEventListener('click', () => {
+            window.vibePlayer.loadTrack(song.id, true);
+            window.vibePlayer.showToast(`Now Playing: ${song.title}`);
+          });
+          featuredGrid.appendChild(card);
+        });
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      function renderTracks() {
+        tracksList.innerHTML = '';
+        const currentSong = window.vibePlayer ? window.vibePlayer.getCurrentSong() : null;
+        const isPlaying = window.vibePlayer ? window.vibePlayer.isPlaying : false;
+
+        window.VIBE_CATALOG.songs.forEach((song, idx) => {
+          const isCurrent = currentSong && song.id === currentSong.id;
+          const row = document.createElement('div');
+          row.className = `track-row ${isCurrent ? 'playing' : ''}`;
+          row.dataset.id = song.id;
+
+          row.innerHTML = `
+            <div class="track-index">
+              ${isCurrent && isPlaying ? `
+                <div class="sound-bars">
+                  <div class="sound-bar"></div>
+                  <div class="sound-bar"></div>
+                  <div class="sound-bar"></div>
+                  <div class="sound-bar"></div>
+                </div>
+              ` : (idx + 1)}
+            </div>
+            <div class="track-info-cell">
+              <img class="track-thumb" src="${song.albumArt}" alt="${song.title}">
+              <div class="track-meta">
+                <span class="track-title-text">${song.title}</span>
+                <span class="track-artist-text">${song.artist}</span>
+              </div>
+            </div>
+            <div class="track-album-col track-album-text">${song.album}</div>
+            <div class="track-duration-text">${song.duration}</div>
+            <div style="display:flex; justify-content:flex-end;">
+              <button class="track-action-btn" title="Add to Playlist" onclick="event.stopPropagation(); window.location.href='playlist.html'">
+                <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+              </button>
+            </div>
+          `;
+
+          row.addEventListener('click', () => {
+            if (window.vibePlayer.currentTrackId === song.id) {
+              window.vibePlayer.togglePlayPause();
+            } else {
+              window.vibePlayer.loadTrack(song.id, true);
+              window.vibePlayer.showToast(`Playing: ${song.title}`);
+            }
+          });
+
+          tracksList.appendChild(row);
+        });
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      // Filter tabs handling
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.filter-tab').forEach(t => {
+            t.classList.remove('active');
+            t.style.background = 'transparent';
+            t.style.color = 'var(--text-muted)';
+          });
+          tab.classList.add('active');
+          tab.style.background = 'var(--bg-surface-elevated)';
+          tab.style.color = 'var(--text-main)';
+          currentFilter = tab.dataset.filter;
+          renderFeaturedCards();
+        });
+      });
+
+      // Hero Play Button
+      if (heroPlayBtn) {
+        heroPlayBtn.addEventListener('click', () => {
+          window.vibePlayer.setQueue(window.VIBE_CATALOG.songs, 1);
+          window.vibePlayer.showToast("Playing Trending Mix");
+        });
+      }
+
+      // Listen to player updates
+      window.addEventListener('vibeTrackChange', () => {
+        renderTracks();
+      });
+
+      renderFeaturedCards();
+      renderTracks();
+    });
+  </script>
+</body>
+</html>

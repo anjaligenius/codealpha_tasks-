@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibePlayer - Search</title>
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Shared & Page Styles -->
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Audio Element (Managed by VibeAudioPlayer) -->
+  <audio id="main-audio" preload="metadata"></audio>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast-alert">
+    <i data-lucide="info" style="color: #c084fc;"></i>
+    <span id="toast-message">Searching...</span>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <a class="brand-logo" href="index.html">
+        <div class="brand-icon-box">
+          <i data-lucide="radio" style="width: 22px; height: 22px;"></i>
+        </div>
+        <div class="brand-title">VibePlayer</div>
+        <span class="brand-badge">PRO</span>
+      </a>
+
+      <nav class="nav-group">
+        <div class="nav-label">Menu</div>
+        <a class="nav-item" href="index.html">
+          <i data-lucide="home" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Home</span>
+        </a>
+        <a class="nav-item" href="playlist.html">
+          <i data-lucide="library" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">My Playlist</span>
+        </a>
+        <a class="nav-item" href="recent.html">
+          <i data-lucide="clock" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Recently Played</span>
+        </a>
+        <a class="nav-item active" href="search.html">
+          <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Search</span>
+        </a>
+        <a class="nav-item" href="album.html">
+          <i data-lucide="disc" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Album Details</span>
+        </a>
+        <a class="nav-item" href="settings.html">
+          <i data-lucide="settings" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Settings</span>
+        </a>
+      </nav>
+
+      <div class="nav-group" style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
+        <div class="nav-label">Playlists</div>
+        <div class="playlist-scroll">
+          <a class="playlist-chip" href="playlist.html?id=pl-chill-lofi">☕ Chill Lofi Beats</a>
+          <a class="playlist-chip" href="playlist.html?id=pl-cyber-synth">⚡ Cyber Synthwave</a>
+          <a class="playlist-chip" href="playlist.html?id=pl-deep-focus">🧠 Deep Focus Study</a>
+          <a class="playlist-chip" href="playlist.html?id=pl-midnight-echoes">🌙 Midnight Echoes</a>
+        </div>
+      </div>
+
+      <div class="sidebar-footer" style="background: rgba(255,255,255,0.03); border: 1px dashed var(--border-subtle); padding: 12px; border-radius: var(--radius-sm); font-size: 0.76rem; color: var(--text-dim); line-height: 1.4;">
+        <span style="color: var(--accent-emerald); font-weight: 600;">Pro Search Tip:</span><br>
+        Press <code style="color:#cbd5e1;">Ctrl + K</code> anywhere to focus the search bar instantly.
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-view">
+      
+      <!-- Search Header & Bar -->
+      <section style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="header-left-title">
+          <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+            <span class="pill-badge purple">
+              <i data-lucide="sparkles" style="width: 13px; height: 13px;"></i> Global Discovery
+            </span>
+          </div>
+          <h1>Search VibePlayer</h1>
+          <p>Find songs, artists, and albums from our high-fidelity nocturnal music catalog.</p>
+        </div>
+
+        <!-- Search Input Bar -->
+        <div class="search-input-container">
+          <i data-lucide="search" style="color: var(--text-dim); width: 22px; height: 22px;"></i>
+          <input 
+            type="text" 
+            id="search-input" 
+            class="search-input-field" 
+            placeholder="Search songs, artists, albums..." 
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button id="search-clear-btn" class="search-clear-btn" title="Clear query">
+            <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+          </button>
+          <span class="search-shortcut-pill">Ctrl K</span>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="search-filter-pills">
+          <button class="search-filter-btn active" data-category="all">All Categories</button>
+          <button class="search-filter-btn" data-category="songs">Songs</button>
+          <button class="search-filter-btn" data-category="artists">Artists</button>
+          <button class="search-filter-btn" data-category="albums">Albums</button>
+        </div>
+      </section>
+
+      <!-- Loading State (Temporary simulated shimmer/spinner) -->
+      <div id="search-loading-state" class="empty-state-box" style="display: none; padding: 40px 24px;">
+        <div style="width: 44px; height: 44px; border: 3px solid rgba(139, 92, 246, 0.2); border-top-color: var(--accent-purple); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">Searching audio database...</p>
+      </div>
+
+      <style>
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+      </style>
+
+      <!-- Empty Query State (Before user types anything) -->
+      <section id="empty-search-state" style="display: flex; flex-direction: column; gap: 28px;">
+        <div>
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 14px; color: var(--text-main);">Popular Searches</h3>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn-secondary quick-search-tag" data-query="Aura Minimal">
+              <i data-lucide="trending-up" style="width: 14px; height: 14px; color: var(--accent-purple-light);"></i>
+              <span>Aura Minimal</span>
+            </button>
+            <button class="btn-secondary quick-search-tag" data-query="Cyber Synthwave">
+              <i data-lucide="trending-up" style="width: 14px; height: 14px; color: var(--accent-purple-light);"></i>
+              <span>Cyber Synthwave</span>
+            </button>
+            <button class="btn-secondary quick-search-tag" data-query="Ethereal Horizons">
+              <i data-lucide="trending-up" style="width: 14px; height: 14px; color: var(--accent-purple-light);"></i>
+              <span>Ethereal Horizons</span>
+            </button>
+            <button class="btn-secondary quick-search-tag" data-query="Focus">
+              <i data-lucide="trending-up" style="width: 14px; height: 14px; color: var(--accent-purple-light);"></i>
+              <span>Cosmic Focus</span>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 14px; color: var(--text-main);">Browse by Mood & Genre</h3>
+          <div class="playlist-cards-grid">
+            <div class="playlist-card quick-search-card" data-query="chill" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), #141724);">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <span style="font-size: 1.1rem; font-weight: 700;">Chill & Lo-Fi</span>
+                <i data-lucide="coffee" style="color: var(--accent-emerald);"></i>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-muted);">Calm acoustics, soft keys, and ambient vinyl warmth</p>
+            </div>
+            <div class="playlist-card quick-search-card" data-query="synth" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), #141724);">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <span style="font-size: 1.1rem; font-weight: 700;">Synthwave & Cyber</span>
+                <i data-lucide="zap" style="color: var(--accent-purple-light);"></i>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-muted);">Driving electro arps and nocturnal neon pulse</p>
+            </div>
+            <div class="playlist-card quick-search-card" data-query="focus" style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), #141724);">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <span style="font-size: 1.1rem; font-weight: 700;">Deep Focus</span>
+                <i data-lucide="brain" style="color: #38bdf8;"></i>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-muted);">Binaural study textures and minimal distractions</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- No Results State -->
+      <section id="no-results-state" class="empty-state-box" style="display: none;">
+        <div class="empty-icon-wrap">
+          <i data-lucide="search-x" style="width: 36px; height: 36px;"></i>
+        </div>
+        <h3 class="empty-state-title" id="no-results-title">No Matching Audio Nodes Found</h3>
+        <p class="empty-state-text" id="no-results-desc">We couldn't find any songs, artists, or albums matching your search. Check for typos or try searching a general genre like "Chill" or "Synth".</p>
+        <button class="btn-secondary" id="reset-search-btn" style="margin-top: 8px;">
+          <i data-lucide="rotate-ccw" style="width: 16px; height: 16px;"></i>
+          <span>Clear Search Filter</span>
+        </button>
+      </section>
+
+      <!-- Active Search Results Sections -->
+      <section id="search-results-container" style="display: none; flex-direction: column; gap: 32px;">
+        
+        <!-- Songs Results -->
+        <div id="results-songs-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <h3 style="font-size: 1.25rem; font-weight: 700;">Songs</h3>
+            <span id="songs-match-count" class="pill-badge">0 Results</span>
+          </div>
+          <div class="tracks-table-container">
+            <div class="table-header">
+              <div>#</div>
+              <div>Title</div>
+              <div class="track-album-col">Album</div>
+              <div>Duration</div>
+              <div style="text-align: right;">Play</div>
+            </div>
+            <div id="search-songs-list" style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Artists Results -->
+        <div id="results-artists-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <h3 style="font-size: 1.25rem; font-weight: 700;">Artists</h3>
+            <span id="artists-match-count" class="pill-badge">0 Results</span>
+          </div>
+          <div class="artists-grid" id="search-artists-grid">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Albums Results -->
+        <div id="results-albums-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <h3 style="font-size: 1.25rem; font-weight: 700;">Albums</h3>
+            <span id="albums-match-count" class="pill-badge">0 Results</span>
+          </div>
+          <div class="playlist-cards-grid" id="search-albums-grid">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Persistent Bottom Music Player Bar -->
+  <footer class="player-bar">
+    <div class="player-now-playing">
+      <img id="player-art" class="player-album-art" src="" alt="Album Artwork" onclick="window.location.href='album.html'">
+      <div class="now-playing-meta">
+        <a id="player-title" class="now-playing-title" href="album.html">No Track Selected</a>
+        <div id="player-artist" class="now-playing-artist">Choose a vibe to play</div>
+      </div>
+      <button class="player-like-btn" id="like-track-btn" title="Add to Favorites">
+        <i data-lucide="heart" style="width: 18px; height: 18px;"></i>
+      </button>
+    </div>
+
+    <div class="player-center">
+      <div class="playback-buttons">
+        <button class="control-btn" id="shuffle-btn" title="Toggle Shuffle">
+          <i data-lucide="shuffle" style="width: 17px; height: 17px;"></i>
+        </button>
+        <button class="control-btn" id="prev-btn" title="Previous Track">
+          <i data-lucide="skip-back" style="width: 20px; height: 20px; fill: currentColor;"></i>
+        </button>
+        <button class="play-pause-btn" id="play-pause-btn" title="Play">
+          <i id="play-icon" data-lucide="play" style="width: 22px; height: 22px; fill: currentColor; margin-left: 2px;"></i>
+        </button>
+        <button class="control-btn" id="next-btn" title="Next Track">
+          <i data-lucide="skip-forward" style="width: 20px; height: 20px; fill: currentColor;"></i>
+        </button>
+        <button class="control-btn" id="repeat-btn" title="Toggle Repeat">
+          <i data-lucide="repeat" style="width: 17px; height: 17px;"></i>
+        </button>
+      </div>
+
+      <div class="progress-container">
+        <span class="time-stamp" id="current-time">0:00</span>
+        <div class="seek-slider-wrap" id="seek-slider">
+          <div class="seek-track-bg">
+            <div class="seek-fill-bar" id="seek-progress"></div>
+            <div class="seek-thumb" id="seek-thumb"></div>
+          </div>
+        </div>
+        <span class="time-stamp" id="total-duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-right">
+      <button class="control-btn" id="mute-btn" title="Mute/Unmute">
+        <i id="volume-icon" data-lucide="volume-2" style="width: 19px; height: 19px;"></i>
+      </button>
+      <div class="volume-box">
+        <div class="volume-slider-wrap" id="volume-slider">
+          <div class="volume-track-bg">
+            <div class="volume-fill-bar" id="volume-fill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-nav-bar">
+    <a href="index.html" class="mobile-nav-item">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="playlist.html" class="mobile-nav-item">
+      <i data-lucide="library"></i>
+      <span>Playlists</span>
+    </a>
+    <a href="recent.html" class="mobile-nav-item">
+      <i data-lucide="clock"></i>
+      <span>Recent</span>
+    </a>
+    <a href="search.html" class="mobile-nav-item active">
+      <i data-lucide="search"></i>
+      <span>Search</span>
+    </a>
+    <a href="settings.html" class="mobile-nav-item">
+      <i data-lucide="settings"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    // Search Page Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('search-input');
+      const searchClearBtn = document.getElementById('search-clear-btn');
+      const emptySearchState = document.getElementById('empty-search-state');
+      const loadingState = document.getElementById('search-loading-state');
+      const noResultsState = document.getElementById('no-results-state');
+      const noResultsDesc = document.getElementById('no-results-desc');
+      const searchResultsContainer = document.getElementById('search-results-container');
+      const resetSearchBtn = document.getElementById('reset-search-btn');
+
+      const songsGroup = document.getElementById('results-songs-group');
+      const artistsGroup = document.getElementById('results-artists-group');
+      const albumsGroup = document.getElementById('results-albums-group');
+      const searchSongsList = document.getElementById('search-songs-list');
+      const searchArtistsGrid = document.getElementById('search-artists-grid');
+      const searchAlbumsGrid = document.getElementById('search-albums-grid');
+
+      const songsMatchCount = document.getElementById('songs-match-count');
+      const artistsMatchCount = document.getElementById('artists-match-count');
+      const albumsMatchCount = document.getElementById('albums-match-count');
+
+      let currentCategory = 'all';
+      let searchTimeout = null;
+
+      // Category filter buttons
+      document.querySelectorAll('.search-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.search-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentCategory = btn.dataset.category;
+          performSearch();
+        });
+      });
+
+      // Keyboard shortcut Ctrl+K
+      window.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+          e.preventDefault();
+          searchInput.focus();
+          searchInput.select();
+        }
+      });
+
+      // Input changes
+      searchInput.addEventListener('input', () => {
+        const val = searchInput.value.trim();
+        searchClearBtn.style.display = val.length > 0 ? 'block' : 'none';
+
+        clearTimeout(searchTimeout);
+        if (!val) {
+          showEmptyState();
+          return;
+        }
+
+        // Show subtle loading state for 150ms to indicate responsive querying
+        loadingState.style.display = 'flex';
+        emptySearchState.style.display = 'none';
+        searchResultsContainer.style.display = 'none';
+        noResultsState.style.display = 'none';
+
+        searchTimeout = setTimeout(() => {
+          performSearch();
+        }, 120);
+      });
+
+      searchClearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClearBtn.style.display = 'none';
+        showEmptyState();
+        searchInput.focus();
+      });
+
+      resetSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClearBtn.style.display = 'none';
+        currentCategory = 'all';
+        document.querySelectorAll('.search-filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('.search-filter-btn[data-category="all"]').classList.add('active');
+        showEmptyState();
+        searchInput.focus();
+      });
+
+      // Quick Search tags & cards
+      document.querySelectorAll('.quick-search-tag, .quick-search-card').forEach(item => {
+        item.addEventListener('click', () => {
+          searchInput.value = item.dataset.query;
+          searchClearBtn.style.display = 'block';
+          performSearch();
+        });
+      });
+
+      function showEmptyState() {
+        loadingState.style.display = 'none';
+        emptySearchState.style.display = 'flex';
+        searchResultsContainer.style.display = 'none';
+        noResultsState.style.display = 'none';
+      }
+
+      function performSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (!query) {
+          showEmptyState();
+          return;
+        }
+
+        loadingState.style.display = 'none';
+        emptySearchState.style.display = 'none';
+
+        // 1. Search Songs (by title, artist, album, genre)
+        const matchedSongs = window.VIBE_CATALOG.songs.filter(s => 
+          s.title.toLowerCase().includes(query) ||
+          s.artist.toLowerCase().includes(query) ||
+          s.album.toLowerCase().includes(query) ||
+          s.genre.toLowerCase().includes(query)
+        );
+
+        // 2. Search Artists (by name, genre)
+        const matchedArtists = window.VIBE_CATALOG.artists.filter(a =>
+          a.name.toLowerCase().includes(query) ||
+          a.genre.toLowerCase().includes(query)
+        );
+
+        // 3. Search Albums (by title, artist, genre)
+        const matchedAlbums = window.VIBE_CATALOG.albums.filter(al =>
+          al.title.toLowerCase().includes(query) ||
+          al.artist.toLowerCase().includes(query) ||
+          al.genre.toLowerCase().includes(query)
+        );
+
+        // Category filter filtering
+        const showSongs = (currentCategory === 'all' || currentCategory === 'songs') && matchedSongs.length > 0;
+        const showArtists = (currentCategory === 'all' || currentCategory === 'artists') && matchedArtists.length > 0;
+        const showAlbums = (currentCategory === 'all' || currentCategory === 'albums') && matchedAlbums.length > 0;
+
+        const totalMatches = (showSongs ? matchedSongs.length : 0) +
+                             (showArtists ? matchedArtists.length : 0) +
+                             (showAlbums ? matchedAlbums.length : 0);
+
+        if (totalMatches === 0) {
+          searchResultsContainer.style.display = 'none';
+          noResultsState.style.display = 'flex';
+          noResultsDesc.textContent = `No matches found for "${query}" in ${currentCategory.toUpperCase()}. Try searching "Chill", "Synth", or an artist name like "Aura Minimal".`;
+          return;
+        }
+
+        noResultsState.style.display = 'none';
+        searchResultsContainer.style.display = 'flex';
+
+        // Render Songs
+        songsGroup.style.display = showSongs ? 'block' : 'none';
+        if (showSongs) {
+          songsMatchCount.textContent = `${matchedSongs.length} Matches`;
+          searchSongsList.innerHTML = '';
+          const currentSong = window.vibePlayer ? window.vibePlayer.getCurrentSong() : null;
+          const isPlaying = window.vibePlayer ? window.vibePlayer.isPlaying : false;
+
+          matchedSongs.forEach((song, idx) => {
+            const isCurrent = currentSong && song.id === currentSong.id;
+            const row = document.createElement('div');
+            row.className = `track-row ${isCurrent ? 'playing' : ''}`;
+            row.dataset.id = song.id;
+
+            row.innerHTML = `
+              <div class="track-index">
+                ${isCurrent && isPlaying ? `
+                  <div class="sound-bars">
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                    <div class="sound-bar"></div>
+                  </div>
+                ` : (idx + 1)}
+              </div>
+              <div class="track-info-cell">
+                <img class="track-thumb" src="${song.albumArt}" alt="${song.title}">
+                <div class="track-meta">
+                  <span class="track-title-text">${song.title}</span>
+                  <span class="track-artist-text">${song.artist}</span>
+                </div>
+              </div>
+              <div class="track-album-col track-album-text">${song.album}</div>
+              <div class="track-duration-text">${song.duration}</div>
+              <div style="display: flex; justify-content: flex-end;">
+                <button class="track-action-btn" title="Play Track">
+                  <i data-lucide="play" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                </button>
+              </div>
+            `;
+
+            row.addEventListener('click', () => {
+              window.vibePlayer.loadTrack(song.id, true);
+              window.vibePlayer.showToast(`Playing: ${song.title}`);
+            });
+
+            searchSongsList.appendChild(row);
+          });
+        }
+
+        // Render Artists
+        artistsGroup.style.display = showArtists ? 'block' : 'none';
+        if (showArtists) {
+          artistsMatchCount.textContent = `${matchedArtists.length} Matches`;
+          searchArtistsGrid.innerHTML = '';
+          matchedArtists.forEach(art => {
+            const card = document.createElement('div');
+            card.className = 'artist-card';
+            card.innerHTML = `
+              <img class="artist-avatar" src="${art.avatar}" alt="${art.name}">
+              <div>
+                <div style="font-weight: 700; font-size: 0.98rem; color: var(--text-main);">${art.name}</div>
+                <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">${art.genre}</div>
+              </div>
+              <span class="pill-badge emerald" style="font-size: 0.72rem;">${art.monthlyListeners} Monthly</span>
+            `;
+            card.addEventListener('click', () => {
+              searchInput.value = art.name;
+              performSearch();
+            });
+            searchArtistsGrid.appendChild(card);
+          });
+        }
+
+        // Render Albums
+        albumsGroup.style.display = showAlbums ? 'block' : 'none';
+        if (showAlbums) {
+          albumsMatchCount.textContent = `${matchedAlbums.length} Matches`;
+          searchAlbumsGrid.innerHTML = '';
+          matchedAlbums.forEach(al => {
+            const card = document.createElement('div');
+            card.className = 'playlist-card';
+            card.innerHTML = `
+              <div class="playlist-cover-wrap">
+                <img class="playlist-cover-img" src="${al.coverArt}" alt="${al.title}">
+                <div class="playlist-play-overlay">
+                  <i data-lucide="disc" style="width: 20px; height: 20px; color: white;"></i>
+                </div>
+              </div>
+              <div>
+                <div class="playlist-card-title">${al.title}</div>
+                <div class="playlist-card-desc">${al.artist} • ${al.year}</div>
+              </div>
+              <div class="playlist-card-meta">
+                <span>${al.tracks.length} Tracks</span>
+                <span style="color: var(--accent-emerald);">Details →</span>
+              </div>
+            `;
+            card.addEventListener('click', () => {
+              window.location.href = `album.html?id=${al.id}`;
+            });
+            searchAlbumsGrid.appendChild(card);
+          });
+        }
+
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      // Track updates
+      window.addEventListener('vibeTrackChange', () => {
+        const query = searchInput.value.trim();
+        if (query) performSearch();
+      });
+
+      // Check URL query param e.g. search.html?q=lofi
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialQuery = urlParams.get('q');
+      if (initialQuery) {
+        searchInput.value = initialQuery;
+        searchClearBtn.style.display = 'block';
+        performSearch();
+      }
+    });
+  </script>
+</body>
+</html>

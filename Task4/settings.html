@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibePlayer - Settings</title>
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Shared & Page Styles -->
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Audio Element (Managed by VibeAudioPlayer) -->
+  <audio id="main-audio" preload="metadata"></audio>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast-alert">
+    <i data-lucide="info" style="color: #c084fc;"></i>
+    <span id="toast-message">Settings saved</span>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <a class="brand-logo" href="index.html">
+        <div class="brand-icon-box">
+          <i data-lucide="radio" style="width: 22px; height: 22px;"></i>
+        </div>
+        <div class="brand-title">VibePlayer</div>
+        <span class="brand-badge">PRO</span>
+      </a>
+
+      <nav class="nav-group">
+        <div class="nav-label">Menu</div>
+        <a class="nav-item" href="index.html">
+          <i data-lucide="home" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Home</span>
+        </a>
+        <a class="nav-item" href="playlist.html">
+          <i data-lucide="library" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">My Playlist</span>
+        </a>
+        <a class="nav-item" href="recent.html">
+          <i data-lucide="clock" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Recently Played</span>
+        </a>
+        <a class="nav-item" href="search.html">
+          <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Search</span>
+        </a>
+        <a class="nav-item" href="album.html">
+          <i data-lucide="disc" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Album Details</span>
+        </a>
+        <a class="nav-item active" href="settings.html">
+          <i data-lucide="settings" style="width: 20px; height: 20px;"></i>
+          <span class="nav-text">Settings</span>
+        </a>
+      </nav>
+
+      <div class="nav-group" style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
+        <div class="nav-label">Playlists</div>
+        <div class="playlist-scroll">
+          <a class="playlist-chip" href="playlist.html?id=pl-chill-lofi">☕ Chill Lofi Beats</a>
+          <a class="playlist-chip" href="playlist.html?id=pl-cyber-synth">⚡ Cyber Synthwave</a>
+          <a class="playlist-chip" href="playlist.html?id=pl-deep-focus">🧠 Deep Focus Study</a>
+          <a class="playlist-chip" href="playlist.html?id=pl-midnight-echoes">🌙 Midnight Echoes</a>
+        </div>
+      </div>
+
+      <div class="sidebar-footer" style="background: rgba(255,255,255,0.03); border: 1px dashed var(--border-subtle); padding: 12px; border-radius: var(--radius-sm); font-size: 0.76rem; color: var(--text-dim); line-height: 1.4;">
+        <span style="color: var(--accent-emerald); font-weight: 600;">Engine v2.4 (Nocturne):</span><br>
+        Audio parameters persist in HTML5 LocalStorage.
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-view" style="max-width: 900px;">
+      
+      <!-- Page Header -->
+      <header class="top-header-bar">
+        <div class="header-left-title">
+          <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+            <span class="pill-badge purple">
+              <i data-lucide="sliders" style="width: 13px; height: 13px;"></i> Preferences
+            </span>
+            <span class="pill-badge emerald">Auto-Saved</span>
+          </div>
+          <h1>Settings & Audio Controls</h1>
+          <p>Customize playback behavior, default volumes, themes, and local storage data.</p>
+        </div>
+
+        <div>
+          <button class="btn-danger" id="open-reset-modal-btn">
+            <i data-lucide="rotate-ccw" style="width: 16px; height: 16px;"></i>
+            <span>Reset Settings</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Section 1: Audio & Playback Preferences -->
+      <section class="settings-section-card">
+        <h2 class="settings-section-title">
+          <i data-lucide="volume-2" style="color: var(--accent-purple-light); width: 20px; height: 20px;"></i>
+          <span>Audio & Playback</span>
+        </h2>
+
+        <!-- Autoplay Toggle -->
+        <div class="settings-row">
+          <div class="settings-row-info">
+            <span class="settings-row-label">Autoplay Next Track</span>
+            <span class="settings-row-desc">Automatically begin playing the next song when the current one finishes.</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="setting-autoplay">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- Default Volume Slider -->
+        <div class="settings-row" style="border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+          <div class="settings-row-info">
+            <span class="settings-row-label">Default Playback Volume</span>
+            <span class="settings-row-desc">The default volume level applied whenever you launch VibePlayer.</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <span id="volume-val-badge" class="pill-badge emerald" style="min-width: 50px; justify-content: center;">75%</span>
+            <input type="range" id="setting-default-volume" class="settings-range-slider" min="0" max="100" value="75">
+          </div>
+        </div>
+
+        <!-- Default Shuffle Preference -->
+        <div class="settings-row" style="border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+          <div class="settings-row-info">
+            <span class="settings-row-label">Enable Shuffle by Default</span>
+            <span class="settings-row-desc">Randomize track playback order automatically on page refresh and session start.</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="setting-default-shuffle">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- Default Repeat Preference -->
+        <div class="settings-row" style="border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+          <div class="settings-row-info">
+            <span class="settings-row-label">Enable Loop / Repeat by Default</span>
+            <span class="settings-row-desc">Continuously loop the currently active track instead of advancing.</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="setting-default-repeat">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- Streaming Quality -->
+        <div class="settings-row" style="border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+          <div class="settings-row-info">
+            <span class="settings-row-label">Audio Fidelity Tier</span>
+            <span class="settings-row-desc">Pristine 24-bit studio sound resolution.</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-secondary quality-btn active" data-quality="lossless" style="font-size: 0.8rem; padding: 6px 14px;">Lossless FLAC</button>
+            <button class="btn-secondary quality-btn" data-quality="high" style="font-size: 0.8rem; padding: 6px 14px;">320 kbps</button>
+            <button class="btn-secondary quality-btn" data-quality="standard" style="font-size: 0.8rem; padding: 6px 14px;">160 kbps</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Interface & Themes -->
+      <section class="settings-section-card">
+        <h2 class="settings-section-title">
+          <i data-lucide="palette" style="color: var(--accent-emerald); width: 20px; height: 20px;"></i>
+          <span>Interface & Themes</span>
+        </h2>
+
+        <p class="settings-row-desc">Choose your preferred visual accent palette. Changes take effect across all screens instantly.</p>
+
+        <div class="theme-picker-grid">
+          <div class="theme-card active" data-theme="default">
+            <div class="theme-color-disc" style="background: linear-gradient(135deg, #8b5cf6, #10b981);"></div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.94rem;">Nocturne Audio</div>
+              <div style="font-size: 0.78rem; color: var(--text-dim);">Electric Purple & Emerald</div>
+            </div>
+          </div>
+
+          <div class="theme-card" data-theme="violet">
+            <div class="theme-color-disc" style="background: linear-gradient(135deg, #a855f7, #38bdf8);"></div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.94rem;">Cyber Violet</div>
+              <div style="font-size: 0.78rem; color: var(--text-dim);">Vibrant Purple & Cyan</div>
+            </div>
+          </div>
+
+          <div class="theme-card" data-theme="emerald">
+            <div class="theme-color-disc" style="background: linear-gradient(135deg, #10b981, #34d399);"></div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.94rem;">Midnight Emerald</div>
+              <div style="font-size: 0.78rem; color: var(--text-dim);">Lush Neon Mint</div>
+            </div>
+          </div>
+
+          <div class="theme-card" data-theme="contrast">
+            <div class="theme-color-disc" style="background: linear-gradient(135deg, #ffffff, #64748b);"></div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.94rem;">Obsidian Void</div>
+              <div style="font-size: 0.78rem; color: var(--text-dim);">Ultra High-Contrast Black</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Data & Local Storage Telemetry -->
+      <section class="settings-section-card">
+        <h2 class="settings-section-title">
+          <i data-lucide="database" style="color: var(--accent-purple-light); width: 20px; height: 20px;"></i>
+          <span>Data & Storage</span>
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+          <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.76rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">Stored Playlists</div>
+            <div id="stat-playlists" style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-top: 4px;">4</div>
+          </div>
+          <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.76rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">Listening History</div>
+            <div id="stat-history" style="font-size: 1.4rem; font-weight: 800; color: var(--accent-emerald); margin-top: 4px;">5 Tracks</div>
+          </div>
+          <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.76rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">Favorite Songs</div>
+            <div id="stat-favorites" style="font-size: 1.4rem; font-weight: 800; color: #f43f5e; margin-top: 4px;">2</div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px;">
+          <button class="btn-secondary" id="btn-export-data">
+            <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+            <span>Export Library JSON</span>
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Reset Confirmation Modal -->
+  <div id="reset-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Reset All Settings?</h3>
+        <button class="modal-close-btn" id="close-reset-modal">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+
+      <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+        This will restore autoplay, default volume (75%), theme colors, and shuffle/repeat preferences back to their factory defaults. Your playlists and favorite songs will be preserved.
+      </p>
+
+      <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px;">
+        <button type="button" class="btn-secondary" id="cancel-reset-modal">Cancel</button>
+        <button type="button" class="btn-danger" id="confirm-reset-btn">
+          <i data-lucide="rotate-ccw" style="width: 16px; height: 16px;"></i>
+          <span>Confirm Reset</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persistent Bottom Music Player Bar -->
+  <footer class="player-bar">
+    <div class="player-now-playing">
+      <img id="player-art" class="player-album-art" src="" alt="Album Artwork" onclick="window.location.href='album.html'">
+      <div class="now-playing-meta">
+        <a id="player-title" class="now-playing-title" href="album.html">No Track Selected</a>
+        <div id="player-artist" class="now-playing-artist">Choose a vibe to play</div>
+      </div>
+      <button class="player-like-btn" id="like-track-btn" title="Add to Favorites">
+        <i data-lucide="heart" style="width: 18px; height: 18px;"></i>
+      </button>
+    </div>
+
+    <div class="player-center">
+      <div class="playback-buttons">
+        <button class="control-btn" id="shuffle-btn" title="Toggle Shuffle">
+          <i data-lucide="shuffle" style="width: 17px; height: 17px;"></i>
+        </button>
+        <button class="control-btn" id="prev-btn" title="Previous Track">
+          <i data-lucide="skip-back" style="width: 20px; height: 20px; fill: currentColor;"></i>
+        </button>
+        <button class="play-pause-btn" id="play-pause-btn" title="Play">
+          <i id="play-icon" data-lucide="play" style="width: 22px; height: 22px; fill: currentColor; margin-left: 2px;"></i>
+        </button>
+        <button class="control-btn" id="next-btn" title="Next Track">
+          <i data-lucide="skip-forward" style="width: 20px; height: 20px; fill: currentColor;"></i>
+        </button>
+        <button class="control-btn" id="repeat-btn" title="Toggle Repeat">
+          <i data-lucide="repeat" style="width: 17px; height: 17px;"></i>
+        </button>
+      </div>
+
+      <div class="progress-container">
+        <span class="time-stamp" id="current-time">0:00</span>
+        <div class="seek-slider-wrap" id="seek-slider">
+          <div class="seek-track-bg">
+            <div class="seek-fill-bar" id="seek-progress"></div>
+            <div class="seek-thumb" id="seek-thumb"></div>
+          </div>
+        </div>
+        <span class="time-stamp" id="total-duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-right">
+      <button class="control-btn" id="mute-btn" title="Mute/Unmute">
+        <i id="volume-icon" data-lucide="volume-2" style="width: 19px; height: 19px;"></i>
+      </button>
+      <div class="volume-box">
+        <div class="volume-slider-wrap" id="volume-slider">
+          <div class="volume-track-bg">
+            <div class="volume-fill-bar" id="volume-fill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-nav-bar">
+    <a href="index.html" class="mobile-nav-item">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="playlist.html" class="mobile-nav-item">
+      <i data-lucide="library"></i>
+      <span>Playlists</span>
+    </a>
+    <a href="recent.html" class="mobile-nav-item">
+      <i data-lucide="clock"></i>
+      <span>Recent</span>
+    </a>
+    <a href="search.html" class="mobile-nav-item">
+      <i data-lucide="search"></i>
+      <span>Search</span>
+    </a>
+    <a href="settings.html" class="mobile-nav-item active">
+      <i data-lucide="settings"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    // Settings Page Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const settingAutoplay = document.getElementById('setting-autoplay');
+      const settingDefaultVolume = document.getElementById('setting-default-volume');
+      const volumeValBadge = document.getElementById('volume-val-badge');
+      const settingDefaultShuffle = document.getElementById('setting-default-shuffle');
+      const settingDefaultRepeat = document.getElementById('setting-default-repeat');
+
+      const statPlaylists = document.getElementById('stat-playlists');
+      const statHistory = document.getElementById('stat-history');
+      const statFavorites = document.getElementById('stat-favorites');
+
+      const resetModal = document.getElementById('reset-modal');
+      const openResetModalBtn = document.getElementById('open-reset-modal-btn');
+      const closeResetModal = document.getElementById('close-reset-modal');
+      const cancelResetModal = document.getElementById('cancel-reset-modal');
+      const confirmResetBtn = document.getElementById('confirm-reset-btn');
+      const btnExportData = document.getElementById('btn-export-data');
+
+      function loadSettingsUI() {
+        const settings = window.vibePlayer.getSettings();
+
+        settingAutoplay.checked = settings.autoplay !== false;
+        settingDefaultVolume.value = Math.round((settings.defaultVolume || 0.75) * 100);
+        volumeValBadge.textContent = `${settingDefaultVolume.value}%`;
+        settingDefaultShuffle.checked = settings.defaultShuffle === true;
+        settingDefaultRepeat.checked = settings.defaultRepeat === true;
+
+        // Theme cards
+        const currentTheme = settings.theme || 'default';
+        document.querySelectorAll('.theme-card').forEach(card => {
+          card.classList.toggle('active', card.dataset.theme === currentTheme);
+        });
+
+        // Quality buttons
+        const currentQuality = settings.audioQuality || 'lossless';
+        document.querySelectorAll('.quality-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.quality === currentQuality);
+        });
+
+        // Telemetry stats
+        const pls = VibeApp.getPlaylists();
+        const history = VibeApp.getHistory();
+        const liked = window.vibePlayer.likedSongs;
+        statPlaylists.textContent = pls.length;
+        statHistory.textContent = `${history.length} Tracks`;
+        statFavorites.textContent = liked.size;
+      }
+
+      function updateAndSaveSettings(patch) {
+        const settings = window.vibePlayer.getSettings();
+        const updated = Object.assign(settings, patch);
+        window.vibePlayer.saveSettings(updated);
+        window.vibePlayer.showToast("Setting updated & saved");
+      }
+
+      // Event listeners for inputs
+      settingAutoplay.addEventListener('change', () => {
+        updateAndSaveSettings({ autoplay: settingAutoplay.checked });
+      });
+
+      settingDefaultVolume.addEventListener('input', () => {
+        volumeValBadge.textContent = `${settingDefaultVolume.value}%`;
+      });
+      settingDefaultVolume.addEventListener('change', () => {
+        const val = parseFloat(settingDefaultVolume.value) / 100;
+        updateAndSaveSettings({ defaultVolume: val });
+        window.vibePlayer.setVolume(val);
+      });
+
+      settingDefaultShuffle.addEventListener('change', () => {
+        updateAndSaveSettings({ defaultShuffle: settingDefaultShuffle.checked });
+        window.vibePlayer.isShuffle = settingDefaultShuffle.checked;
+        localStorage.setItem('vibe_is_shuffle', settingDefaultShuffle.checked);
+        const sBtn = document.getElementById('shuffle-btn');
+        if (sBtn) sBtn.classList.toggle('active', settingDefaultShuffle.checked);
+      });
+
+      settingDefaultRepeat.addEventListener('change', () => {
+        updateAndSaveSettings({ defaultRepeat: settingDefaultRepeat.checked });
+        window.vibePlayer.isRepeat = settingDefaultRepeat.checked;
+        localStorage.setItem('vibe_is_repeat', settingDefaultRepeat.checked);
+        const rBtn = document.getElementById('repeat-btn');
+        if (rBtn) rBtn.classList.toggle('active', settingDefaultRepeat.checked);
+      });
+
+      // Quality selection
+      document.querySelectorAll('.quality-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.quality-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          updateAndSaveSettings({ audioQuality: btn.dataset.quality });
+        });
+      });
+
+      // Theme Picker
+      document.querySelectorAll('.theme-card').forEach(card => {
+        card.addEventListener('click', () => {
+          document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+          const theme = card.dataset.theme;
+          updateAndSaveSettings({ theme: theme });
+          
+          if (theme === 'default') {
+            document.body.removeAttribute('data-theme');
+          } else {
+            document.body.setAttribute('data-theme', theme);
+          }
+          window.vibePlayer.showToast(`Applied theme: ${card.querySelector('div div').textContent}`);
+        });
+      });
+
+      // Export Library
+      btnExportData.addEventListener('click', () => {
+        const exportObj = {
+          playlists: VibeApp.getPlaylists(),
+          history: VibeApp.getHistory(),
+          likedSongs: [...window.vibePlayer.likedSongs],
+          settings: window.vibePlayer.getSettings(),
+          exportedAt: new Date().toISOString()
+        };
+        const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `vibeplayer-library-${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        window.vibePlayer.showToast("Library exported successfully");
+      });
+
+      // Reset Modal
+      openResetModalBtn.addEventListener('click', () => resetModal.classList.add('open'));
+      const closeReset = () => resetModal.classList.remove('open');
+      closeResetModal.addEventListener('click', closeReset);
+      cancelResetModal.addEventListener('click', closeReset);
+
+      confirmResetBtn.addEventListener('click', () => {
+        const factoryDefaults = {
+          autoplay: true,
+          defaultVolume: 0.75,
+          theme: 'default',
+          defaultShuffle: false,
+          defaultRepeat: false,
+          audioQuality: 'lossless'
+        };
+        window.vibePlayer.saveSettings(factoryDefaults);
+        window.vibePlayer.setVolume(0.75);
+        document.body.removeAttribute('data-theme');
+        closeReset();
+        loadSettingsUI();
+        window.vibePlayer.showToast("All settings restored to factory defaults");
+      });
+
+      loadSettingsUI();
+    });
+  </script>
+</body>
+</html>

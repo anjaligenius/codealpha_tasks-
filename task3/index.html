@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Anjali Mishra | Software Engineer & Full-Stack Developer Portfolio</title>
+  <meta name="description" content="Portfolio of Anjali Mishra - Second-year Engineering Student at TSEC Mumbai University seeking SDE Internship. Full-Stack Web Developer (React, Node.js, Express, SQL) and C++ Problem Solver."/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>"/>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            background: "#0a0814",
+            surface: "#14121e",
+            "surface-dim": "#14121e",
+            "surface-bright": "#3a3745",
+            "surface-container-lowest": "#0f0d19",
+            "surface-container-low": "#1c1a27",
+            "surface-container": "#201e2b",
+            "surface-container-high": "#2b2836",
+            "surface-container-highest": "#363341",
+            primary: "#a855f7",
+            "primary-container": "#b76dff",
+            "primary-fixed": "#f0dbff",
+            "primary-fixed-dim": "#ddb7ff",
+            secondary: "#38bdf8",
+            "secondary-container": "#00a6e0",
+            "secondary-fixed": "#c4e7ff",
+            tertiary: "#6366f1",
+            "tertiary-container": "#8083ff",
+            "on-surface": "#e6e0f2",
+            "on-surface-variant": "#cfc2d6",
+            outline: "#988d9f",
+            "outline-variant": "#4d4354",
+            error: "#ffb4ab",
+            "error-container": "#93000a"
+          },
+          fontFamily: {
+            display: ["Space Grotesk", "sans-serif"],
+            headline: ["Space Grotesk", "sans-serif"],
+            body: ["Plus Jakarta Sans", "sans-serif"],
+            code: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Three.js CDN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<body class="bg-background text-on-surface font-body antialiased selection:bg-primary selection:text-white">
+
+  <!-- =========================================================================
+       STICKY NAVIGATION BAR
+       ========================================================================= -->
+  <header class="fixed top-0 w-full z-50 bg-[#14121e]/85 backdrop-blur-xl border-b border-primary/10 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+    <div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-4">
+      
+      <!-- Logo Monogram -->
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-tertiary to-secondary p-0.5 shadow-[0_0_15px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_25px_rgba(56,189,248,0.6)] transition-all">
+          <div class="w-full h-full bg-[#14121e] rounded-[10px] flex items-center justify-center font-display font-bold text-lg text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+            AM
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-code text-sm text-on-surface font-bold tracking-tight">
+            ANJALI.DEV <span class="text-outline-variant font-normal">//</span> PORTFOLIO
+          </span>
+          <div class="flex items-center gap-1.5">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+            </span>
+            <span class="font-code text-[11px] text-secondary uppercase tracking-wider">
+              Available for Internships
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden lg:flex items-center gap-8">
+        <a href="#hero" class="font-headline text-sm font-semibold text-primary transition-colors hover:text-primary">Home</a>
+        <a href="#about" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">About</a>
+        <a href="#skills" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">Skills</a>
+        <a href="#projects" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">Projects</a>
+        <a href="#journey" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">Journey</a>
+        <a href="#resume" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">Resume</a>
+        <a href="#contact" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">Contact</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-3">
+        <a href="#resume" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-primary to-primary-container text-white font-headline text-xs font-bold shadow-[0_0_20px_rgba(168,85,247,0.35)] hover:shadow-[0_0_28px_rgba(183,109,255,0.6)] hover:-translate-y-0.5 transition-all">
+          <span class="material-symbols-outlined text-[17px]">download</span>
+          <span>Resume</span>
+        </a>
+        <a href="https://linkedin.com/in/anjali-mishra-a14a88382" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-secondary hover:bg-surface-container-high transition-colors">
+          <span class="material-symbols-outlined text-[20px]">share</span>
+        </a>
+        <a href="mailto:anjalibhavanimishra@gmail.com" aria-label="Send Email" class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors">
+          <span class="material-symbols-outlined text-[20px]">mail</span>
+        </a>
+        
+        <!-- Mobile Menu Hamburger Button -->
+        <button onclick="toggleMobileMenu()" aria-label="Toggle Navigation Menu" class="lg:hidden w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
+          <span class="material-symbols-outlined text-[22px]">menu</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobileMenuDrawer" class="hidden lg:hidden flex-col bg-[#14121e] border-b border-primary/20 px-6 py-4 space-y-3">
+      <a href="#hero" class="font-headline text-sm font-semibold text-primary py-1">Home</a>
+      <a href="#about" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface py-1">About</a>
+      <a href="#skills" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface py-1">Skills</a>
+      <a href="#projects" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface py-1">Projects</a>
+      <a href="#journey" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface py-1">Journey</a>
+      <a href="#resume" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface py-1">Resume</a>
+      <a href="#contact" class="font-headline text-sm font-medium text-on-surface-variant hover:text-on-surface py-1">Contact</a>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       HERO SECTION (3D Cosmic Canvas + Telemetry)
+       ========================================================================= -->
+  <main class="w-full pt-20">
+    <div class="flex flex-col w-full relative overflow-hidden">
+      
+      <!-- Atmospheric Cosmic Underlay Glows -->
+      <div class="pointer-events-none absolute -top-40 right-10 w-[620px] h-[620px] rounded-full bg-primary/10 blur-[150px] -z-10"></div>
+      <div class="pointer-events-none absolute top-96 -left-32 w-[540px] h-[540px] rounded-full bg-secondary/10 blur-[140px] -z-10"></div>
+      <div class="pointer-events-none absolute bottom-10 right-1/4 w-[400px] h-[400px] rounded-full bg-tertiary/10 blur-[130px] -z-10"></div>
+
+      <section class="relative w-full max-w-7xl mx-auto px-6 lg:px-12 pt-8 pb-16 lg:py-20 flex flex-col justify-between min-h-[calc(100vh-5rem)]" id="hero">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center flex-grow">
+          
+          <!-- Left Column: Vision & Narrative -->
+          <div class="lg:col-span-7 flex flex-col items-start gap-6 z-10">
+            
+            <!-- Status Pill -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container-high/80 border border-primary/30 backdrop-blur-md shadow-[0_0_16px_rgba(168,85,247,0.25)]">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-80"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+              </span>
+              <span class="font-code text-xs text-primary-fixed-dim tracking-wider uppercase font-semibold">
+                ELECTRONICS &amp; COMMUNICATION ENGINEERING • SDE INTERNSHIPS
+              </span>
+            </div>
+
+            <!-- Oversized Display Headline -->
+            <div class="flex flex-col gap-2">
+              <span class="font-code text-sm text-on-surface-variant flex items-center gap-2">
+                <span class="text-secondary font-bold text-sm">01 //</span> HELLO WORLD, I AM
+              </span>
+              <h1 class="font-display text-4xl sm:text-5xl lg:text-[62px] text-on-surface font-bold tracking-tight leading-[1.08]">
+                Anjali Mishra.
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-secondary via-primary-fixed-dim to-primary drop-shadow-[0_0_35px_rgba(168,85,247,0.35)] mt-1">
+                  Building Scalable Web Systems.
+                </span>
+              </h1>
+            </div>
+
+            <!-- Supporting Paragraph -->
+            <p class="font-body text-base sm:text-lg text-on-surface-variant max-w-2xl leading-relaxed">
+              Second-year engineering student at <strong class="text-on-surface font-semibold">Thakur Shyamnarayan Engineering College (TSEC), Mumbai University</strong>. Passionate about crafting full-stack web applications with the modern JavaScript stack (<span class="text-secondary">React, Node.js, Express, SQL</span>) and writing optimized <span class="text-primary-fixed-dim">C++</span> for algorithmic problem solving.
+            </p>
+
+            <!-- Dynamic Action Buttons -->
+            <div class="flex flex-wrap items-center gap-4 w-full pt-1">
+              <a href="#projects" class="group inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-gradient-to-r from-primary via-tertiary to-secondary text-white font-headline text-sm font-bold shadow-[0_0_28px_rgba(168,85,247,0.45)] hover:shadow-[0_0_36px_rgba(56,189,248,0.6)] hover:-translate-y-0.5 transition-all duration-300">
+                <span>Explore Featured Projects</span>
+                <span class="material-symbols-outlined text-[19px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+              <a href="#contact" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-surface-container/80 border border-primary/20 backdrop-blur-xl text-on-surface font-headline text-sm font-semibold hover:bg-surface-container-high hover:text-secondary hover:border-secondary/40 hover:-translate-y-0.5 transition-all duration-300">
+                <span class="material-symbols-outlined text-[18px] text-secondary">terminal</span>
+                <span>Get in Touch</span>
+              </a>
+            </div>
+
+            <!-- Tech Focus Indicator Badge -->
+            <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-lg bg-surface-container-lowest/90 border border-outline-variant/30 backdrop-blur-lg">
+              <span class="material-symbols-outlined text-secondary text-[18px]">bolt</span>
+              <span class="font-code text-xs text-on-surface-variant">
+                Current focus: <span class="text-on-surface font-medium">Full-Stack JavaScript &amp; C++ Problem Solving</span>
+              </span>
+            </div>
+
+            <!-- Telemetry Badges -->
+            <div class="flex items-center gap-4 pt-1 flex-wrap">
+              <span class="font-code text-xs text-outline uppercase tracking-widest hidden sm:inline-block">TELEMETRY:</span>
+              <div class="flex items-center gap-3">
+                <a href="https://linkedin.com/in/anjali-mishra-a14a88382" target="_blank" rel="noopener noreferrer" class="group relative p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/30 text-on-surface-variant hover:text-secondary hover:shadow-[0_0_16px_rgba(56,189,248,0.3)] transition-all">
+                  <span class="material-symbols-outlined text-[20px]">share</span>
+                  <span class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-code text-[10px] opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap">LinkedIn</span>
+                </a>
+                <a href="mailto:anjalibhavanimishra@gmail.com" class="group relative p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/30 text-on-surface-variant hover:text-primary hover:shadow-[0_0_16px_rgba(168,85,247,0.3)] transition-all">
+                  <span class="material-symbols-outlined text-[20px]">alternate_email</span>
+                  <span class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-code text-[10px] opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap">Email</span>
+                </a>
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant/30">
+                  <span class="material-symbols-outlined text-[16px] text-secondary">psychology</span>
+                  <span class="font-code text-xs font-semibold text-secondary">250+</span>
+                  <span class="font-code text-xs text-on-surface-variant">DSA Solved</span>
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant/30">
+                  <span class="material-symbols-outlined text-[16px] text-primary">location_on</span>
+                  <span class="font-code text-xs text-on-surface font-medium">Mumbai, India</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Interactive 3D Canvas + Overlapping Glassmorphic IDE Node -->
+          <div class="lg:col-span-5 relative w-full flex items-center justify-center">
+            
+            <!-- Living Three.js Canvas Container -->
+            <div class="relative w-full h-[480px] lg:h-[540px] rounded-2xl bg-surface-container-lowest/80 border border-primary/20 backdrop-blur-md overflow-hidden shadow-2xl flex items-center justify-center">
+              
+              <!-- Animated Background Grid Pattern -->
+              <svg class="absolute inset-0 w-full h-full opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern height="32" id="matrix-grid" patternunits="userSpaceOnUse" width="32">
+                    <circle class="text-primary" cx="2" cy="2" fill="currentColor" r="1"></circle>
+                    <path class="text-outline-variant" d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" stroke-width="0.5"></path>
+                  </pattern>
+                </defs>
+                <rect fill="url(#matrix-grid)" height="100%" width="100%"></rect>
+              </svg>
+
+              <!-- Three.js Canvas Destination -->
+              <div id="threejs-container" class="w-full h-full bg-transparent rounded-2xl z-0"></div>
+
+              <!-- Radial Core Spotlight Glow -->
+              <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent pointer-events-none"></div>
+
+
+
+              <!-- Floating Micro Badge -->
+              <div class="absolute top-4 right-4 bg-surface-container-high/90 border border-primary/20 backdrop-blur-lg px-3 py-1.5 rounded-lg shadow-md flex items-center gap-2 z-10">
+                <span class="text-secondary font-bold text-xs">★</span>
+                <span class="font-code text-xs text-on-surface">9+ Projects Built</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="w-full flex flex-col items-center justify-center pt-8 pb-2">
+          <a href="#metrics" aria-label="Scroll to metrics" class="flex flex-col items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors group">
+            <span class="font-code text-[11px] uppercase tracking-widest text-outline group-hover:text-primary transition-colors">Telemetry Matrix</span>
+            <span class="material-symbols-outlined text-[20px] animate-bounce text-secondary">keyboard_arrow_down</span>
+          </a>
+        </div>
+
+      </section>
+
+      <!-- =========================================================================
+           METRICS & PERFORMANCE BENCHMARKS STRIP
+           ========================================================================= -->
+      <section class="w-full bg-surface-container-lowest/80 border-y border-primary/10 backdrop-blur-md py-12" id="metrics">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+          
+          <div class="flex flex-col gap-2 mb-8">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <span class="h-2 w-2 rounded-full bg-primary inline-block"></span>
+                <span class="font-code text-xs text-primary uppercase tracking-widest font-bold">PERFORMANCE BENCHMARKS</span>
+              </div>
+              <span class="font-code text-xs text-on-surface-variant">SYS_DIAGNOSTICS // VERIFIED METRICS</span>
+            </div>
+          </div>
+
+          <!-- 4 Telemetry Glass Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Metric 1: Education -->
+            <div class="relative group p-6 rounded-xl bg-surface-container-low/70 border border-white/5 backdrop-blur-lg hover:border-primary/40 transition-all duration-300 shadow-md hover:-translate-y-1">
+              <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary-container opacity-40 group-hover:opacity-100 transition-opacity rounded-t-xl"></div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="p-2 rounded-lg bg-surface-container text-primary material-symbols-outlined text-[22px]">school</span>
+                <span class="font-code text-xs text-on-surface-variant font-semibold">TSEC MUMBAI</span>
+              </div>
+              <div class="flex flex-col gap-1">
+                <div class="font-headline text-2xl font-bold text-on-surface tracking-tight">
+                  Sem 3 <span class="text-sm text-outline font-normal">/ Grad 2029</span>
+                </div>
+                <p class="font-body text-sm text-on-surface font-semibold">B.E. in Electronics &amp; Comm.</p>
+                <p class="font-body text-xs text-on-surface-variant">Thakur Shyamnarayan Eng. College, Mumbai Univ.</p>
+              </div>
+            </div>
+
+            <!-- Metric 2: Shipped Projects -->
+            <div class="relative group p-6 rounded-xl bg-surface-container-low/70 border border-white/5 backdrop-blur-lg hover:border-secondary/40 transition-all duration-300 shadow-md hover:-translate-y-1">
+              <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-secondary-container opacity-40 group-hover:opacity-100 transition-opacity rounded-t-xl"></div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="p-2 rounded-lg bg-surface-container text-secondary material-symbols-outlined text-[22px]">rocket_launch</span>
+                <span class="font-code text-xs text-secondary font-semibold">DEPLOYED</span>
+              </div>
+              <div class="flex flex-col gap-1">
+                <div class="font-headline text-3xl font-bold text-on-surface tracking-tight">
+                  9<span class="text-secondary">+</span>
+                </div>
+                <p class="font-body text-sm text-on-surface font-semibold">Engineering Projects</p>
+                <p class="font-body text-xs text-on-surface-variant">6 Full-Stack AI &amp; Web Apps + 3 Frontend Systems</p>
+              </div>
+            </div>
+
+            <!-- Metric 3: C++ & DSA -->
+            <div class="relative group p-6 rounded-xl bg-surface-container-low/70 border border-white/5 backdrop-blur-lg hover:border-tertiary/40 transition-all duration-300 shadow-md hover:-translate-y-1">
+              <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-tertiary to-tertiary-container opacity-40 group-hover:opacity-100 transition-opacity rounded-t-xl"></div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="p-2 rounded-lg bg-surface-container text-tertiary material-symbols-outlined text-[22px]">code_blocks</span>
+                <span class="font-code text-xs text-tertiary font-semibold">ALGORITHMS</span>
+              </div>
+              <div class="flex flex-col gap-1">
+                <div class="font-headline text-3xl font-bold text-on-surface tracking-tight">
+                  250<span class="text-tertiary">+</span>
+                </div>
+                <p class="font-body text-sm text-on-surface font-semibold">DSA Challenges Solved</p>
+                <p class="font-body text-xs text-on-surface-variant">Data structures, recursion, pointers, and C++ problem-solving</p>
+              </div>
+            </div>
+
+            <!-- Metric 4: JavaScript Stack -->
+            <div class="relative group p-6 rounded-xl bg-surface-container-low/70 border border-white/5 backdrop-blur-lg hover:border-primary/40 transition-all duration-300 shadow-md hover:-translate-y-1">
+              <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-primary-container opacity-40 group-hover:opacity-100 transition-opacity rounded-t-xl"></div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="p-2 rounded-lg bg-surface-container text-primary-container material-symbols-outlined text-[22px]">developer_board</span>
+                <span class="font-code text-xs text-on-surface-variant font-semibold">TECH STACK</span>
+              </div>
+              <div class="flex flex-col gap-1">
+                <div class="font-headline text-3xl font-bold text-on-surface tracking-tight">
+                  100<span class="text-primary-container">%</span>
+                </div>
+                <p class="font-body text-sm text-on-surface font-semibold">JavaScript Full-Stack</p>
+                <p class="font-body text-xs text-on-surface-variant">React, Node.js, Express.js &amp; SQL Database Architecture</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Engineering Pillars Strip -->
+          <div class="mt-8 pt-8 border-t border-white/5 flex flex-wrap items-center justify-between gap-4">
+            <span class="font-code text-xs text-outline uppercase tracking-wider">Core Foundations:</span>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-code text-xs px-3 py-1 rounded-md bg-surface-container border border-outline-variant/30 text-secondary">Full-Stack Web Dev</span>
+              <span class="font-code text-xs px-3 py-1 rounded-md bg-surface-container border border-outline-variant/30 text-primary">C++ Problem Solving</span>
+              <span class="font-code text-xs px-3 py-1 rounded-md bg-surface-container border border-outline-variant/30 text-tertiary">RESTful APIs &amp; Express</span>
+              <span class="font-code text-xs px-3 py-1 rounded-md bg-surface-container border border-outline-variant/30 text-on-surface">SQL Database Schemas</span>
+              <span class="font-code text-xs px-3 py-1 rounded-md bg-surface-container border border-outline-variant/30 text-on-surface-variant">React SPA Components</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           ABOUT ME (Bento Split + HUD / Terminal)
+           ========================================================================= -->
+      <section class="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24 w-full" id="about">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-primary/20 mb-2">
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+              <span class="font-code text-xs text-secondary tracking-widest uppercase font-semibold">01 // ORIGIN &amp; PASSION</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl text-on-surface font-bold tracking-tight">
+              A Little About Me<span class="text-primary">.</span>
+            </h2>
+          </div>
+          <div class="flex items-center gap-3 font-code text-xs text-on-surface-variant bg-surface-container-low border border-white/5 px-4 py-2 rounded-lg">
+            <span class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-secondary"></span>
+              STATUS: <strong class="text-secondary font-semibold">ACTIVE_STUDENT</strong>
+            </span>
+            <span class="text-outline-variant">|</span>
+            <span>MUMBAI_NODE // 2029</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Left Column: HUD / Terminal Card + Audio Widget (5 cols) -->
+          <div class="lg:col-span-5 flex flex-col gap-6 w-full">
+            
+            <div class="w-full bg-surface-container-low border border-primary/20 rounded-xl p-5 shadow-xl flex flex-col relative overflow-hidden group">
+              
+              <!-- Tab Switcher Header -->
+              <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/5">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-yellow-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-green-400 inline-block"></span>
+                </div>
+                <div class="flex p-0.5 bg-surface-container rounded-lg">
+                  <button id="tab-visual-btn" onclick="switchAboutTab('visual')" class="px-3 py-1 rounded font-code text-xs text-on-primary bg-primary shadow-sm transition-all">
+                    HUD_VIEW
+                  </button>
+                  <button id="tab-terminal-btn" onclick="switchAboutTab('terminal')" class="px-3 py-1 rounded font-code text-xs text-on-surface-variant hover:text-on-surface transition-all">
+                    TERM_BIO
+                  </button>
+                </div>
+              </div>
+
+              <!-- Tab 1: HUD Visual View -->
+              <div id="visual-content-pane" class="flex flex-col gap-4">
+                <div class="relative w-full aspect-square rounded-lg overflow-hidden bg-surface-container-lowest flex items-center justify-center border border-white/5">
+                  
+                  <!-- Generative Avatar / Badge Illustration -->
+                  <div class="absolute inset-0 bg-gradient-to-tr from-[#12072b] via-[#1a0f3d] to-[#0a1a36] flex flex-col items-center justify-center p-6 text-center">
+                    
+                    <!-- Pulsing Tech Circle Rings -->
+                    <div class="relative w-36 h-36 rounded-full border border-primary/40 flex items-center justify-center mb-4">
+                      <div class="absolute inset-0 rounded-full border border-secondary/30 border-dashed animate-spin" style="animation-duration: 25s;"></div>
+                      <div class="w-28 h-28 rounded-full bg-gradient-to-br from-primary via-tertiary to-secondary p-1 flex items-center justify-center shadow-[0_0_30px_rgba(168,85,247,0.4)]">
+                        <div class="w-full h-full bg-[#14121e] rounded-full flex flex-col items-center justify-center">
+                          <span class="material-symbols-outlined text-4xl text-primary">terminal</span>
+                          <span class="font-code text-[11px] text-secondary font-bold mt-1">C++ • JS</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <h3 class="font-headline text-xl font-bold text-on-surface">Anjali Mishra</h3>
+                    <p class="font-code text-xs text-primary font-medium mt-1">Software Development Intern Candidate</p>
+                    <span class="font-code text-[11px] text-on-surface-variant mt-0.5">TSEC, Mumbai University</span>
+
+                  </div>
+
+                  <!-- Coordinates Overlay -->
+                  <div class="absolute top-3 left-3 bg-surface-container-lowest/90 backdrop-blur-md px-2.5 py-1 rounded font-code text-[11px] text-secondary flex items-center gap-1.5 border border-secondary/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+                    <span>19.0760° N, 72.8777° E // Mumbai</span>
+                  </div>
+
+                  <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-primary/20 text-primary font-code text-[11px] font-semibold border border-primary/30">
+                    B.E. 2029
+                  </div>
+
+                </div>
+
+                <!-- Info Badges -->
+                <div class="flex flex-col gap-2">
+                  <div class="flex items-center gap-3 p-2.5 rounded-lg bg-surface-container border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-[20px]">school</span>
+                    <div class="flex flex-col">
+                      <span class="font-code text-[10px] text-outline uppercase">College / University</span>
+                      <span class="font-body text-xs text-on-surface font-semibold">TSEC, Mumbai University (Sem 3)</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3 p-2.5 rounded-lg bg-surface-container border border-white/5">
+                    <span class="material-symbols-outlined text-secondary text-[20px]">call</span>
+                    <div class="flex flex-col">
+                      <span class="font-code text-[10px] text-outline uppercase">Contact Direct</span>
+                      <span class="font-body text-xs text-on-surface font-semibold">+91 88579 02061</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3 p-2.5 rounded-lg bg-surface-container border border-white/5">
+                    <span class="material-symbols-outlined text-tertiary text-[20px]">mark_email_read</span>
+                    <div class="flex flex-col truncate">
+                      <span class="font-code text-[10px] text-outline uppercase">Email Address</span>
+                      <span class="font-body text-xs text-on-surface font-semibold truncate">anjalibhavanimishra@gmail.com</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Tab 2: Terminal Bio Pane -->
+              <div id="terminal-content-pane" class="hidden flex-col gap-3 font-code text-xs text-on-surface h-[440px] overflow-y-auto pr-1">
+                <div class="p-3 rounded bg-surface-container-lowest border border-white/5 font-code text-xs space-y-2">
+                  <div class="text-on-surface-variant flex items-center gap-2">
+                    <span class="text-secondary">$</span>
+                    <span class="text-on-surface">whoami</span>
+                  </div>
+                  <div class="text-primary pl-4">
+                    &gt; Anjali Mishra (Second-Year Engineering Student &amp; SDE Aspirant)
+                  </div>
+                  <div class="text-on-surface-variant flex items-center gap-2 pt-2">
+                    <span class="text-secondary">$</span>
+                    <span class="text-on-surface">cat /etc/manifest/identity.json</span>
+                  </div>
+                  <div class="text-on-surface-variant pl-4 leading-relaxed font-code text-[11px]">
+                    {<br/>
+                    &nbsp;&nbsp;<span class="text-secondary">"name"</span>: <span class="text-primary-light">"Anjali Mishra"</span>,<br/>
+                    &nbsp;&nbsp;<span class="text-secondary">"university"</span>: <span class="text-primary-light">"Thakur Shyamnarayan Eng. College, Mumbai Univ"</span>,<br/>
+                    &nbsp;&nbsp;<span class="text-secondary">"degree"</span>: <span class="text-primary-light">"B.E. Electronics &amp; Communication Eng (Sem 3)"</span>,<br/>
+                    &nbsp;&nbsp;<span class="text-secondary">"graduation"</span>: <span class="text-secondary font-bold">2029</span>,<br/>
+                    &nbsp;&nbsp;<span class="text-secondary">"core_languages"</span>: [<span class="text-primary">"C++"</span>, <span class="text-primary">"JavaScript"</span>],<br/>
+                    &nbsp;&nbsp;<span class="text-secondary">"web_technologies"</span>: [<span class="text-primary">"HTML"</span>, <span class="text-primary">"CSS"</span>, <span class="text-primary">"React"</span>, <span class="text-primary">"Node.js"</span>, <span class="text-primary">"Express.js"</span>],<br/>
+                    &nbsp;&nbsp;<span class="text-secondary">"database"</span>: [<span class="text-primary">"SQL"</span>],<br/>
+                    &nbsp;&nbsp;<span class="text-secondary">"objective"</span>: <span class="text-secondary">"Seeking SDE Internship • Full-Stack Development"</span><br/>
+                    }
+                  </div>
+                  <div class="text-on-surface-variant flex items-center gap-2 pt-2">
+                    <span class="text-secondary">$</span>
+                    <span class="text-on-surface">cat about.txt</span>
+                  </div>
+                  <p class="text-on-surface pl-4 font-code text-xs leading-relaxed">
+                    I build full-stack web applications with the modern JavaScript stack and solve algorithmic problems in C++. Focused on clean code, modular architecture, and high reliability.
+                  </p>
+                  <div class="text-on-surface-variant flex items-center gap-2 pt-2">
+                    <span class="text-secondary">$</span>
+                    <span class="text-secondary animate-pulse">_</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Interactive Soundtrack Widget -->
+            <div class="w-full bg-surface-container border border-primary/20 rounded-xl p-4 shadow-md flex items-center justify-between gap-4">
+              <div class="flex items-center gap-3 min-w-0">
+                <button onclick="togglePlayTrack()" aria-label="Play/Pause soundtrack" class="w-10 h-10 rounded-lg bg-surface-container-high hover:bg-primary text-secondary hover:text-white flex items-center justify-center transition-colors flex-shrink-0">
+                  <span id="musicPlayIcon" class="material-symbols-outlined text-[22px]">play_arrow</span>
+                </button>
+                <div class="flex flex-col min-w-0">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+                    <span class="font-code text-[10px] text-secondary uppercase tracking-wider">DEV SOUNDTRACK</span>
+                  </div>
+                  <span id="musicTrackTitle" class="font-headline text-xs font-bold text-on-surface truncate">Cosmic Drift // Focus Beat</span>
+                  <span id="musicTrackArtist" class="font-code text-[10px] text-on-surface-variant truncate">Anjali Mishra • Dev Audio</span>
+                </div>
+              </div>
+              
+              <!-- Equalizer Waveform -->
+              <div id="musicWaveforms" class="flex items-end gap-1 h-6 flex-shrink-0 px-2 py-1 bg-surface-container-low rounded-lg opacity-40 transition-opacity">
+                <div class="w-1 bg-secondary rounded-full wave-bar-1" style="height: 60%;"></div>
+                <div class="w-1 bg-primary rounded-full wave-bar-2" style="height: 100%;"></div>
+                <div class="w-1 bg-secondary rounded-full wave-bar-3" style="height: 45%;"></div>
+                <div class="w-1 bg-tertiary rounded-full wave-bar-4" style="height: 80%;"></div>
+                <div class="w-1 bg-secondary rounded-full wave-bar-5" style="height: 30%;"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Story & 3 Deep Highlight Cards (7 cols) -->
+          <div class="lg:col-span-7 flex flex-col gap-6 w-full">
+            
+            <div class="bg-surface-container-low border border-primary/20 rounded-xl p-6 lg:p-8 shadow-xl flex flex-col gap-4">
+              <span class="font-code text-xs text-primary uppercase font-bold tracking-wider">// 01.1 PHILOSOPHY &amp; OBJECTIVE</span>
+              <h3 class="font-headline text-2xl sm:text-3xl text-on-surface font-bold leading-tight">
+                Second-Year Engineering Student Seeking SDE Internship<span class="text-secondary">.</span>
+              </h3>
+              <div class="space-y-4 font-body text-base text-on-surface-variant leading-relaxed">
+                <p>
+                  As an Electronics and Communication Engineering student at <strong class="text-on-surface font-semibold">Thakur Shyamnarayan Engineering College (TSEC), Mumbai University</strong>, I have cultivated a dual passion for low-level computational efficiency and high-velocity web product development.
+                </p>
+                <p>
+                  I build full-stack web applications utilizing the <strong class="text-on-surface font-semibold">JavaScript ecosystem (HTML, CSS, JavaScript, React, Node.js, Express.js)</strong> coupled with structured relational storage in <strong class="text-on-surface font-semibold">SQL</strong>. For rigorous data structure challenges and computational problem-solving, I rely on <strong class="text-on-surface font-semibold">C++</strong>.
+                </p>
+                <p>
+                  My goal is to secure a software development (SDE) internship where I can contribute to mission-critical codebases, build reliable software architectures, and collaborate with inspiring engineering teams.
+                </p>
+              </div>
+
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-2 pt-2">
+                <span class="px-3 py-1 rounded bg-surface-container font-code text-xs text-secondary font-medium">#FullStackWeb</span>
+                <span class="px-3 py-1 rounded bg-surface-container font-code text-xs text-primary font-medium">#CPlusPlus</span>
+                <span class="px-3 py-1 rounded bg-surface-container font-code text-xs text-tertiary font-medium">#ReactAndNode</span>
+                <span class="px-3 py-1 rounded bg-surface-container font-code text-xs text-on-surface font-medium">#SQLDatabases</span>
+              </div>
+            </div>
+
+            <!-- 3 Highlight Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
+              
+              <div class="bg-surface-container border border-white/5 rounded-xl p-4 shadow-md flex flex-col justify-between hover:border-primary/40 transition-all">
+                <div>
+                  <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
+                    <span class="material-symbols-outlined text-[24px]">school</span>
+                  </div>
+                  <h4 class="font-headline text-sm font-bold text-on-surface mb-1">Academic Rigor</h4>
+                  <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                    B.E. in Electronics &amp; Communication at TSEC Mumbai University. Expected graduation: 2029.
+                  </p>
+                </div>
+                <div class="pt-3 font-code text-xs text-primary font-semibold flex items-center justify-between">
+                  <span>Sem 3</span>
+                  <span class="material-symbols-outlined text-[16px]">verified</span>
+                </div>
+              </div>
+
+              <div class="bg-surface-container border border-white/5 rounded-xl p-4 shadow-md flex flex-col justify-between hover:border-secondary/40 transition-all">
+                <div>
+                  <div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary mb-3">
+                    <span class="material-symbols-outlined text-[24px]">hub</span>
+                  </div>
+                  <h4 class="font-headline text-sm font-bold text-on-surface mb-1">Full-Stack Web</h4>
+                  <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                    Building scalable applications from scratch with React frontends, Express APIs, and SQL persistence.
+                  </p>
+                </div>
+                <div class="pt-3 font-code text-xs text-secondary font-semibold flex items-center justify-between">
+                  <span>JavaScript Stack</span>
+                  <span class="material-symbols-outlined text-[16px]">account_tree</span>
+                </div>
+              </div>
+
+              <div class="bg-surface-container border border-white/5 rounded-xl p-4 shadow-md flex flex-col justify-between hover:border-tertiary/40 transition-all">
+                <div>
+                  <div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary mb-3">
+                    <span class="material-symbols-outlined text-[24px]">memory</span>
+                  </div>
+                  <h4 class="font-headline text-sm font-bold text-on-surface mb-1">C++ Problem Solving</h4>
+                  <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                    Solving complex data structure challenges and algorithmic problems with high memory and runtime efficiency.
+                  </p>
+                </div>
+                <div class="pt-3 font-code text-xs text-tertiary font-semibold flex items-center justify-between">
+                  <span>250+ Solved</span>
+                  <span class="material-symbols-outlined text-[16px]">insights</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================================================================
+           TECHNICAL UNIVERSE (Skills Matrix + Real-Time Search & Filter)
+           ========================================================================= -->
+      <section class="max-w-7xl mx-auto px-6 lg:px-12 py-16 w-full" id="skills">
+        
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
+          <div>
+            <div class="inline-flex items-center gap-2 mb-2">
+              <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+              <span class="font-code text-xs text-secondary uppercase tracking-widest font-bold">02 // STACK &amp; TOOLKIT</span>
+              <span class="text-outline-variant font-code text-xs">:: COMPILATION v2.4</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl text-on-surface font-bold tracking-tight">
+              My Technical <span class="bg-gradient-to-r from-primary via-tertiary to-secondary bg-clip-text text-transparent">Universe</span>
+            </h2>
+            <p class="font-body text-base text-on-surface-variant max-w-2xl mt-1">
+              Languages, frontend libraries, backend runtimes, and databases verified through real code repositories.
+            </p>
+          </div>
+
+          <!-- Telemetry Summary -->
+          <div class="flex items-center gap-6 bg-surface-container-low border border-white/5 px-6 py-3 rounded-xl shadow-md">
+            <div class="flex flex-col">
+              <span class="font-code text-[11px] text-outline uppercase tracking-wider">Languages</span>
+              <span class="font-headline text-xl text-primary font-bold">C++, JS</span>
+            </div>
+            <div class="w-px h-8 bg-white/10"></div>
+            <div class="flex flex-col">
+              <span class="font-code text-[11px] text-outline uppercase tracking-wider">Web Stack</span>
+              <span class="font-headline text-xl text-secondary font-bold">React • Node</span>
+            </div>
+            <div class="w-px h-8 bg-white/10"></div>
+            <div class="flex flex-col">
+              <span class="font-code text-[11px] text-outline uppercase tracking-wider">Database</span>
+              <span class="font-headline text-xl text-tertiary font-bold">SQL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Controls & Real-Time Search -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-lowest border border-white/5 p-3 rounded-xl shadow-inner mb-8">
+          <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
+            <button class="skill-filter-btn px-4 py-2 rounded-lg font-code text-xs transition-all duration-200 bg-primary text-on-primary shadow-[0_0_16px_rgba(183,109,255,0.4)] font-semibold" data-filter="all">
+              All Skills (8)
+            </button>
+            <button class="skill-filter-btn px-4 py-2 rounded-lg font-code text-xs transition-all duration-200 bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high" data-filter="languages">
+              Languages (2)
+            </button>
+            <button class="skill-filter-btn px-4 py-2 rounded-lg font-code text-xs transition-all duration-200 bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high" data-filter="frontend">
+              Frontend (3)
+            </button>
+            <button class="skill-filter-btn px-4 py-2 rounded-lg font-code text-xs transition-all duration-200 bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high" data-filter="backend">
+              Backend (2)
+            </button>
+            <button class="skill-filter-btn px-4 py-2 rounded-lg font-code text-xs transition-all duration-200 bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high" data-filter="databases">
+              Databases (1)
+            </button>
+          </div>
+
+          <div class="relative min-w-[240px]">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-outline">search</span>
+            <input id="skillSearchInput" type="text" placeholder="Search skill or concept..." class="w-full bg-surface-container-low border border-white/10 pl-9 pr-3 py-2 rounded-lg font-code text-xs text-on-surface placeholder:text-outline-variant focus:outline-none focus:border-secondary transition-colors"/>
+          </div>
+        </div>
+
+        <!-- Skills Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" id="skillsMatrix">
+          
+          <!-- Card 1: C++ -->
+          <div class="skill-card group bg-surface-container-low border border-primary/20 hover:border-primary/50 p-5 rounded-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(168,85,247,0.2)]" data-category="languages">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-[22px]">memory</span>
+                </div>
+                <span class="font-code text-[11px] px-2.5 py-0.5 rounded-full bg-primary/20 text-primary-fixed-dim font-semibold">Core Language</span>
+              </div>
+              <h3 class="font-headline text-lg font-bold text-on-surface">C++</h3>
+              <span class="font-code text-xs text-secondary block mb-2">STL / OOP / Pointers</span>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Algorithmic problem solving, standard template library (STL), custom memory and pointer handling, data structures, and optimized runtimes.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-white/5">
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-secondary">DSA</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">STL Vectors</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Efficiency</span>
+            </div>
+          </div>
+
+          <!-- Card 2: JavaScript -->
+          <div class="skill-card group bg-surface-container-low border border-secondary/20 hover:border-secondary/50 p-5 rounded-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(56,189,248,0.2)]" data-category="languages">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-black transition-colors">
+                  <span class="material-symbols-outlined text-[22px]">javascript</span>
+                </div>
+                <span class="font-code text-[11px] px-2.5 py-0.5 rounded-full bg-secondary/20 text-secondary font-semibold">Primary Web</span>
+              </div>
+              <h3 class="font-headline text-lg font-bold text-on-surface">JavaScript</h3>
+              <span class="font-code text-xs text-secondary block mb-2">ES6+ / Async Engine</span>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Asynchronous programming with Promises and Async/Await, DOM manipulation, closures, event loop mechanics, and modular ES code design.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-white/5">
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-secondary">Async/Await</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">ES6 Modules</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">DOM API</span>
+            </div>
+          </div>
+
+          <!-- Card 3: React -->
+          <div class="skill-card group bg-surface-container-low border border-primary/20 hover:border-primary/50 p-5 rounded-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(168,85,247,0.2)]" data-category="frontend">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-[22px]">widgets</span>
+                </div>
+                <span class="font-code text-[11px] px-2.5 py-0.5 rounded-full bg-primary/20 text-primary-fixed-dim font-semibold">Frontend SPA</span>
+              </div>
+              <h3 class="font-headline text-lg font-bold text-on-surface">React</h3>
+              <span class="font-code text-xs text-secondary block mb-2">Components &amp; Hooks</span>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Component-driven web architecture, custom React hooks, declarative state management, virtual DOM reconciliation, and interactive UI design.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-white/5">
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-secondary">useState/Effect</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Props Flow</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">SPA Design</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Node.js -->
+          <div class="skill-card group bg-surface-container-low border border-secondary/20 hover:border-secondary/50 p-5 rounded-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(56,189,248,0.2)]" data-category="backend">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-black transition-colors">
+                  <span class="material-symbols-outlined text-[22px]">dns</span>
+                </div>
+                <span class="font-code text-[11px] px-2.5 py-0.5 rounded-full bg-secondary/20 text-secondary font-semibold">Runtime</span>
+              </div>
+              <h3 class="font-headline text-lg font-bold text-on-surface">Node.js</h3>
+              <span class="font-code text-xs text-secondary block mb-2">Backend Server</span>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Event-driven asynchronous backend runtime, file system streaming, process automation, npm dependency ecosystem, and micro-servers.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-white/5">
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-secondary">Event Loop</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">FS &amp; Path</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">NPM</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Express.js -->
+          <div class="skill-card group bg-surface-container-low border border-tertiary/20 hover:border-tertiary/50 p-5 rounded-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(99,102,241,0.2)]" data-category="backend">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-tertiary group-hover:bg-tertiary group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-[22px]">api</span>
+                </div>
+                <span class="font-code text-[11px] px-2.5 py-0.5 rounded-full bg-tertiary/20 text-tertiary font-semibold">Web Framework</span>
+              </div>
+              <h3 class="font-headline text-lg font-bold text-on-surface">Express.js</h3>
+              <span class="font-code text-xs text-secondary block mb-2">RESTful APIs</span>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Layered REST endpoints, middleware request pipelines, error interceptors, route controllers, and JSON request/response validation.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-white/5">
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-secondary">Middleware</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">REST Routes</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">CORS</span>
+            </div>
+          </div>
+
+          <!-- Card 6: SQL -->
+          <div class="skill-card group bg-surface-container-low border border-secondary/20 hover:border-secondary/50 p-5 rounded-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(56,189,248,0.2)]" data-category="databases">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-black transition-colors">
+                  <span class="material-symbols-outlined text-[22px]">database</span>
+                </div>
+                <span class="font-code text-[11px] px-2.5 py-0.5 rounded-full bg-secondary/20 text-secondary font-semibold">Relational DB</span>
+              </div>
+              <h3 class="font-headline text-lg font-bold text-on-surface">SQL</h3>
+              <span class="font-code text-xs text-secondary block mb-2">Schema &amp; Queries</span>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Relational schema normalization, complex multi-table JOINs, aggregate calculations, foreign key constraints, and query performance.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-white/5">
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-secondary">Joins &amp; Filters</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">ACID</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Indexing</span>
+            </div>
+          </div>
+
+          <!-- Card 7: HTML5 -->
+          <div class="skill-card group bg-surface-container-low border border-primary/20 hover:border-primary/50 p-5 rounded-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(168,85,247,0.2)]" data-category="frontend">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-[22px]">html</span>
+                </div>
+                <span class="font-code text-[11px] px-2.5 py-0.5 rounded-full bg-primary/20 text-primary-fixed-dim font-semibold">Semantic Spec</span>
+              </div>
+              <h3 class="font-headline text-lg font-bold text-on-surface">HTML5</h3>
+              <span class="font-code text-xs text-secondary block mb-2">Markup &amp; A11y</span>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Semantic structuring, accessible element hierarchy (WCAG compliant), form validations, and clean DOM trees.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-white/5">
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-secondary">Semantics</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">SEO Ready</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Accessible</span>
+            </div>
+          </div>
+
+          <!-- Card 8: CSS3 -->
+          <div class="skill-card group bg-surface-container-low border border-tertiary/20 hover:border-tertiary/50 p-5 rounded-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(99,102,241,0.2)]" data-category="frontend">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-tertiary group-hover:bg-tertiary group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-[22px]">palette</span>
+                </div>
+                <span class="font-code text-[11px] px-2.5 py-0.5 rounded-full bg-tertiary/20 text-tertiary font-semibold">Styling &amp; UX</span>
+              </div>
+              <h3 class="font-headline text-lg font-bold text-on-surface">CSS3</h3>
+              <span class="font-code text-xs text-secondary block mb-2">Flexbox / Grid / Anim</span>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Responsive mobile-first grid systems, fluid layouts, keyframe transitions, glassmorphism, and modern typography hierarchy.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-white/5">
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-secondary">Flexbox</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">CSS Grid</span>
+              <span class="font-code text-[10px] px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Animations</span>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================================================================
+           PROJECTS: FEATURED WORK & CASE STUDIES
+           ========================================================================= -->
+      <section class="max-w-7xl mx-auto px-6 lg:px-12 py-16 w-full" id="projects">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <div class="inline-flex items-center gap-2 mb-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+              <span class="font-code text-xs text-secondary uppercase tracking-wider font-semibold">03 // FEATURED WORK &amp; CASE STUDIES</span>
+              <span class="font-code text-xs text-outline">SYS.INDEX::PROD</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl text-on-surface font-bold tracking-tight">
+              Things I've Built<span class="text-secondary">.</span>
+            </h2>
+            <p class="font-body text-base text-on-surface-variant max-w-2xl mt-1">
+              End-to-end full-stack web applications, developer CLI tooling, and responsive frontend systems.
+            </p>
+          </div>
+          <div class="flex items-center gap-4 bg-surface-container-low border border-white/5 px-5 py-3 rounded-xl shadow-sm">
+            <div class="flex flex-col">
+              <span class="font-code text-[10px] text-outline uppercase">Total Projects</span>
+              <span class="font-headline text-lg text-primary font-bold">9 Systems</span>
+            </div>
+            <div class="w-px h-8 bg-white/10"></div>
+            <div class="flex flex-col">
+              <span class="font-code text-[10px] text-outline uppercase">Stack</span>
+              <span class="font-headline text-lg text-secondary font-bold">Full-Stack JS + C++</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. Centerpiece Flagship Project (SaaS Boilerplate Generator) -->
+        <div class="group relative rounded-2xl bg-surface-container-low border border-primary/30 p-6 lg:p-8 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(168,85,247,0.2)] mb-12">
+          
+          <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <!-- Visual Terminal Preview -->
+            <div class="lg:col-span-7 flex flex-col gap-3">
+              <div class="relative w-full rounded-xl bg-surface-container-lowest border border-white/10 p-4 overflow-hidden shadow-inner flex flex-col gap-3">
+                
+                <!-- Terminal Header Bar -->
+                <div class="flex items-center justify-between pb-2 border-b border-white/5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                    <span class="font-code text-xs text-outline ml-2">saas-generator.sh</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-on-surface-variant font-code text-[11px]">
+                    <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                    <span>CLI: READY</span>
+                  </div>
+                </div>
+
+                <!-- Architecture Cards Strip -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div class="bg-surface-container p-3 rounded-lg flex flex-col gap-1 border border-white/5">
+                    <span class="font-code text-[10px] text-outline uppercase">Scaffolding Speed</span>
+                    <span class="font-headline text-base text-primary font-bold">&lt; 1.5 seconds</span>
+                    <div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden mt-1">
+                      <div class="h-full bg-primary rounded-full" style="width: 90%;"></div>
+                    </div>
+                  </div>
+                  <div class="bg-surface-container p-3 rounded-lg flex flex-col gap-1 border border-white/5">
+                    <span class="font-code text-[10px] text-outline uppercase">Architecture</span>
+                    <span class="font-headline text-base text-secondary font-bold">Modular MVC</span>
+                    <div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden mt-1">
+                      <div class="h-full bg-secondary rounded-full" style="width: 100%;"></div>
+                    </div>
+                  </div>
+                  <div class="bg-surface-container p-3 rounded-lg flex flex-col gap-1 border border-white/5">
+                    <span class="font-code text-[10px] text-outline uppercase">Auth &amp; DB Ready</span>
+                    <span class="font-headline text-base text-tertiary font-bold">JWT + SQL Pool</span>
+                    <div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden mt-1">
+                      <div class="h-full bg-tertiary rounded-full" style="width: 100%;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Terminal Preview Code Box -->
+                <pre class="font-code text-xs text-on-surface bg-[#0a0814] p-3.5 rounded-lg border border-white/5 overflow-x-auto leading-relaxed"><code><span class="text-secondary">$</span> saas-boilerplate create --name my-saas-app --auth jwt --db postgres
+<span class="text-primary-light">✔ Creating folder structure: /controllers, /routes, /middleware, /models</span>
+<span class="text-primary-light">✔ Installing Express, CORS, dotenv, jsonwebtoken, pg</span>
+<span class="text-primary-light">✔ Generating authentication boilerplate &amp; SQL schema migrations</span>
+<span class="text-secondary font-bold">✨ Boilerplate ready! Run "npm run dev" to launch in 0.8s</span></code></pre>
+
+              </div>
+            </div>
+
+            <!-- Content & Actions -->
+            <div class="lg:col-span-5 flex flex-col gap-4">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-primary/20 text-primary-fixed-dim font-code text-xs uppercase font-bold tracking-wider border border-primary/30">
+                  Flagship Project
+                </span>
+                <span class="font-code text-xs text-outline">// FULL-STACK GENERATOR</span>
+              </div>
+
+              <h3 class="font-headline text-2xl lg:text-3xl font-bold text-on-surface leading-tight">
+                SaaS Boilerplate Generator
+              </h3>
+
+              <p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                Generates starter code and folder structure for modern SaaS web applications from selected configuration options. Saves developers hours of repetitive setup by providing an instant, production-ready foundation with authentication, clean MVC routing, and database connections.
+              </p>
+
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2.5 py-1 rounded bg-surface-container text-primary font-code text-xs border border-white/5">Node.js</span>
+                <span class="px-2.5 py-1 rounded bg-surface-container text-secondary font-code text-xs border border-white/5">Express.js</span>
+                <span class="px-2.5 py-1 rounded bg-surface-container text-tertiary font-code text-xs border border-white/5">React</span>
+                <span class="px-2.5 py-1 rounded bg-surface-container text-on-surface font-code text-xs border border-white/5">SQL</span>
+                <span class="px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-code text-xs border border-white/5">JavaScript</span>
+              </div>
+
+              <!-- Bullets -->
+              <div class="space-y-2 pt-1 font-body text-xs text-on-surface">
+                <div class="flex items-start gap-2">
+                  <span class="material-symbols-outlined text-secondary text-[16px] mt-0.5">check_circle</span>
+                  <span>Generates starter code and folder structure for a SaaS app from selected options.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="material-symbols-outlined text-secondary text-[16px] mt-0.5">check_circle</span>
+                  <span>Saves the time of setting up a new project from scratch.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="material-symbols-outlined text-secondary text-[16px] mt-0.5">check_circle</span>
+                  <span>Gives developers a ready base to build their own features on.</span>
+                </div>
+              </div>
+
+              <!-- Action Trigger -->
+              <div class="flex flex-wrap items-center gap-3 pt-3">
+                <button onclick="openCaseStudyModal('saas-boilerplate')" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white font-headline text-xs font-bold hover:bg-primary-container shadow-[0_0_20px_rgba(168,85,247,0.35)] transition-all">
+                  <span class="material-symbols-outlined text-[18px]">architecture</span>
+                  <span>View Case Study &amp; Architecture</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- 2. Additional Full-Stack & Systems Projects Grid (5 Cards) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          
+          <!-- Project 2: Natural Language to SQL Generator -->
+          <div class="project-card bg-surface-container-low border border-white/10 rounded-xl p-6 flex flex-col justify-between">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between">
+                <span class="font-code text-xs text-outline uppercase tracking-wider">PROJECT 02 // AI &amp; DB</span>
+                <span class="font-code text-[11px] text-secondary bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20 font-semibold">Zero SQL Handcraft</span>
+              </div>
+              <h4 class="font-headline text-lg font-bold text-on-surface group-hover:text-primary transition-colors">
+                Natural Language to SQL Generator
+              </h4>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Converts plain-English questions into valid, optimized SQL queries. Lets users query relational databases without writing SQL by hand, turning questions into queries that can be run on a database.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-secondary">JavaScript</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-primary">Node.js</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-tertiary">SQL</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-on-surface">NLP</span>
+              </div>
+            </div>
+            <div class="pt-5 mt-4 border-t border-white/5 flex items-center justify-between">
+              <button onclick="openCaseStudyModal('nl-to-sql')" class="inline-flex items-center gap-1.5 text-primary hover:text-white font-headline text-xs font-semibold transition-colors">
+                <span>View Architecture</span>
+                <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+              </button>
+              <span class="material-symbols-outlined text-outline text-[18px]">database</span>
+            </div>
+          </div>
+
+          <!-- Project 3: RAG Platform -->
+          <div class="project-card bg-surface-container-low border border-white/10 rounded-xl p-6 flex flex-col justify-between">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between">
+                <span class="font-code text-xs text-outline uppercase tracking-wider">PROJECT 03 // NLP &amp; DOCS</span>
+                <span class="font-code text-[11px] text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20 font-semibold">Factual Grounding</span>
+              </div>
+              <h4 class="font-headline text-lg font-bold text-on-surface group-hover:text-primary transition-colors">
+                RAG Platform
+              </h4>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Finds relevant sections of documents and answers questions based on them. Answers come directly from document content instead of guesses, allowing users to get quick answers from long documents without reading them fully.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-primary">React</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-secondary">Node.js</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-tertiary">Vector Search</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-on-surface">Express</span>
+              </div>
+            </div>
+            <div class="pt-5 mt-4 border-t border-white/5 flex items-center justify-between">
+              <button onclick="openCaseStudyModal('rag-platform')" class="inline-flex items-center gap-1.5 text-primary hover:text-white font-headline text-xs font-semibold transition-colors">
+                <span>View Architecture</span>
+                <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+              </button>
+              <span class="material-symbols-outlined text-outline text-[18px]">search</span>
+            </div>
+          </div>
+
+          <!-- Project 4: Chat With Any Codebase -->
+          <div class="project-card bg-surface-container-low border border-white/10 rounded-xl p-6 flex flex-col justify-between">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between">
+                <span class="font-code text-xs text-outline uppercase tracking-wider">PROJECT 04 // DEV TOOLS</span>
+                <span class="font-code text-[11px] text-secondary bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20 font-semibold">Repository AST</span>
+              </div>
+              <h4 class="font-headline text-lg font-bold text-on-surface group-hover:text-primary transition-colors">
+                Chat With Any Codebase
+              </h4>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Finds relevant files in a repository and answers questions about the code. Lets users ask in plain language how the code works, accelerating comprehension of unfamiliar codebases.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-secondary">Node.js</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-primary">React</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-tertiary">Code Indexing</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-on-surface">JavaScript</span>
+              </div>
+            </div>
+            <div class="pt-5 mt-4 border-t border-white/5 flex items-center justify-between">
+              <button onclick="openCaseStudyModal('chat-codebase')" class="inline-flex items-center gap-1.5 text-primary hover:text-white font-headline text-xs font-semibold transition-colors">
+                <span>View Architecture</span>
+                <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+              </button>
+              <span class="material-symbols-outlined text-outline text-[18px]">code</span>
+            </div>
+          </div>
+
+          <!-- Project 5: API Reverse Engineer from Docs -->
+          <div class="project-card bg-surface-container-low border border-white/10 rounded-xl p-6 flex flex-col justify-between">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between">
+                <span class="font-code text-xs text-outline uppercase tracking-wider">PROJECT 05 // API AUTOMATION</span>
+                <span class="font-code text-[11px] text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20 font-semibold">OpenAPI Builder</span>
+              </div>
+              <h4 class="font-headline text-lg font-bold text-on-surface group-hover:text-primary transition-colors">
+                API Reverse Engineer from Docs
+              </h4>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Reads API documentation and builds a structured summary of endpoints and parameters. Saves the effort of going through long API docs by hand, providing a clear overview to start working with the API.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-tertiary">Express</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-secondary">JavaScript</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-primary">Web Scraper</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-on-surface">OpenAPI</span>
+              </div>
+            </div>
+            <div class="pt-5 mt-4 border-t border-white/5 flex items-center justify-between">
+              <button onclick="openCaseStudyModal('api-reverse-engineer')" class="inline-flex items-center gap-1.5 text-primary hover:text-white font-headline text-xs font-semibold transition-colors">
+                <span>View Architecture</span>
+                <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+              </button>
+              <span class="material-symbols-outlined text-outline text-[18px]">api</span>
+            </div>
+          </div>
+
+          <!-- Project 6: Personal Knowledge Assistant -->
+          <div class="project-card bg-surface-container-low border border-white/10 rounded-xl p-6 flex flex-col justify-between">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between">
+                <span class="font-code text-xs text-outline uppercase tracking-wider">PROJECT 06 // CONTEXT MEMORY</span>
+                <span class="font-code text-[11px] text-secondary bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20 font-semibold">SQL Relational</span>
+              </div>
+              <h4 class="font-headline text-lg font-bold text-on-surface group-hover:text-primary transition-colors">
+                Personal Knowledge Assistant
+              </h4>
+              <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                Recalls relevant context from saved notes and past conversations. Brings up earlier information when it is needed in a new question, serving as a personal assistant that preserves context over time.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-secondary">SQL</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-primary">Node.js</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-tertiary">React</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container font-code text-[10px] text-on-surface">JavaScript</span>
+              </div>
+            </div>
+            <div class="pt-5 mt-4 border-t border-white/5 flex items-center justify-between">
+              <button onclick="openCaseStudyModal('knowledge-assistant')" class="inline-flex items-center gap-1.5 text-primary hover:text-white font-headline text-xs font-semibold transition-colors">
+                <span>View Architecture</span>
+                <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+              </button>
+              <span class="material-symbols-outlined text-outline text-[18px]">psychology</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 3. Dedicated Frontend Projects Showcase -->
+        <div class="border-t border-white/10 pt-12">
+          
+          <div class="flex items-center justify-between mb-8">
+            <div>
+              <span class="font-code text-xs text-secondary uppercase tracking-widest font-semibold">// INTERACTIVE EXPERIENCES</span>
+              <h3 class="font-headline text-2xl font-bold text-on-surface">Frontend Projects Showcase</h3>
+              <p class="font-body text-xs text-on-surface-variant">Built with clean HTML, CSS &amp; vanilla JavaScript—try them live right here!</p>
+            </div>
+            <span class="font-code text-xs text-outline hidden sm:inline">VANILLA JS &amp; DOM CRAFT</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Frontend 1: Image Gallery -->
+            <div class="bg-surface-container-low border border-white/10 rounded-xl p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="p-2 rounded-lg bg-surface-container text-primary material-symbols-outlined text-[20px]">photo_library</span>
+                  <span class="font-code text-[10px] text-primary uppercase font-bold">HTML • CSS • JS</span>
+                </div>
+                <h4 class="font-headline text-base font-bold text-on-surface">Image Gallery</h4>
+                <p class="font-body text-xs text-on-surface-variant mt-1 leading-relaxed">
+                  Responsive image gallery featuring dynamic grid layout, smooth hover zoom animations, and an interactive full-size lightbox viewer.
+                </p>
+                <div class="grid grid-cols-3 gap-1.5 my-3">
+                  <div onclick="openLightbox('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80', 'Circuitry & Motherboard')" class="h-16 rounded overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&q=80" alt="Tech" class="w-full h-full object-cover"/>
+                  </div>
+                  <div onclick="openLightbox('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80', 'Matrix Code Terminal')" class="h-16 rounded overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
+                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=300&q=80" alt="Code" class="w-full h-full object-cover"/>
+                  </div>
+                  <div onclick="openLightbox('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80', 'Cosmic Nebula Universe')" class="h-16 rounded overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=300&q=80" alt="Cosmos" class="w-full h-full object-cover"/>
+                  </div>
+                </div>
+              </div>
+              <button onclick="openLightbox('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80', 'Circuitry & Motherboard')" class="w-full py-2 bg-surface-container hover:bg-surface-container-high rounded text-xs font-code text-primary flex items-center justify-center gap-1.5 transition-colors">
+                <span class="material-symbols-outlined text-[16px]">visibility</span>
+                <span>Open Lightbox Gallery</span>
+              </button>
+            </div>
+
+            <!-- Frontend 2: Interactive Calculator -->
+            <div class="bg-surface-container-low border border-white/10 rounded-xl p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="p-2 rounded-lg bg-surface-container text-secondary material-symbols-outlined text-[20px]">calculate</span>
+                  <span class="font-code text-[10px] text-secondary uppercase font-bold">JavaScript Math</span>
+                </div>
+                <h4 class="font-headline text-base font-bold text-on-surface">Calculator</h4>
+                <p class="font-body text-xs text-on-surface-variant mt-1 mb-3">
+                  Functional arithmetic calculator handling order of operations, decimal floats, and error guardrails.
+                </p>
+
+                <!-- Mini Calculator Widget -->
+                <div class="bg-surface-container-lowest p-3 rounded-lg border border-white/10">
+                  <div id="calcDisplay" class="bg-surface p-2 rounded text-right font-code text-sm text-secondary font-bold mb-2 truncate">
+                    0
+                  </div>
+                  <div class="grid grid-cols-4 gap-1 text-center font-code text-xs">
+                    <button onclick="pressCalc('C')" class="p-1.5 bg-surface-container-high hover:bg-red-500/20 text-red-400 rounded">C</button>
+                    <button onclick="pressCalc('DEL')" class="p-1.5 bg-surface-container-high hover:bg-surface-bright rounded">DEL</button>
+                    <button onclick="pressCalc('/')" class="p-1.5 bg-surface-container-high hover:bg-secondary/20 text-secondary rounded">/</button>
+                    <button onclick="pressCalc('*')" class="p-1.5 bg-surface-container-high hover:bg-secondary/20 text-secondary rounded">*</button>
+
+                    <button onclick="pressCalc('7')" class="p-1.5 bg-surface-container hover:bg-surface-bright rounded">7</button>
+                    <button onclick="pressCalc('8')" class="p-1.5 bg-surface-container hover:bg-surface-bright rounded">8</button>
+                    <button onclick="pressCalc('9')" class="p-1.5 bg-surface-container hover:bg-surface-bright rounded">9</button>
+                    <button onclick="pressCalc('-')" class="p-1.5 bg-surface-container-high hover:bg-secondary/20 text-secondary rounded">-</button>
+
+                    <button onclick="pressCalc('4')" class="p-1.5 bg-surface-container hover:bg-surface-bright rounded">4</button>
+                    <button onclick="pressCalc('5')" class="p-1.5 bg-surface-container hover:bg-surface-bright rounded">5</button>
+                    <button onclick="pressCalc('6')" class="p-1.5 bg-surface-container hover:bg-surface-bright rounded">6</button>
+                    <button onclick="pressCalc('+')" class="p-1.5 bg-surface-container-high hover:bg-secondary/20 text-secondary rounded">+</button>
+
+                    <button onclick="pressCalc('1')" class="p-1.5 bg-surface-container hover:bg-surface-bright rounded">1</button>
+                    <button onclick="pressCalc('2')" class="p-1.5 bg-surface-container hover:bg-surface-bright rounded">2</button>
+                    <button onclick="pressCalc('3')" class="p-1.5 bg-surface-container hover:bg-surface-bright rounded">3</button>
+                    <button onclick="pressCalc('=')" class="p-1.5 bg-primary hover:bg-primary-container text-white font-bold rounded row-span-2 flex items-center justify-center">=</button>
+
+                    <button onclick="pressCalc('0')" class="p-1.5 bg-surface-container hover:bg-surface-bright rounded col-span-2">0</button>
+                    <button onclick="pressCalc('.')" class="p-1.5 bg-surface-container hover:bg-surface-bright rounded">.</button>
+                  </div>
+                </div>
+
+              </div>
+              <div class="mt-3 text-center font-code text-[11px] text-outline">Live Interactive Widget</div>
+            </div>
+
+            <!-- Frontend 3: Music Player -->
+            <div class="bg-surface-container-low border border-white/10 rounded-xl p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="p-2 rounded-lg bg-surface-container text-tertiary material-symbols-outlined text-[20px]">headphones</span>
+                  <span class="font-code text-[10px] text-tertiary uppercase font-bold">JavaScript Audio</span>
+                </div>
+                <h4 class="font-headline text-base font-bold text-on-surface">Music Player</h4>
+                <p class="font-body text-xs text-on-surface-variant mt-1 mb-3">
+                  Audio player with song queue, play/pause controls, forward/back track toggling, and animated playback telemetry.
+                </p>
+
+                <!-- Mini Player Container -->
+                <div class="bg-surface-container-lowest p-3 rounded-lg border border-white/10 flex flex-col gap-2">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 rounded bg-gradient-to-tr from-primary to-secondary flex items-center justify-center text-white">
+                      <span class="material-symbols-outlined text-[20px]">music_note</span>
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                      <span class="font-headline text-xs font-bold text-on-surface truncate">Cosmic Runtime Lo-Fi</span>
+                      <span class="font-code text-[10px] text-on-surface-variant">Anjali Mishra • Playlist (3)</span>
+                    </div>
+                  </div>
+
+                  <!-- Progress Bar -->
+                  <div class="w-full bg-surface-container h-1 rounded-full overflow-hidden my-1">
+                    <div class="bg-gradient-to-r from-primary to-secondary h-full" style="width: 48%;"></div>
+                  </div>
+
+                  <!-- Controls -->
+                  <div class="flex items-center justify-center gap-4 pt-1">
+                    <button onclick="nextTrack(-1)" aria-label="Previous track" class="text-on-surface-variant hover:text-white transition-colors">
+                      <span class="material-symbols-outlined text-[18px]">skip_previous</span>
+                    </button>
+                    <button onclick="togglePlayTrack()" aria-label="Play/Pause" class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_12px_rgba(168,85,247,0.5)]">
+                      <span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                    </button>
+                    <button onclick="nextTrack(1)" aria-label="Next track" class="text-on-surface-variant hover:text-white transition-colors">
+                      <span class="material-symbols-outlined text-[18px]">skip_next</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+              <div class="mt-3 text-center font-code text-[11px] text-outline">Interactive Audio Controls</div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================================================================
+           JOURNEY / TIMELINE
+           ========================================================================= -->
+      <section class="max-w-7xl mx-auto px-6 lg:px-12 py-16 w-full" id="journey">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <div class="inline-flex items-center gap-2 mb-2">
+              <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+              <span class="font-code text-xs text-secondary uppercase tracking-widest font-bold">04 // TIMELINE &amp; MILESTONES</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl text-on-surface font-bold tracking-tight">
+              My Journey So Far<span class="text-primary">.</span>
+            </h2>
+            <p class="font-body text-base text-on-surface-variant max-w-2xl mt-1">
+              A chronological perspective on academic foundations, full-stack projects, and continuous software engineering progression.
+            </p>
+          </div>
+          <div class="flex items-center gap-3 bg-surface-container-low border border-white/5 px-4 py-2 rounded-xl">
+            <span class="font-code text-xs text-outline uppercase">Active Horizon:</span>
+            <span class="font-code text-xs text-secondary font-bold">2023 — 2029 (Expected)</span>
+          </div>
+        </div>
+
+        <!-- Timeline Filters -->
+        <div class="flex flex-wrap items-center gap-2 mb-10 p-1.5 bg-surface-container-lowest border border-white/5 rounded-xl max-w-fit shadow-inner">
+          <button class="timeline-filter-btn px-4 py-1.5 rounded-lg font-headline text-xs font-semibold bg-primary text-white shadow-[0_0_16px_rgba(183,109,255,0.4)]" data-filter="all">
+            All Milestones
+          </button>
+          <button class="timeline-filter-btn px-4 py-1.5 rounded-lg font-headline text-xs font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-filter="education">
+            Education
+          </button>
+          <button class="timeline-filter-btn px-4 py-1.5 rounded-lg font-headline text-xs font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-filter="projects">
+            Full-Stack Projects
+          </button>
+          <button class="timeline-filter-btn px-4 py-1.5 rounded-lg font-headline text-xs font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-filter="skills">
+            Frontend &amp; Algorithms
+          </button>
+        </div>
+
+        <!-- Continuous Glowing Laser Timeline -->
+        <div class="relative w-full">
+          <div class="absolute left-4 md:left-8 top-4 bottom-4 w-1 timeline-laser-line rounded-full"></div>
+
+          <div class="flex flex-col gap-10">
+            
+            <!-- Milestone 1: TSEC Mumbai University -->
+            <div class="timeline-node relative pl-12 md:pl-20 group" data-category="education">
+              <div class="absolute left-2 md:left-6 top-3 -translate-x-1/2 flex items-center justify-center">
+                <span class="w-4 h-4 rounded-full bg-surface-container-lowest border-2 border-primary timeline-node-dot"></span>
+              </div>
+              <div class="bg-surface-container-low border border-primary/20 rounded-xl p-6 shadow-md hover:border-primary/50 transition-all flex flex-col gap-3">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-0.5 rounded-full bg-primary/20 text-primary-fixed-dim font-code text-xs font-semibold">2023 — Present (Expected 2029)</span>
+                    <span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-code text-[10px] uppercase">ACADEMIC FOUNDATION</span>
+                  </div>
+                  <span class="font-code text-xs text-secondary flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">school</span>
+                    Second Year (Sem 3)
+                  </span>
+                </div>
+                <h3 class="font-headline text-xl font-bold text-on-surface">
+                  B.E. in Electronics and Communication Engineering
+                </h3>
+                <div class="font-body text-sm text-primary font-medium">Thakur Shyamnarayan Engineering College (TSEC), Mumbai University</div>
+                <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                  Rigorous engineering education building deep analytical skills, signal processing fundamentals, computer hardware architecture, logic design, and software fundamentals.
+                </p>
+                <div class="flex flex-wrap gap-2 pt-1">
+                  <span class="font-code text-[11px] px-2 py-0.5 rounded bg-surface-container text-secondary">Signal Analysis</span>
+                  <span class="font-code text-[11px] px-2 py-0.5 rounded bg-surface-container text-secondary">Digital Electronics</span>
+                  <span class="font-code text-[11px] px-2 py-0.5 rounded bg-surface-container text-secondary">Communication Systems</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Milestone 2: Advanced Web & AI Projects -->
+            <div class="timeline-node relative pl-12 md:pl-20 group" data-category="projects">
+              <div class="absolute left-2 md:left-6 top-3 -translate-x-1/2 flex items-center justify-center">
+                <span class="w-4 h-4 rounded-full bg-surface-container-lowest border-2 border-secondary timeline-node-dot"></span>
+              </div>
+              <div class="bg-surface-container-low border border-secondary/20 rounded-xl p-6 shadow-md hover:border-secondary/50 transition-all flex flex-col gap-3">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-0.5 rounded-full bg-secondary/20 text-secondary font-code text-xs font-semibold">2024 — 2025</span>
+                    <span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-code text-[10px] uppercase">FULL-STACK &amp; AI INNOVATION</span>
+                  </div>
+                  <span class="font-code text-xs text-primary flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">terminal</span>
+                    Full-Stack Systems
+                  </span>
+                </div>
+                <h3 class="font-headline text-xl font-bold text-on-surface">
+                  Engineered 6 Comprehensive Backend &amp; Full-Stack Solutions
+                </h3>
+                <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                  Architected and published high-utility tools including the <strong class="text-on-surface font-semibold">SaaS Boilerplate Generator</strong>, <strong class="text-on-surface font-semibold">Natural Language to SQL Generator</strong>, <strong class="text-on-surface font-semibold">RAG Platform</strong>, <strong class="text-on-surface font-semibold">Chat With Any Codebase</strong>, <strong class="text-on-surface font-semibold">API Reverse Engineer</strong>, and <strong class="text-on-surface font-semibold">Personal Knowledge Assistant</strong>.
+                </p>
+                <div class="flex flex-wrap gap-2 pt-1">
+                  <span class="font-code text-[11px] px-2 py-0.5 rounded bg-surface-container text-primary">React</span>
+                  <span class="font-code text-[11px] px-2 py-0.5 rounded bg-surface-container text-primary">Node.js</span>
+                  <span class="font-code text-[11px] px-2 py-0.5 rounded bg-surface-container text-primary">Express.js</span>
+                  <span class="font-code text-[11px] px-2 py-0.5 rounded bg-surface-container text-primary">SQL</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Milestone 3: Frontend Systems & C++ DSA -->
+            <div class="timeline-node relative pl-12 md:pl-20 group" data-category="skills">
+              <div class="absolute left-2 md:left-6 top-3 -translate-x-1/2 flex items-center justify-center">
+                <span class="w-4 h-4 rounded-full bg-surface-container-lowest border-2 border-tertiary timeline-node-dot"></span>
+              </div>
+              <div class="bg-surface-container-low border border-tertiary/20 rounded-xl p-6 shadow-md hover:border-tertiary/50 transition-all flex flex-col gap-3">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-0.5 rounded-full bg-tertiary/20 text-tertiary font-code text-xs font-semibold">Foundational</span>
+                    <span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-code text-[10px] uppercase">ALGORITHMS &amp; FRONTEND</span>
+                  </div>
+                  <span class="font-code text-xs text-secondary flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">code</span>
+                    C++ &amp; DOM Web
+                  </span>
+                </div>
+                <h3 class="font-headline text-xl font-bold text-on-surface">
+                  250+ DSA Problems Solved &amp; Vanilla Frontend Mastery
+                </h3>
+                <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                  Mastered C++ pointer semantics and algorithm complexity while simultaneously shipping rich interactive client-side web tools (Image Gallery with lightbox, Calculator with precision math, and Audio Music Player with custom controls).
+                </p>
+                <div class="flex flex-wrap gap-2 pt-1">
+                  <span class="font-code text-[11px] px-2 py-0.5 rounded bg-surface-container text-secondary">C++ Pointers</span>
+                  <span class="font-code text-[11px] px-2 py-0.5 rounded bg-surface-container text-secondary">Vanilla JavaScript</span>
+                  <span class="font-code text-[11px] px-2 py-0.5 rounded bg-surface-container text-secondary">CSS Architecture</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================================================================
+           RESUME / INTERACTIVE CV PREVIEW
+           ========================================================================= -->
+      <section class="max-w-7xl mx-auto px-6 lg:px-12 py-16 w-full" id="resume">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-primary/20 mb-2">
+              <span class="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+              <span class="font-code text-xs text-secondary tracking-widest uppercase font-semibold">05 // CURRICULUM VITAE</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl text-on-surface font-bold tracking-tight">
+              Interactive Resume<span class="text-secondary">.</span>
+            </h2>
+            <p class="font-body text-base text-on-surface-variant max-w-2xl mt-1">
+              ATS-optimized preview and official CV ready for recruiter download and review.
+            </p>
+          </div>
+          <div class="flex items-center gap-3 bg-surface-container-low border border-white/5 px-4 py-2.5 rounded-xl shadow-md">
+            <span class="material-symbols-outlined text-primary text-[22px]">verified</span>
+            <div class="flex flex-col">
+              <span class="font-code text-xs text-on-surface font-semibold">STATUS: VERIFIED CANDIDATE</span>
+              <span class="font-code text-[10px] text-on-surface-variant">ANJALI MISHRA • MUMBAI, INDIA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Left Column: Quick At-a-Glance & CTAs (5 cols) -->
+          <div class="lg:col-span-5 flex flex-col gap-6">
+            
+            <div class="bg-surface-container-low border border-primary/20 rounded-xl p-6 shadow-xl flex flex-col gap-5">
+              <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-secondary text-[22px]">contact_page</span>
+                  <h3 class="font-headline text-lg font-bold text-on-surface">Candidate Summary</h3>
+                </div>
+                <span class="font-code text-xs text-secondary bg-surface-container px-2 py-0.5 rounded">TSEC/2029</span>
+              </div>
+
+              <!-- Target Roles -->
+              <div class="space-y-1">
+                <span class="font-code text-xs text-outline uppercase tracking-wider">Target Roles</span>
+                <div class="flex flex-wrap gap-2 pt-1">
+                  <span class="px-3 py-1 rounded bg-surface-container font-code text-xs text-secondary">Software Development Engineer (SDE)</span>
+                  <span class="px-3 py-1 rounded bg-surface-container font-code text-xs text-secondary">Full-Stack Web Intern</span>
+                  <span class="px-3 py-1 rounded bg-surface-container font-code text-xs text-secondary">Backend Developer</span>
+                </div>
+              </div>
+
+              <!-- Availability -->
+              <div class="space-y-1">
+                <span class="font-code text-xs text-outline uppercase tracking-wider">Availability</span>
+                <div class="p-3 rounded-lg bg-surface-container border border-white/5 flex items-start gap-3">
+                  <span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">event_available</span>
+                  <div>
+                    <p class="font-body text-xs text-on-surface font-semibold">Summer / Fall SDE Internship</p>
+                    <p class="font-body text-[11px] text-on-surface-variant">Immediate availability for on-site (Mumbai) or distributed remote internships.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Strengths -->
+              <div class="space-y-1">
+                <span class="font-code text-xs text-outline uppercase tracking-wider">Core Strengths</span>
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                  <div class="p-2.5 rounded bg-surface-container border border-white/5 flex items-center gap-2 text-xs font-body text-on-surface">
+                    <span class="material-symbols-outlined text-primary text-[18px]">bolt</span>
+                    <span>Fast Learner</span>
+                  </div>
+                  <div class="p-2.5 rounded bg-surface-container border border-white/5 flex items-center gap-2 text-xs font-body text-on-surface">
+                    <span class="material-symbols-outlined text-primary text-[18px]">insights</span>
+                    <span>C++ Problem Solver</span>
+                  </div>
+                  <div class="p-2.5 rounded bg-surface-container border border-white/5 flex items-center gap-2 text-xs font-body text-on-surface">
+                    <span class="material-symbols-outlined text-primary text-[18px]">hub</span>
+                    <span>React &amp; Node.js</span>
+                  </div>
+                  <div class="p-2.5 rounded bg-surface-container border border-white/5 flex items-center gap-2 text-xs font-body text-on-surface">
+                    <span class="material-symbols-outlined text-primary text-[18px]">rule</span>
+                    <span>SQL Relational DB</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Download & Copy Action Deck -->
+            <div class="flex flex-col gap-3">
+              <button onclick="printOrDownloadResume()" class="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-primary via-tertiary to-secondary text-white shadow-[0_0_24px_rgba(168,85,247,0.4)] hover:shadow-[0_0_32px_rgba(56,189,248,0.6)] hover:-translate-y-0.5 transition-all text-left">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[22px]">download</span>
+                  </div>
+                  <div class="flex flex-col">
+                    <span class="font-headline text-sm font-bold text-white">Download / Print Resume (PDF)</span>
+                    <span class="font-code text-[11px] text-white/80">Official ATS-Optimized Document</span>
+                  </div>
+                </div>
+                <span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">print</span>
+              </button>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <a href="resume.html" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline text-xs font-semibold transition-all">
+                  <span class="material-symbols-outlined text-[18px] text-secondary">open_in_new</span>
+                  <span>Open in New Tab</span>
+                </a>
+                <button onclick="copyPlaintextResume()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline text-xs font-semibold transition-all">
+                  <span id="copyResumeIcon" class="material-symbols-outlined text-[18px] text-primary">content_copy</span>
+                  <span id="copyResumeLabel">Copy Plaintext</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Recruiter Quick Contacts -->
+            <div class="bg-surface-container-low border border-primary/20 rounded-xl p-5 shadow-xl flex flex-col gap-3">
+              <div class="flex items-center justify-between">
+                <span class="font-headline text-xs font-bold text-on-surface flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-secondary text-[18px]">quick_reference</span>
+                  Direct Recruiter Copy
+                </span>
+                <span class="font-code text-[10px] text-secondary">1-CLICK CLIPBOARD</span>
+              </div>
+              <div class="flex flex-col gap-2">
+                <button onclick="copyContactText('anjalibhavanimishra@gmail.com', this)" class="flex items-center justify-between p-2.5 rounded bg-surface-container hover:bg-surface-container-high text-left transition-colors group">
+                  <div class="flex items-center gap-2 truncate">
+                    <span class="material-symbols-outlined text-[18px] text-primary">mail</span>
+                    <span class="font-code text-xs text-on-surface truncate">anjalibhavanimishra@gmail.com</span>
+                  </div>
+                  <span class="copy-indicator font-code text-[10px] text-outline group-hover:text-secondary uppercase">Copy</span>
+                </button>
+                <button onclick="copyContactText('+918857902061', this)" class="flex items-center justify-between p-2.5 rounded bg-surface-container hover:bg-surface-container-high text-left transition-colors group">
+                  <div class="flex items-center gap-2 truncate">
+                    <span class="material-symbols-outlined text-[18px] text-secondary">call</span>
+                    <span class="font-code text-xs text-on-surface truncate">+91 88579 02061</span>
+                  </div>
+                  <span class="copy-indicator font-code text-[10px] text-outline group-hover:text-secondary uppercase">Copy</span>
+                </button>
+                <button onclick="copyContactText('https://linkedin.com/in/anjali-mishra-a14a88382', this)" class="flex items-center justify-between p-2.5 rounded bg-surface-container hover:bg-surface-container-high text-left transition-colors group">
+                  <div class="flex items-center gap-2 truncate">
+                    <span class="material-symbols-outlined text-[18px] text-tertiary">share</span>
+                    <span class="font-code text-xs text-on-surface truncate">linkedin.com/in/anjali-mishra-a14a88382</span>
+                  </div>
+                  <span class="copy-indicator font-code text-[10px] text-outline group-hover:text-secondary uppercase">Copy</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Clean A4 Resume Canvas (7 cols) -->
+          <div class="lg:col-span-7 flex flex-col gap-4">
+            
+            <!-- Controls Bar -->
+            <div class="flex items-center justify-between px-4 py-2.5 rounded-xl bg-surface-container-low border border-white/5">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
+                <span class="font-code text-xs text-on-surface-variant font-medium">A4_CANVAS // ATS-VERIFIED</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="toggleResumeZoom()" id="zoomBtn" class="flex items-center gap-1 px-3 py-1 rounded bg-surface-container hover:bg-surface-container-high font-code text-xs text-on-surface transition-all">
+                  <span id="zoomIcon" class="material-symbols-outlined text-[16px]">zoom_in</span>
+                  <span id="zoomText">100%</span>
+                </button>
+                <button onclick="toggleResumeFullscreen(true)" class="flex items-center gap-1 px-3 py-1 rounded bg-primary/20 hover:bg-primary/30 font-code text-xs text-primary transition-all">
+                  <span class="material-symbols-outlined text-[16px]">fullscreen</span>
+                  <span>Inspect</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- The Live Resume Document Inner Canvas -->
+            <div id="resumeCanvasContainer" class="relative w-full bg-[#0f0d19] border border-primary/20 rounded-2xl p-6 sm:p-10 shadow-2xl overflow-hidden transition-all duration-300">
+              
+              <div id="resumeSheet" class="flex flex-col gap-6 text-on-surface transition-transform duration-300 origin-top">
+                
+                <!-- RESUME HEADER -->
+                <div class="flex flex-col sm:flex-row sm:items-baseline justify-between pb-5 border-b border-white/10 gap-2">
+                  <div class="flex flex-col">
+                    <h2 class="font-headline text-3xl font-bold tracking-tight text-white">Anjali Mishra</h2>
+                    <span class="font-code text-xs text-secondary font-semibold mt-0.5">Software Development Engineer (SDE) Aspirant</span>
+                  </div>
+                  <div class="flex flex-col sm:text-right font-code text-xs text-on-surface-variant space-y-0.5">
+                    <span>Mumbai, India • +91 88579 02061</span>
+                    <span class="text-primary-fixed-dim">anjalibhavanimishra@gmail.com</span>
+                    <span>linkedin.com/in/anjali-mishra-a14a88382</span>
+                  </div>
+                </div>
+
+                <!-- OBJECTIVE -->
+                <div class="flex flex-col gap-1.5">
+                  <span class="font-code text-xs text-primary font-bold uppercase tracking-wider">OBJECTIVE</span>
+                  <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                    Second-year engineering student seeking a software development (SDE) internship. Build full-stack web projects with the JavaScript stack and write C++ for problem solving.
+                  </p>
+                </div>
+
+                <!-- EDUCATION -->
+                <div class="flex flex-col gap-2">
+                  <span class="font-code text-xs text-primary font-bold uppercase tracking-wider">EDUCATION</span>
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between">
+                    <div>
+                      <span class="font-headline text-sm font-bold text-white">Thakur Shyamnarayan Engineering College (TSEC), Mumbai University</span>
+                      <p class="font-body text-xs text-on-surface-variant">B.E. in Electronics and Communication Engineering, Second Year (Sem 3)</p>
+                    </div>
+                    <span class="font-code text-xs text-secondary mt-1 sm:mt-0 font-semibold">Expected: 2029</span>
+                  </div>
+                </div>
+
+                <!-- TECHNICAL SKILLS -->
+                <div class="flex flex-col gap-2">
+                  <span class="font-code text-xs text-primary font-bold uppercase tracking-wider">TECHNICAL SKILLS</span>
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs font-body">
+                    <div class="p-2.5 rounded bg-surface-container border border-white/5">
+                      <span class="font-code text-xs font-bold text-secondary block mb-1">Languages</span>
+                      <span class="text-on-surface-variant">C++</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-surface-container border border-white/5">
+                      <span class="font-code text-xs font-bold text-secondary block mb-1">Web</span>
+                      <span class="text-on-surface-variant">HTML, CSS, JavaScript, React, Node.js, Express.js</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-surface-container border border-white/5">
+                      <span class="font-code text-xs font-bold text-secondary block mb-1">Databases</span>
+                      <span class="text-on-surface-variant">SQL</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- NOTABLE PROJECTS -->
+                <div class="flex flex-col gap-3">
+                  <span class="font-code text-xs text-primary font-bold uppercase tracking-wider">PROJECTS</span>
+                  
+                  <!-- Project 1 -->
+                  <div class="p-3 rounded-lg bg-surface-container/60 border border-white/5">
+                    <div class="flex justify-between items-center mb-1">
+                      <span class="font-headline text-xs font-bold text-white">SaaS Boilerplate Generator</span>
+                      <span class="font-code text-[11px] text-secondary">React • Node.js • Express</span>
+                    </div>
+                    <ul class="list-disc list-inside font-body text-xs text-on-surface-variant space-y-0.5">
+                      <li>Generates starter code and folder structure for a SaaS app from selected options.</li>
+                      <li>Saves the time of setting up a new project from scratch.</li>
+                      <li>Gives developers a ready base to build their own features on.</li>
+                    </ul>
+                  </div>
+
+                  <!-- Project 2 -->
+                  <div class="p-3 rounded-lg bg-surface-container/60 border border-white/5">
+                    <div class="flex justify-between items-center mb-1">
+                      <span class="font-headline text-xs font-bold text-white">Natural Language to SQL Generator</span>
+                      <span class="font-code text-[11px] text-secondary">JavaScript • SQL • Node</span>
+                    </div>
+                    <ul class="list-disc list-inside font-body text-xs text-on-surface-variant space-y-0.5">
+                      <li>Converts plain-English questions into SQL queries.</li>
+                      <li>Lets a user ask about data without writing SQL by hand.</li>
+                      <li>Turns the question into a query that can be run on a database.</li>
+                    </ul>
+                  </div>
+
+                  <!-- Project 3 -->
+                  <div class="p-3 rounded-lg bg-surface-container/60 border border-white/5">
+                    <div class="flex justify-between items-center mb-1">
+                      <span class="font-headline text-xs font-bold text-white">RAG Platform</span>
+                      <span class="font-code text-[11px] text-secondary">Vector Search • React • Node</span>
+                    </div>
+                    <ul class="list-disc list-inside font-body text-xs text-on-surface-variant space-y-0.5">
+                      <li>Finds relevant sections of documents and answers questions based on them.</li>
+                      <li>Answers come from the document content instead of guesses.</li>
+                      <li>Lets a user get quick answers from long documents without reading them fully.</li>
+                    </ul>
+                  </div>
+
+                  <!-- Project 4 & 5 & 6 Short Summary -->
+                  <div class="p-3 rounded-lg bg-surface-container/60 border border-white/5">
+                    <div class="flex justify-between items-center mb-1">
+                      <span class="font-headline text-xs font-bold text-white">Chat With Any Codebase &amp; API Reverse Engineer &amp; Knowledge Assistant</span>
+                      <span class="font-code text-[11px] text-secondary">Full-Stack Tools</span>
+                    </div>
+                    <p class="font-body text-xs text-on-surface-variant">
+                      Built AST code exploration tools, automated OpenAPI summary generation from docs, and SQL-backed contextual memory assistant.
+                    </p>
+                  </div>
+
+                </div>
+
+                <!-- FRONTEND PROJECTS -->
+                <div class="flex flex-col gap-2">
+                  <span class="font-code text-xs text-primary font-bold uppercase tracking-wider">FRONTEND PROJECTS</span>
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-body text-on-surface-variant">
+                    <div class="p-2.5 rounded bg-surface-container border border-white/5">
+                      <strong class="text-white block font-headline">Image Gallery</strong>
+                      <span>HTML, CSS and JavaScript with responsive grid and lightbox.</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-surface-container border border-white/5">
+                      <strong class="text-white block font-headline">Calculator</strong>
+                      <span>Interactive calculator with arithmetic operations.</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-surface-container border border-white/5">
+                      <strong class="text-white block font-headline">Music Player</strong>
+                      <span>Music player built with JavaScript audio controls.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bottom Watermark -->
+                <div class="pt-4 border-t border-white/5 flex items-center justify-between font-code text-[10px] text-outline">
+                  <span>ATS-Optimized • Anjali Mishra • Official Resume</span>
+                  <span>Mumbai University (TSEC)</span>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================================================================
+           CONTACT & TRANSMISSION
+           ========================================================================= -->
+      <section class="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24 w-full" id="contact">
+        
+        <div class="flex flex-col gap-2 max-w-3xl mb-12">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-primary font-code text-xs tracking-widest uppercase border border-primary/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+              06 // INITIATE TRANSMISSION
+            </span>
+            <span class="font-code text-xs text-outline-variant">SYS.COMMS.ONLINE</span>
+          </div>
+          <h2 class="font-display text-3xl sm:text-4xl text-on-surface font-bold tracking-tight">
+            Let's Build <span class="bg-gradient-to-r from-primary via-tertiary to-secondary bg-clip-text text-transparent">Something Great</span>
+          </h2>
+          <p class="font-body text-base text-on-surface-variant leading-relaxed">
+            Whether you have an internship opportunity, a project to collaborate on, or just want to connect regarding software engineering and C++—my inbox is always open.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Left Column: Direct Info & Social Signals (5 cols) -->
+          <div class="lg:col-span-5 flex flex-col gap-6">
+            
+            <div class="rounded-xl bg-surface-container-low border border-primary/20 p-6 shadow-xl flex flex-col gap-4">
+              <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                <div class="flex items-center gap-2">
+                  <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-secondary"></span>
+                  </span>
+                  <span class="font-code text-xs text-secondary font-semibold">Seeking SDE Internships</span>
+                </div>
+                <span class="font-code text-xs text-outline">STATUS // 01</span>
+              </div>
+
+              <!-- Direct Email Box with One-Click Copy -->
+              <div class="space-y-1">
+                <label class="font-code text-[10px] text-outline uppercase tracking-wider">Direct Inbox Node</label>
+                <div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-lowest border border-white/5">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span class="material-symbols-outlined text-[18px] text-primary">alternate_email</span>
+                    <span class="font-code text-xs text-on-surface truncate font-semibold">anjalibhavanimishra@gmail.com</span>
+                  </div>
+                  <button onclick="copyContactText('anjalibhavanimishra@gmail.com', this)" class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-high font-code text-[11px] text-secondary border border-secondary/20 transition-all flex items-center gap-1">
+                    <span class="copy-indicator uppercase">Copy</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Phone Node -->
+              <div class="space-y-1">
+                <label class="font-code text-[10px] text-outline uppercase tracking-wider">Phone Communication Node</label>
+                <div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-lowest border border-white/5">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span class="material-symbols-outlined text-[18px] text-secondary">call</span>
+                    <span class="font-code text-xs text-on-surface truncate font-semibold">+91 88579 02061</span>
+                  </div>
+                  <button onclick="copyContactText('+918857902061', this)" class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-high font-code text-[11px] text-secondary border border-secondary/20 transition-all flex items-center gap-1">
+                    <span class="copy-indicator uppercase">Copy</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Location Coordinates -->
+              <div class="space-y-1">
+                <label class="font-code text-[10px] text-outline uppercase tracking-wider">Location Node</label>
+                <div class="p-3 rounded-lg bg-surface-container-lowest border border-white/5 flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px] text-tertiary">location_on</span>
+                    <div>
+                      <span class="font-body text-xs text-on-surface font-semibold block">Mumbai, India</span>
+                      <span class="font-code text-[10px] text-on-surface-variant">Thakur Shyamnarayan Eng. College (TSEC)</span>
+                    </div>
+                  </div>
+                  <span class="font-code text-[10px] text-outline">IST (UTC+5:30)</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Social Signals Grid -->
+            <div class="rounded-xl bg-surface-container-low border border-primary/20 p-6 shadow-xl flex flex-col gap-3">
+              <span class="font-code text-xs text-outline uppercase tracking-wider">SIGNAL CHANNELS &amp; RADAR</span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com/in/anjali-mishra-a14a88382" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg bg-surface-container hover:bg-surface-container-high border border-white/5 transition-all flex items-center justify-between group">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="material-symbols-outlined text-secondary text-[20px]">share</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="font-headline text-xs font-bold text-on-surface">LinkedIn</span>
+                      <span class="font-code text-[10px] text-on-surface-variant truncate">anjali-mishra</span>
+                    </div>
+                  </div>
+                  <span class="material-symbols-outlined text-[16px] text-outline group-hover:text-secondary transition-colors">arrow_outward</span>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:anjalibhavanimishra@gmail.com" class="p-3 rounded-lg bg-surface-container hover:bg-surface-container-high border border-white/5 transition-all flex items-center justify-between group">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="material-symbols-outlined text-primary text-[20px]">mail</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="font-headline text-xs font-bold text-on-surface">Email</span>
+                      <span class="font-code text-[10px] text-on-surface-variant truncate">Direct Inbox</span>
+                    </div>
+                  </div>
+                  <span class="material-symbols-outlined text-[16px] text-outline group-hover:text-primary transition-colors">arrow_outward</span>
+                </a>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Transmission Form (7 cols) -->
+          <div class="lg:col-span-7 flex flex-col">
+            <div class="rounded-2xl bg-surface-container-low border border-primary/30 p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+              <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-tertiary to-secondary"></div>
+
+              <div class="flex items-center justify-between mb-6">
+                <div>
+                  <span class="font-code text-xs text-primary uppercase tracking-widest font-bold">TRANSMISSION INTERFACE</span>
+                  <h3 class="font-headline text-xl sm:text-2xl font-bold text-on-surface">Send a Message</h3>
+                </div>
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container font-code text-xs text-outline border border-white/5">
+                  <span class="material-symbols-outlined text-[15px] text-secondary">encrypted</span>
+                  <span>SECURE UPLINK</span>
+                </div>
+              </div>
+
+              <!-- Form -->
+              <form id="contactForm" onsubmit="handleTransmission(event)" class="flex flex-col gap-4">
+                
+                <!-- Name -->
+                <div class="flex flex-col gap-1.5">
+                  <label for="senderName" class="font-code text-xs text-on-surface-variant uppercase tracking-wider flex items-center gap-1">
+                    <span>01 // Your Name</span>
+                    <span class="text-red-400">*</span>
+                  </label>
+                  <input id="senderName" type="text" required placeholder="e.g. Hiring Manager / Tech Recruiter" class="w-full bg-surface-container-lowest border border-white/10 rounded-lg px-4 py-2.5 font-body text-sm text-on-surface placeholder:text-outline/40 focus:outline-none focus:border-primary transition-colors"/>
+                </div>
+
+                <!-- Email -->
+                <div class="flex flex-col gap-1.5">
+                  <div class="flex justify-between items-center">
+                    <label for="senderEmail" class="font-code text-xs text-on-surface-variant uppercase tracking-wider flex items-center gap-1">
+                      <span>02 // Your Email</span>
+                      <span class="text-red-400">*</span>
+                    </label>
+                    <span id="emailFormatBadge" class="font-code text-[10px] text-outline-variant">Awaiting input</span>
+                  </div>
+                  <div class="relative flex items-center">
+                    <input id="senderEmail" type="email" required oninput="validateEmail(this)" placeholder="name@company.com" class="w-full bg-surface-container-lowest border border-white/10 rounded-lg px-4 py-2.5 font-body text-sm text-on-surface placeholder:text-outline/40 focus:outline-none focus:border-secondary transition-colors"/>
+                    <span id="emailCheckIcon" class="material-symbols-outlined absolute right-3 text-[18px] text-outline-variant">check_circle</span>
+                  </div>
+                </div>
+
+                <!-- Subject -->
+                <div class="flex flex-col gap-1.5">
+                  <label for="transmissionSubject" class="font-code text-xs text-on-surface-variant uppercase tracking-wider flex items-center gap-1">
+                    <span>03 // Purpose</span>
+                    <span class="text-red-400">*</span>
+                  </label>
+                  <select id="transmissionSubject" required class="w-full bg-surface-container-lowest border border-white/10 rounded-lg px-4 py-2.5 font-body text-sm text-on-surface focus:outline-none focus:border-primary transition-colors">
+                    <option value="" disabled selected>Select Ingestion Category</option>
+                    <option value="internship">SDE Internship Opportunity (Summer / Fall)</option>
+                    <option value="project">Full-Stack Web Collaboration</option>
+                    <option value="chat">Technical Chat &amp; Networking</option>
+                    <option value="other">Other Dispatches</option>
+                  </select>
+                </div>
+
+                <!-- Message -->
+                <div class="flex flex-col gap-1.5">
+                  <div class="flex justify-between items-center">
+                    <label for="senderMessage" class="font-code text-xs text-on-surface-variant uppercase tracking-wider flex items-center gap-1">
+                      <span>04 // Message Payload</span>
+                      <span class="text-red-400">*</span>
+                    </label>
+                    <span id="charCounter" class="font-code text-[10px] text-outline">0 / 1000</span>
+                  </div>
+                  <textarea id="senderMessage" rows="4" maxlength="1000" oninput="updateCharCount(this)" required placeholder="Hello Anjali, we saw your portfolio and SaaS boilerplate projects and would love to connect for an internship opportunity..." class="w-full bg-surface-container-lowest border border-white/10 rounded-lg p-3.5 font-body text-sm text-on-surface placeholder:text-outline/40 focus:outline-none focus:border-primary transition-colors resize-none"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submitTransmissionBtn" class="w-full py-3 px-6 rounded-lg bg-gradient-to-r from-primary to-primary-container text-white font-headline text-sm font-bold flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(168,85,247,0.45)] hover:shadow-[0_0_32px_rgba(183,109,255,0.65)] hover:-translate-y-0.5 transition-all">
+                  <span id="transmissionBtnText">Send Transmission</span>
+                  <span id="transmissionBtnIcon" class="material-symbols-outlined text-[19px]">send</span>
+                </button>
+
+                <!-- Success Banner -->
+                <div id="successBanner" class="hidden items-center gap-3 p-3.5 rounded-lg bg-secondary/15 border border-secondary/30 text-secondary font-code text-xs">
+                  <span class="material-symbols-outlined text-[20px]">task_alt</span>
+                  <span>Signal acknowledged! I will review and reply within 24 hours.</span>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="w-full bg-surface-container-lowest border-t border-primary/10 py-10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col gap-6">
+      
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary p-0.5">
+            <div class="w-full h-full bg-[#14121e] rounded-[6px] flex items-center justify-center font-display font-bold text-xs text-primary">
+              AM
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline text-sm text-on-surface font-bold tracking-tight">ANJALI MISHRA</span>
+            <span class="font-code text-[11px] text-on-surface-variant">Software Engineering Portfolio • TSEC Mumbai</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-6 font-headline text-xs text-on-surface-variant">
+          <a href="#hero" class="hover:text-on-surface transition-colors">Home</a>
+          <a href="#about" class="hover:text-on-surface transition-colors">About</a>
+          <a href="#skills" class="hover:text-on-surface transition-colors">Skills</a>
+          <a href="#projects" class="hover:text-on-surface transition-colors">Projects</a>
+          <a href="#journey" class="hover:text-on-surface transition-colors">Journey</a>
+          <a href="#resume" class="hover:text-on-surface transition-colors">Resume</a>
+          <a href="#contact" class="hover:text-on-surface transition-colors">Contact</a>
+        </div>
+
+        <a href="#hero" aria-label="Back to top" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-code text-xs transition-all">
+          <span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+          <span>Back to Top</span>
+        </a>
+
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-4 border-t border-white/5 font-code text-xs text-outline">
+        <div class="flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-secondary"></span>
+          <span class="text-secondary uppercase">All systems operational</span>
+        </div>
+        <span>© 2025 Anjali Mishra. Built with modern JavaScript &amp; Three.js.</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       MODAL: CASE STUDY DEEP DIVE OVERLAY
+       ========================================================================= -->
+  <div id="caseStudyModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-2xl flex items-center justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-all duration-300" role="dialog" aria-modal="true">
+    <div class="bg-[#0f0d19] border border-primary/30 shadow-[0_20px_60px_rgba(168,85,247,0.3)] rounded-2xl max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden relative">
+      
+      <!-- Modal Header Bar -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#14121e]">
+        <div class="flex flex-col gap-1 pr-4">
+          <div class="flex items-center gap-2">
+            <span id="modalBadge" class="px-2.5 py-0.5 rounded-full bg-primary/20 text-primary-fixed-dim font-code text-[11px] font-semibold border border-primary/30">
+              FEATURED WORK
+            </span>
+            <div class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-secondary font-code text-[11px]">
+              <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+              <span id="modalMetricBadgeText">50k+ req/s</span>
+            </div>
+          </div>
+          <h3 id="modalTitle" class="font-headline text-lg sm:text-xl font-bold text-white tracking-tight">
+            Project Title
+          </h3>
+        </div>
+        <button onclick="closeCaseStudyModal()" aria-label="Close Case Study" class="w-8 h-8 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-white flex items-center justify-center transition-all">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="flex items-center gap-2 px-6 border-b border-white/10 bg-[#12101b] overflow-x-auto">
+        <button class="modal-tab-btn px-4 py-3 font-code text-xs font-semibold border-b-2 border-primary text-primary transition-all flex items-center gap-2 whitespace-nowrap" data-tab="overview" onclick="switchModalTab('overview')">
+          <span class="material-symbols-outlined text-[17px]">account_tree</span>
+          <span>Overview &amp; Architecture</span>
+        </button>
+        <button class="modal-tab-btn px-4 py-3 font-code text-xs font-semibold border-b-2 border-transparent text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-2 whitespace-nowrap" data-tab="specs" onclick="switchModalTab('specs')">
+          <span class="material-symbols-outlined text-[17px]">speed</span>
+          <span>System Specs &amp; Workflow</span>
+        </button>
+        <button class="modal-tab-btn px-4 py-3 font-code text-xs font-semibold border-b-2 border-transparent text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-2 whitespace-nowrap" data-tab="code" onclick="switchModalTab('code')">
+          <span class="material-symbols-outlined text-[17px]">terminal</span>
+          <span>Code Implementation</span>
+        </button>
+      </div>
+
+      <!-- Modal Body Content -->
+      <div id="modalTabContent" class="p-6 overflow-y-auto max-h-[calc(92vh-140px)] text-on-surface font-body text-sm leading-relaxed">
+        <!-- Injected via JavaScript -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: FULLSCREEN RESUME INSPECTION
+       ========================================================================= -->
+  <div id="fullscreenModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-2xl hidden items-center justify-center p-4 sm:p-8">
+    <div class="relative w-full max-w-4xl max-h-[94vh] overflow-y-auto bg-[#0f0d19] border border-primary/30 rounded-2xl p-6 sm:p-10 shadow-2xl flex flex-col gap-6">
+      <div class="sticky top-0 right-0 z-20 flex items-center justify-between pb-4 bg-[#0f0d19] border-b border-white/10">
+        <span class="font-code text-xs text-secondary uppercase font-semibold">ATS-OPTIMIZED RESUME FULL-RESOLUTION VIEW</span>
+        <button onclick="toggleResumeFullscreen(false)" aria-label="Close Fullscreen" class="w-8 h-8 rounded-lg bg-surface-container hover:bg-surface-bright text-on-surface flex items-center justify-center">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+      <div id="modalResumeClone" class="flex flex-col gap-6 text-on-surface">
+        <!-- Cloned from resumeSheet -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: LIGHTBOX IMAGE VIEWER
+       ========================================================================= -->
+  <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden items-center justify-center p-4">
+    <div class="relative max-w-4xl w-full flex flex-col items-center gap-3">
+      <button onclick="closeLightbox()" aria-label="Close Lightbox" class="absolute -top-10 right-0 text-white hover:text-primary transition-colors flex items-center gap-1 font-code text-xs">
+        <span>CLOSE</span>
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+      <img id="lightboxImg" src="" alt="Enlarged Preview" class="w-full max-h-[80vh] object-contain rounded-xl border border-primary/30 shadow-2xl"/>
+      <span id="lightboxCaption" class="font-code text-xs text-secondary mt-1">Image Caption</span>
+    </div>
+  </div>
+
+  <!-- Main Application Controller -->
+  <script src="app.js"></script>
+
+</body>
+</html>

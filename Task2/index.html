@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SmartCalc Pro — Modern Precision Calculator</title>
+  <meta name="description" content="A modern, high-precision, responsive dark-themed calculator with safe mathematical expression parser, real-time preview, calculation history, and keyboard shortcuts.">
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Decorative Background Glows -->
+  <div class="ambient-glow glow-top" aria-hidden="true"></div>
+  <div class="ambient-glow glow-bottom" aria-hidden="true"></div>
+  <div class="ambient-glow glow-right" aria-hidden="true"></div>
+
+  <!-- Main Container -->
+  <div class="app-container">
+
+    <!-- Top App Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="3" ry="3"></rect>
+            <line x1="8" y1="6" x2="16" y2="6"></line>
+            <line x1="16" y1="14" x2="16" y2="18"></line>
+            <line x1="16" y1="10" x2="16" y2="10.01"></line>
+            <line x1="12" y1="10" x2="12" y2="10.01"></line>
+            <line x1="8" y1="10" x2="8" y2="10.01"></line>
+            <line x1="12" y1="14" x2="12" y2="14.01"></line>
+            <line x1="8" y1="14" x2="8" y2="14.01"></line>
+            <line x1="12" y1="18" x2="12" y2="18.01"></line>
+            <line x1="8" y1="18" x2="8" y2="18.01"></line>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">SmartCalc <span class="badge-pro">PRO</span></h1>
+          <p class="brand-subtitle">High-Precision Safe Parser</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Shortcuts Trigger -->
+        <button id="shortcuts-btn" class="header-btn" title="Keyboard Shortcuts" aria-label="View keyboard shortcuts">
+          <span class="kbd-badge">?</span>
+          <span class="btn-label">Shortcuts</span>
+        </button>
+
+        <!-- History Drawer Toggle -->
+        <button id="toggle-history-btn" class="header-btn" title="Calculation History" aria-label="Toggle calculation history panel">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span class="btn-label">History</span>
+          <span id="history-badge" class="history-count" aria-label="0 saved calculations">0</span>
+        </button>
+
+        <!-- Theme Toggle (Dark / Light) -->
+        <button id="theme-toggle-btn" class="header-btn theme-btn" title="Switch Theme" aria-label="Toggle light or dark theme">
+          <svg id="moon-icon" class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="sun-icon" class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="main-content" id="main-content">
+
+      <!-- Calculator Card Section -->
+      <section class="calculator-card" id="calculator-card" aria-label="Smart Calculator">
+        
+        <!-- Screen Top Header bar -->
+        <div class="display-header">
+          <div class="status-indicator" id="status-pill">
+            <span class="status-dot"></span>
+            <span class="status-text" id="status-label">READY</span>
+          </div>
+          
+          <button id="copy-btn" class="display-action-btn" title="Copy result to clipboard" aria-label="Copy current result to clipboard">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>Copy</span>
+          </button>
+        </div>
+
+        <!-- Calculator Display Screen -->
+        <div class="calc-screen" id="calc-screen" role="region" aria-label="Calculator display screen">
+          <!-- Expression line (running expression in smaller font) -->
+          <div id="expression-display" class="expression-line" aria-live="polite" aria-atomic="true">
+            &nbsp;
+          </div>
+
+          <!-- Result line (prominently styled) -->
+          <div class="result-wrapper">
+            <output id="result-display" class="result-line" aria-live="assertive" aria-atomic="true">0</output>
+          </div>
+        </div>
+
+        <!-- 4-Column Keypad Grid -->
+        <div class="keypad-grid" id="keypad" role="grid" aria-label="Calculator Keypad">
+          
+          <!-- Row 1: Clear All, DEL, Percent, Divide -->
+          <button type="button" class="btn btn-util btn-clear" data-action="clear" aria-label="Clear all input (All Clear)">
+            <span class="btn-text">C</span>
+          </button>
+          <button type="button" class="btn btn-util btn-del" data-action="delete" aria-label="Delete last character">
+            <span class="btn-text">DEL</span>
+          </button>
+          <button type="button" class="btn btn-util btn-percent" data-action="percent" aria-label="Percentage">
+            <span class="btn-text">%</span>
+          </button>
+          <button type="button" class="btn btn-operator" data-operator="/" aria-label="Divide">
+            <span class="btn-text">÷</span>
+          </button>
+
+          <!-- Row 2: 7, 8, 9, Multiply -->
+          <button type="button" class="btn btn-number" data-number="7" aria-label="Digit 7">
+            <span class="btn-text">7</span>
+          </button>
+          <button type="button" class="btn btn-number" data-number="8" aria-label="Digit 8">
+            <span class="btn-text">8</span>
+          </button>
+          <button type="button" class="btn btn-number" data-number="9" aria-label="Digit 9">
+            <span class="btn-text">9</span>
+          </button>
+          <button type="button" class="btn btn-operator" data-operator="*" aria-label="Multiply">
+            <span class="btn-text">×</span>
+          </button>
+
+          <!-- Row 3: 4, 5, 6, Subtract -->
+          <button type="button" class="btn btn-number" data-number="4" aria-label="Digit 4">
+            <span class="btn-text">4</span>
+          </button>
+          <button type="button" class="btn btn-number" data-number="5" aria-label="Digit 5">
+            <span class="btn-text">5</span>
+          </button>
+          <button type="button" class="btn btn-number" data-number="6" aria-label="Digit 6">
+            <span class="btn-text">6</span>
+          </button>
+          <button type="button" class="btn btn-operator" data-operator="-" aria-label="Subtract">
+            <span class="btn-text">−</span>
+          </button>
+
+          <!-- Row 4: 1, 2, 3, Add -->
+          <button type="button" class="btn btn-number" data-number="1" aria-label="Digit 1">
+            <span class="btn-text">1</span>
+          </button>
+          <button type="button" class="btn btn-number" data-number="2" aria-label="Digit 2">
+            <span class="btn-text">2</span>
+          </button>
+          <button type="button" class="btn btn-number" data-number="3" aria-label="Digit 3">
+            <span class="btn-text">3</span>
+          </button>
+          <button type="button" class="btn btn-operator" data-operator="+" aria-label="Add">
+            <span class="btn-text">+</span>
+          </button>
+
+          <!-- Row 5: Sign Toggle, 0, Decimal Point, Equals -->
+          <button type="button" class="btn btn-util btn-negate" data-action="negate" aria-label="Toggle sign (plus or minus)">
+            <span class="btn-text">±</span>
+          </button>
+          <button type="button" class="btn btn-number" data-number="0" aria-label="Digit 0">
+            <span class="btn-text">0</span>
+          </button>
+          <button type="button" class="btn btn-number btn-decimal" data-action="decimal" aria-label="Decimal point">
+            <span class="btn-text">.</span>
+          </button>
+          <button type="button" class="btn btn-equals" data-action="equals" aria-label="Calculate equals">
+            <span class="btn-text">=</span>
+          </button>
+
+        </div>
+
+        <!-- Keyboard helper / Toast status notification bar -->
+        <div class="card-footer">
+          <div class="key-hint">
+            <span>Keys: <kbd>0-9</kbd> <kbd>+ − × ÷</kbd> <kbd>Enter</kbd> <kbd>Esc</kbd></span>
+          </div>
+          <div id="toast" class="toast-message" role="status" aria-live="polite">Copied!</div>
+        </div>
+
+      </section>
+
+      <!-- History Panel (Collapsible / Slide Drawer) -->
+      <aside class="history-panel" id="history-panel" aria-label="Calculation History Panel">
+        
+        <div class="history-header">
+          <div class="history-title-group">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h2>History</h2>
+          </div>
+
+          <div class="history-actions">
+            <!-- Header Quick Export -->
+            <div class="export-chip-group">
+              <button id="quick-export-csv" class="chip-btn" title="Export as CSV" aria-label="Export history to CSV">CSV</button>
+              <button id="quick-export-txt" class="chip-btn" title="Export as TXT" aria-label="Export history to TXT">TXT</button>
+            </div>
+            <button id="clear-history-btn" class="btn-danger-text" title="Clear all calculation history" aria-label="Clear all calculation history">Clear</button>
+          </div>
+        </div>
+
+        <!-- History list container -->
+        <div class="history-list custom-scrollbar" id="history-list" tabindex="0" role="feed" aria-label="List of past calculations">
+          <!-- Populated dynamically via script.js -->
+        </div>
+
+        <!-- History Footer / Controls -->
+        <div class="history-footer">
+          <div class="export-row">
+            <button id="export-csv-btn" class="export-btn" title="Export calculation history to CSV">
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Export CSV</span>
+            </button>
+            <button id="export-txt-btn" class="export-btn" title="Export calculation history to plain text">
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span>Export TXT</span>
+            </button>
+          </div>
+          <div class="history-tip">
+            <span>Click any item to reuse</span>
+            <span class="storage-pill">Local Storage</span>
+          </div>
+        </div>
+
+      </aside>
+
+    </main>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <p>Modern Smart Calculator &bull; Standard Operator Precedence (BODMAS) &bull; Zero eval()</p>
+    </footer>
+
+  </div>
+
+  <!-- Keyboard Shortcuts Modal Overlay -->
+  <div class="modal-overlay" id="shortcuts-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modal-title" class="modal-title">
+          <span>⌨️</span> Keyboard Shortcuts
+        </h3>
+        <button id="close-modal-btn" class="modal-close-btn" aria-label="Close shortcuts modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-content">
+        <div class="shortcut-card">
+          <span class="shortcut-desc">Numbers</span>
+          <kbd class="shortcut-key">0 – 9</kbd>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-desc">Operators</span>
+          <kbd class="shortcut-key">+ &minus; * /</kbd>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-desc">Calculate Result</span>
+          <kbd class="shortcut-key">Enter or =</kbd>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-desc">Clear All (AC)</span>
+          <kbd class="shortcut-key">Esc or c</kbd>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-desc">Delete Character</span>
+          <kbd class="shortcut-key">Backspace</kbd>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-desc">Decimal Point</span>
+          <kbd class="shortcut-key">. or ,</kbd>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-desc">Percentage</span>
+          <kbd class="shortcut-key">%</kbd>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-desc">Sign Toggle (&plusmn;)</span>
+          <kbd class="shortcut-key">F9</kbd>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modal-gotit-btn" class="btn-primary-modal">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vanilla JavaScript -->
+  <script src="js/script.js"></script>
+</body>
+</html>
